@@ -1,0 +1,17 @@
+{
+  "name": "fed-compliance-tracker",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/next-app",
+    "apps/angular-app",
+    "apps/backend"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start:backend": "npm run --workspaces=backend start",
+    "start:next": "npm run --workspace=next-app dev",
+    "start:ng": "npm run --workspace=angular-app start"
+  }
+}
