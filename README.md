@@ -33,3 +33,23 @@ $ npm run start:ng
 ```
 
 App will open on http://localhost:4200
+
+## App Overview
+
+![alt text](image.png)
+
+** Functionalities may change overtime ^^ **
+
+### Mockups
+
+Designs are all imaginary and concepts at this moments :)
+
+Drawing board: https://excalidraw.com/#json=2HM39o1J5oXcSHQ-GjUH_,MZEDkmUOO1TJ4CQWCz8gRQ
+
+**Dashboard**
+
+![dashboard-ui](image-1.png)
+
+**Employee Details**
+
+![employee-details-ui](image-2.png)
