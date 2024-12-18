@@ -5,8 +5,8 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
-import { Payment, columns } from "./columns"
-import { DataTable } from "./data-table"
+import { Payment, columns } from "../../components/ui/columns"
+import { DataTable } from "../../components/ui/data-table"
 
 async function getData(): Promise<Payment[]> {
     // Fetch data from your API here.
