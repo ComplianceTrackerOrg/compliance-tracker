@@ -65,6 +65,13 @@ export function MainNav() {
               Dashboard
             </NavigationMenuLink>
           </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+          <Link href="/my-compliance" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              MyCompliance
+            </NavigationMenuLink>
+          </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
