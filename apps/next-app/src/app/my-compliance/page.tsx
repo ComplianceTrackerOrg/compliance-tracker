@@ -1,16 +1,15 @@
 "use client"
 
+import { CheckCircle, Square } from "lucide-react"
+
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { CardContent, Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { CheckCircle, Square } from "lucide-react"
-
 import { trainingMockData } from "../mockData/trainings.mock"
 
 import ITrainingItem from "@/interfaces/ITrainingItem"
 
 import './page.css'
-
 
 const trainings = trainingMockData as ITrainingItem[]
 
@@ -19,7 +18,6 @@ export default function MandatoryTrainings() {
     const totalCount = trainings.length
     
   const progressPercentage = (completedCount / totalCount) * 100
-    console.log(completedCount, totalCount, "shit: ", progressPercentage)
 
   return (
    <div className="my-compliance">
