@@ -1,5 +1,5 @@
-export const trainingStatus = {
-    completed: "completed",
-    inProgress: "in_progress",
-    notCompleted: "not_completed",
+export const TRAINING_STATUS = {
+    COMPLETED: "Completed",
+    IN_PROGRESS: "In Progress",
+    NOT_STARTED: "Not Stated",
 }

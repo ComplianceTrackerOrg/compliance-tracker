@@ -1,7 +1,8 @@
+import { TRAINING_STATUS } from "@/contants"
 export default interface ITrainingItem {
     id: number,
     name: string,
     description: string,
     dueDate: string,
-    status: "completed" | "not_completed"
+    status: typeof TRAINING_STATUS
 }
