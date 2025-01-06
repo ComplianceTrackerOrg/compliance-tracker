@@ -6,10 +6,10 @@ import { CardContent, Card, CardHeader, CardTitle, CardDescription } from "@/com
 
 import { TRAINING_STATUS } from "@/contants";
 
-import { trainingMockData } from '../../app/mockData/trainings.mock'
+import { trainingMockData } from '../_mocks'
 
 
-const trainings = trainingMockData 
+const trainings = trainingMockData
 
 export default function MandatoryTrainings() {
 

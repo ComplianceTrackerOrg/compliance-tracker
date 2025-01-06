@@ -1,44 +1,6 @@
-// "use client"
-
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Payment } from "@/types"
-
-// export const columns = (): ColumnDef<Payment>[] => {
-//   return [
-//     {
-//       accessorKey: "employeeId",
-//       header: "Employee ID",
-//     },
-//     {
-//       accessorKey: "name",
-//       header: "Name",
-//     },
-//     {
-//       accessorKey: "department",
-//       header: "Department",
-//     },
-//     {
-//       accessorKey: "training",
-//       header: "Training",
-//     },
-//     {
-//       accessorKey: "status",
-//       header: "Status",
-//     },
-//     {
-//       accessorKey: "startDate",
-//       header: "Start Date",
-//       cell: ({ row }) => (row.original.startDate ? row.original.startDate : "N/A"),
-//     },
-//     {
-//       accessorKey: "completionDate",
-//       header: "Completion Date",
-//       cell: ({ row }) =>
-//         row.original.completionDate ? row.original.completionDate : "N/A",
-//     },
-//   ]
-// }
 
 export const columns: ColumnDef<Payment>[] = [
   {
