@@ -65,6 +65,13 @@ export function MainNav() {
               Dashboard
             </NavigationMenuLink>
           </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+          <Link href="/mandatory-trainings" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              MyTrainings
+            </NavigationMenuLink>
+          </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
