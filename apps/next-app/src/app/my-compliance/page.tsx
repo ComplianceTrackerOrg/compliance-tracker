@@ -5,11 +5,10 @@ import { CheckCircle, Square } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { CardContent, Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+
 import { trainingMockData } from "../mockData/trainings.mock"
 
 import ITrainingItem from "@/interfaces/ITrainingItem"
-
-import './page.css'
 
 const trainings = trainingMockData as ITrainingItem[]
 
@@ -20,7 +19,7 @@ export default function MandatoryTrainings() {
   const progressPercentage = (completedCount / totalCount) * 100
 
   return (
-   <div className="my-compliance">
+   <div className="mt-20">
      <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Your Mandatory Trainings</CardTitle>
