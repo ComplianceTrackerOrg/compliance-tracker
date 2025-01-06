@@ -67,9 +67,9 @@ export function MainNav() {
           </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-          <Link href="/my-compliance" legacyBehavior passHref>
+          <Link href="/mandatory-trainings" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              MyCompliance
+              MyTrainings
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

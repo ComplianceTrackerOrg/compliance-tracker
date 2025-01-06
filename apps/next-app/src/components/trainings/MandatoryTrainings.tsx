@@ -1,26 +1,26 @@
-"use client"
-
-import { CheckCircle, Square } from "lucide-react"
+import { CheckCircle, Square } from "lucide-react";
 
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { CardContent, Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 
-import { trainingMockData } from "../mockData/trainings.mock"
+import { trainingStatus } from "@/contants";
+
+import { trainingMockData } from '../../app/mockData/trainings.mock'
 
 import ITrainingItem from "@/interfaces/ITrainingItem"
 
 const trainings = trainingMockData as ITrainingItem[]
 
 export default function MandatoryTrainings() {
-  const completedCount = trainings.filter((t) => t.status === "completed").length
-    const totalCount = trainings.length
-    
+
+  const completedCount = trainings.filter((t) => t.status === trainingStatus.completed).length
+  const totalCount = trainings.length
+
   const progressPercentage = (completedCount / totalCount) * 100
 
   return (
-   <div className="mt-20">
-     <Card className="w-full max-w-4xl mx-auto">
+    <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Your Mandatory Trainings</CardTitle>
         <CardDescription>
@@ -59,7 +59,7 @@ export default function MandatoryTrainings() {
                 <time dateTime={training.dueDate}>{training.dueDate}</time>
               </div>
               <div className="col-span-3">
-                {training.status === "completed" ? (
+                {training.status === trainingStatus.completed ? (
                   <div className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-50 text-green-700">
                     <CheckCircle className="w-3 h-3 mr-1" />
                     Completed
@@ -76,7 +76,7 @@ export default function MandatoryTrainings() {
                   variant={training.status === "completed" ? "secondary" : "outline"}
                   size="sm"
                 >
-                  {training.status === "completed"
+                  {training.status === trainingStatus.completed
                     ? "Review Training"
                     : "Start Training"}
                 </Button>
@@ -86,6 +86,5 @@ export default function MandatoryTrainings() {
         </div>
       </CardContent>
     </Card>
-   </div>
   )
 }
