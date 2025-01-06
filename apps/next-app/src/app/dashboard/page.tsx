@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Card,
   CardContent,
@@ -6,39 +8,39 @@ import {
 } from "@/components/ui/card"
 import { DataTable } from "@/components/ui/data-table"
 
-import { Payment } from "./_types"
-import { columns, employeeData } from "./_mocks"
+import { Payment } from "@/types"
+import { employeeData, columns, stats } from "./_mocks"
 
 async function getData(): Promise<Payment[]> {
   // Fetch data from your API here.
   return employeeData as Payment[]
 }
 
-const stats = [
-  {
-    title: "Total Employees",
-    value: 120,
-    description: "The total number of employees being tracked for compliance.",
-  },
-  {
-    title: "Trainings Completed",
-    value: 85,
-    description: "Employees who have successfully completed all required trainings.",
-  },
-  {
-    title: "Trainings In Progress",
-    value: 25,
-    description: "Employees actively working on their required trainings.",
-  },
-  {
-    title: "Trainings Not Started",
-    value: 10,
-    description: "Employees who have not started their required trainings.",
-  },
-];
+// const stats = [
+//   {
+//     title: "Total Employees",
+//     value: 120,
+//     description: "The total number of employees being tracked for compliance.",
+//   },
+//   {
+//     title: "Trainings Completed",
+//     value: 85,
+//     description: "Employees who have successfully completed all required trainings.",
+//   },
+//   {
+//     title: "Trainings In Progress",
+//     value: 25,
+//     description: "Employees actively working on their required trainings.",
+//   },
+//   {
+//     title: "Trainings Not Started",
+//     value: 10,
+//     description: "Employees who have not started their required trainings.",
+//   },
+// ];
 
-const DashboardPage = async () => {
-  const data = await getData()
+const DashboardPage = () => {
+  // const data = await getData()
 
   return (
     <div className="container mx-auto px-2 py-10 space-y-4">
@@ -65,9 +67,9 @@ const DashboardPage = async () => {
           </Card>
         ))}
       </div>
-      <div>
+      {/* <div>
         <DataTable columns={columns} data={data} />
-      </div>
+      </div> */}
     </div>
   )
 }
