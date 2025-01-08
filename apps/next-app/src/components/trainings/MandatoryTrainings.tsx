@@ -4,7 +4,7 @@ import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { CardContent, Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 
-import { TRAINING_STATUS } from "@/contants";
+import { TRAINING_STATUS } from "@/constants";
 
 import { trainingMockData } from '../../app/mockData/trainings.mock'
 

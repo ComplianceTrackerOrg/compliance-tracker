@@ -1,4 +1,4 @@
-import { TRAINING_STATUS } from "@/contants"
+import { TRAINING_STATUS } from "@/constants"
 export default interface ITrainingItem {
     id: number,
     name: string,
