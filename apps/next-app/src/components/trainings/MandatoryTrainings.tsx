@@ -21,7 +21,7 @@ export default function MandatoryTrainings() {
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">Your Mandatory Trainings</CardTitle>
+        <CardTitle className="text-2xl">Your Mandatory Trainings</CardTitle>
         <CardDescription>
           Track and update your progress on required trainings
         </CardDescription>
@@ -86,4 +86,6 @@ export default function MandatoryTrainings() {
       </CardContent>
     </Card>
   )
-}
+ }
+
+ export { MandatoryTrainings }
