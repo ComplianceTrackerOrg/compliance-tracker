@@ -4,10 +4,9 @@ import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { CardContent, Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 
-import { TRAINING_STATUS } from "@/contants";
+import { TRAINING_STATUS } from "@/constants";
 
-import { trainingMockData } from '../../app/mockData/trainings.mock'
-
+import { trainingMockData } from "@/mockData/trainings.mock";
 
 const trainings = trainingMockData 
 
@@ -21,7 +20,7 @@ export default function MandatoryTrainings() {
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">Your Mandatory Trainings</CardTitle>
+        <CardTitle className="text-2xl">Your Mandatory Trainings</CardTitle>
         <CardDescription>
           Track and update your progress on required trainings
         </CardDescription>
@@ -86,4 +85,6 @@ export default function MandatoryTrainings() {
       </CardContent>
     </Card>
   )
-}
+ }
+
+ export { MandatoryTrainings }

@@ -34,6 +34,16 @@ $ npm run start:ng
 
 App will open on http://localhost:4200
 
+## Story Books
+
+### Next-App Storybook
+
+```bash
+$ npm run sb-next
+```
+
+NextJS Storybook will open on http://localhost:6006
+
 ## App Overview
 
 ![alt text](image.png)
@@ -41,6 +51,8 @@ App will open on http://localhost:4200
 ** Functionalities may change overtime ^^ **
 
 ### Mockups
+
+Figma (In-progress): https://www.figma.com/design/oMqoDKjiCLmZ9DkFvyemBr/mandatory-tracker-version-1?node-id=0-1&p=f&t=Hu9mk0CPfu0h52FK-0
 
 Designs are all imaginary and concepts at this moments :)
 
