@@ -12,6 +12,7 @@
     "build": "turbo run build",
     "start:backend": "npm run --workspaces=backend start",
     "start:next": "npm run --workspace=next-app dev",
-    "start:ng": "npm run --workspace=angular-app start"
+    "start:ng": "npm run --workspace=angular-app start",
+    "sb-next": "npm run --workspace=next-app storybook"
   }
 }
