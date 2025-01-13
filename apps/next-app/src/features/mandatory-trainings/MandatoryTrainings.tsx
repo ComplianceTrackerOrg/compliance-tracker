@@ -6,7 +6,7 @@ import { CardContent, Card, CardHeader, CardTitle, CardDescription } from "@/com
 
 import { TRAINING_STATUS } from "@/constants";
 
-import { trainingMockData } from '../_mocks'
+import { trainingMockData } from '@/features/mandatory-trainings/mocks'
 
 const trainings = trainingMockData
 

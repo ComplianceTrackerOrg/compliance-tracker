@@ -1,6 +1,6 @@
 "use client"
 
-import MandatoryTrainings from "./_components/MandatoryTrainings"
+import MandatoryTrainings from "@/features/mandatory-trainings/MandatoryTrainings"
 
 export default function MandatoryTrainingsPage() {
   return (

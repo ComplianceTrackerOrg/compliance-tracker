@@ -1,8 +1,8 @@
 import { Payment } from "@/types"
 
-import Dashboard from "./_components/Dashboard"
+import Dashboard from "@/features/dashboard/Dashboard"
 
-import { employeeData } from "./_mocks"
+import { employeeData } from "@/features/dashboard/mocks"
 
 async function getData(): Promise<Payment[]> {
   // Fetch data from your API here.

@@ -6,12 +6,12 @@ import { MainNav } from "@/components/MainNav";
 import "./globals.css";
 
 const geistSans = localFont({
-  src: "../assets/fonts/GeistVF.woff",
+  src: "../../public/assets/fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
 const geistMono = localFont({
-  src: "../assets/fonts/GeistMonoVF.woff",
+  src: "../../public/assets/fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
 });
@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased mx-auto w-full border-border/40 dark:border-border min-[1800px]:max-w-[1536px] min-[1800px]:border-x`}
       >
-        <MainNav/>
+        <MainNav />
         {children}
       </body>
     </html>
