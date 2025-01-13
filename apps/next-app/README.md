@@ -32,6 +32,24 @@ pnpm run storybook
 bun run storybook
 ```
 
+## Run Codegen
+
+Generate typed queries, mutations, and subscriptions, whether you're using Apollo Client, URQL or React Query
+
+```bash
+npm run codegen
+# or
+yarn run codegen
+# or
+pnpm run codegen
+# or
+bun run codegen
+```
+
+- to run in watch mode, run "codegen:watch"
+
+Reference: [Link](https://the-guild.dev/graphql/codegen/docs/getting-started)
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

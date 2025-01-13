@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import {Button as UIButton} from "@/components/ui/button";
+import type { Meta, StoryObj } from "@storybook/react"
+import { Button as UIButton } from "@/components/ui/button"
 
 const meta: Meta<typeof UIButton> = {
   title: "UI/Button",
@@ -14,7 +14,14 @@ const meta: Meta<typeof UIButton> = {
   argTypes: {
     variant: {
       defaultValue: "default",
-      options: ["default", "outline", "secondary", "ghost", "link"],
+      options: [
+        "default",
+        "outline",
+        "secondary",
+        "destructive",
+        "ghost",
+        "link",
+      ],
       control: { type: "radio" },
     },
     size: {
@@ -22,12 +29,10 @@ const meta: Meta<typeof UIButton> = {
       options: ["default", "sm", "lg", "icon"],
       control: { type: "radio" },
     },
-  }
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-
-export const Button: Story = {
-}
+export const Button: Story = {}
