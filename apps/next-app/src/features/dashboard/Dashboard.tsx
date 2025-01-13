@@ -10,7 +10,7 @@ import { DataTable } from "@/components/ui/data-table"
 
 import { Payment } from "@/types"
 
-import { columns, stats } from "@/features/dashboard/mocks"
+import { columns, stats } from "./mocks"
 
 type DashboardType = {
 	data: Payment[];
