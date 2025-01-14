@@ -7,12 +7,12 @@ import "./globals.css"
 import { AuthProvider } from "@/lib/hooks/auth/AuthProvider"
 
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
+  src: "../../public/assets/fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 })
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+  src: "../../public/assets/fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
 })
