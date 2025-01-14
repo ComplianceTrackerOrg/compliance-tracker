@@ -1,4 +1,3 @@
-//TODO: mock GraphQL calls to fix the story
 import { Meta, StoryObj } from "@storybook/react"
 import { MandatoryTrainings as UIMandatoryTrainings } from "@/features/mandatory-trainings/MandatoryTrainings"
 
