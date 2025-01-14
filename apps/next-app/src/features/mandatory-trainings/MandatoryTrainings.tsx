@@ -6,9 +6,9 @@ import { CardContent, Card, CardHeader, CardTitle, CardDescription } from "@/com
 
 import { TRAINING_STATUS } from "@/constants";
 
-import { trainingMockData } from "@/mockData/trainings.mock";
+import { trainingMockData } from './mocks'
 
-const trainings = trainingMockData 
+const trainings = trainingMockData
 
 export default function MandatoryTrainings() {
 
@@ -85,6 +85,6 @@ export default function MandatoryTrainings() {
       </CardContent>
     </Card>
   )
- }
+}
 
- export { MandatoryTrainings }
+export { MandatoryTrainings }
