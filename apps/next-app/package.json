@@ -4,33 +4,44 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "predev": "pnpm codegen",
     "build": "next build",
     "start": "next start",
+    "prestart": "pnpm codegen",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "codegen": "graphql-codegen",
+    "codegen:watch": "graphql-codegen --watch"
   },
   "dependencies": {
-    "@radix-ui/react-dialog": "^1.1.4",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@next/env": "^15.1.4",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-popover": "^1.1.4",
     "@radix-ui/react-progress": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@tanstack/react-table": "^8.20.5",
+    "@urql/next": "^1.1.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cmdk": "^1.0.0",
+    "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.5.1",
+    "graphql": "^16.10.0",
     "lucide-react": "^0.468.0",
     "next": "15.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "urql": "^4.2.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
+    "@graphql-codegen/cli": "^5.0.3",
+    "@graphql-codegen/client-preset": "^4.5.1",
+    "@parcel/watcher": "^2.5.0",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
     "@storybook/addon-onboarding": "^8.4.7",
@@ -47,6 +58,6 @@
     "postcss": "^8",
     "storybook": "^8.4.7",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5.7.3"
   }
 }
