@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { EmailForm } from '../components/EmailForm'
+import { EmailForm } from '../components/EmailForm';
 
 const meta: Meta<typeof EmailForm> = {
     title: "Components/Login/Sub-components/EmailForm",
