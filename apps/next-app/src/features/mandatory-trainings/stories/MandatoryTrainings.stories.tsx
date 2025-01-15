@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { MandatoryTrainings as UIMandatoryTrainings } from "@/features/mandatory-trainings/MandatoryTrainings"
+
+import { MandatoryTrainings as UIMandatoryTrainings } from "@/features/mandatory-trainings/components/MandatoryTrainings"
 
 const trainingData = [
   {

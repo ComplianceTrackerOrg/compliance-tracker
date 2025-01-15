@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table"
 
-import { Payment } from "@/types"
+import { Employee } from "@/types"
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Employee>[] = [
   {
     accessorKey: "employeeId",
     header: "Employee ID",
