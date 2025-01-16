@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
-import { MainNav } from "@/components/MainNav"
+import { MainNav } from "@/features/navigation/MainNav";
 
 import "./globals.css"
 import { AuthProvider } from "@/lib/hooks/auth/AuthProvider"

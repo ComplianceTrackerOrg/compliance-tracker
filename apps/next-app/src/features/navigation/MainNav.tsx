@@ -55,7 +55,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function MainNav() {
   return (
-    <div className="flex justify-between container mx-auto mt-2">
+    <div className="hidden md:flex justify-between container mx-auto mt-2">
       <Link href='/'>
         <h1>Compliance Tracker Dashboard</h1>
       </Link>
@@ -65,6 +65,13 @@ export function MainNav() {
             <Link href="/dashboard" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Dashboard
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/login" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Login
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
