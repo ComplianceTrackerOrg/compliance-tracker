@@ -80,7 +80,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           <Icons.gitHub className="mr-2 h-4 w-4" />
           <p>Deloitte Icon</p>
         )}{" "} */}
-        Deloitte
+        Github
       </Button>
     </div>
   )
