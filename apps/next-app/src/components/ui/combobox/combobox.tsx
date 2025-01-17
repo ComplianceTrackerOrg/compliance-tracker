@@ -43,7 +43,7 @@ export function Combobox(props: ComboboxProps) {
     onItemSelected,
   } = props
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState("")
+  const [itemValue, setItemValue] = useState("")
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -54,9 +54,9 @@ export function Combobox(props: ComboboxProps) {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {value
-            ? items.find((option) => option.value === value)?.label
-            : placeholder ?? "Search"}
+          {itemValue
+            ? items.find((item) => item.value === itemValue)?.label
+            : placeholder ?? "Select item..."}
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -65,7 +65,7 @@ export function Combobox(props: ComboboxProps) {
           {enableSearch && <CommandInput placeholder={inputPlaceholder} />}
           <CommandList>
             <CommandEmpty>
-              {itemNotFoundMessage || "Option not found"}
+              {itemNotFoundMessage || "Item not found"}
             </CommandEmpty>
             <CommandGroup>
               {items &&
@@ -76,7 +76,9 @@ export function Combobox(props: ComboboxProps) {
                       key={value}
                       value={value}
                       onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue)
+                        setItemValue(
+                          currentValue === itemValue ? "" : currentValue
+                        )
                         setOpen(false)
 
                         if (onItemSelected) {
