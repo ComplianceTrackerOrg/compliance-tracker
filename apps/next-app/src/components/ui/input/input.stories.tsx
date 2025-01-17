@@ -10,7 +10,12 @@ const meta: Meta = {
   args: {
     type: "text",
     placeholder: "Enter your name",
-    value: "Neri",
+  },
+  argTypes: {
+    type: {
+      control: { type: "select" },
+      options: ["text", "password", "email", "date"],
+    },
   },
 }
 
@@ -48,7 +53,6 @@ export const Email: Story = {
   args: {
     placeholder: "Enter your email",
     type: "email",
-    value: "daenerys@westeros.io",
   },
 }
 

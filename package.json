@@ -8,11 +8,13 @@
     "apps/backend"
   ],
   "scripts": {
-    "dev": "turbo run dev",
+    "next-dev": "npm run --workspace=next-app dev",
+    "ng-dev": "npm run --workspace=angular-app dev",
     "build": "turbo run build",
     "start:backend": "npm run --workspaces=backend start",
     "start:next": "npm run --workspace=next-app dev",
     "start:ng": "npm run --workspace=angular-app start",
-    "sb-next": "npm run --workspace=next-app storybook"
+    "sb-next": "npm run --workspace=next-app storybook",
+    "sb-ng": "npm run --workspace=angular-app storybook"
   }
 }
