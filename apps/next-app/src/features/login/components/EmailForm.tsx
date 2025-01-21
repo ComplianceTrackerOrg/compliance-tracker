@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button/button"
+import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 
 interface EmailFormProps {
