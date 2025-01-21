@@ -3,7 +3,7 @@
 import React, { useState } from "react"
 import { ChevronDown } from "lucide-react"
 
-import { Button } from "@/components/ui/button/button"
+import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandEmpty,
