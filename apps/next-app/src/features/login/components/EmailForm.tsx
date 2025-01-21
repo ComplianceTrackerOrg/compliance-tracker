@@ -1,19 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
+import { Button } from "@/components/ui/button/button"
+import { Label } from "@/components/ui/label"
 
 interface EmailFormProps {
   onSubmit: (email: string) => Promise<void>
 }
 
 export function EmailForm({ onSubmit }: EmailFormProps): React.ReactElement {
-  const [email, setEmail] = useState<string>('')
+  const [email, setEmail] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault()
     setIsLoading(true)
     await onSubmit(email)
@@ -24,7 +33,9 @@ export function EmailForm({ onSubmit }: EmailFormProps): React.ReactElement {
     <Card>
       <CardHeader>
         <CardTitle>Login</CardTitle>
-        <CardDescription>Enter your email to receive a one-time password.</CardDescription>
+        <CardDescription>
+          Enter your email to receive a one-time password.
+        </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent>
@@ -36,7 +47,9 @@ export function EmailForm({ onSubmit }: EmailFormProps): React.ReactElement {
                 type="email"
                 placeholder="Enter your email"
                 value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
                 required
               />
             </div>
@@ -44,11 +57,10 @@ export function EmailForm({ onSubmit }: EmailFormProps): React.ReactElement {
         </CardContent>
         <CardFooter>
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Sending...' : 'Send OTP'}
+            {isLoading ? "Sending..." : "Send OTP"}
           </Button>
         </CardFooter>
       </form>
     </Card>
   )
 }
-
