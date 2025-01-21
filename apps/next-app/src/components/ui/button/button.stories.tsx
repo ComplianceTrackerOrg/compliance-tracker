@@ -1,26 +1,36 @@
-import type { Meta, StoryObj } from "@storybook/react"
-import { Button as UIButton } from "@/components/ui/button"
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-const meta: Meta<typeof UIButton> = {
+import { Meta, StoryObj } from "@storybook/react"
+
+import { Button } from "./button"
+
+const meta: Meta<typeof Button> = {
   title: "UI/Button",
-  component: UIButton,
+  component: Button,
   parameters: {
     layout: "centered",
   },
   args: {
-    children: "Sample Button",
     variant: "default",
+    size: "default",
+    children: "Button",
   },
   argTypes: {
     variant: {
-      defaultValue: "default",
-      options: ["default", "outline", "secondary", "ghost", "link"],
-      control: { type: "radio" },
+      control: { type: "select" },
+      options: [
+        "default",
+        "destructive",
+        "outline",
+        "secondary",
+        "ghost",
+        "link",
+      ],
+      description: "Button variant",
     },
     size: {
-      defaultValue: "default",
+      control: { type: "select" },
       options: ["default", "sm", "lg", "icon"],
-      control: { type: "radio" },
     },
   },
 }
@@ -28,4 +38,25 @@ const meta: Meta<typeof UIButton> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Button: Story = {}
+export const Default: Story = {}
+
+export const AllVariants: Story = {
+  render: (args) => (
+    <div className="space-4-y">
+      {["default", "destructive", "outline", "secondary", "ghost", "link"].map(
+        (variant: string) => (
+          <Button key={variant} {...args} variant={variant as any}>
+            {variant}
+          </Button>
+        )
+      )}
+    </div>
+  ),
+}
+
+export const CustomClassName: Story = {
+  args: {
+    className: "bg-gradient-to-r from-green-400 to-blue-500 text-white",
+    children: "Custom Style",
+  },
+}
