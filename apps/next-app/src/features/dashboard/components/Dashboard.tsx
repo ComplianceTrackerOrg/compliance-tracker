@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/card"
 import { DataTable } from "@/components/ui/data-table"
 
-import { Payment } from "@/types"
+import { Employee } from "@/types"
 
-import { columns, stats } from "./mocks"
+import { columns, stats } from "../mocks"
 
 type DashboardType = {
-	data: Payment[];
+	data: Employee[];
 }
 
 const Dashboard = ({ data }: DashboardType) => {

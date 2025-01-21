@@ -1,4 +1,4 @@
-export type Payment = {
+export type Employee = {
 	employeeId: string;
 	name: string;
 	department: string;

@@ -1,12 +1,12 @@
-import { Payment } from "@/types"
+import { Employee } from "@/types"
 
-import Dashboard from "@/features/dashboard/Dashboard"
+import Dashboard from "@/features/dashboard"
 
 import { employeeData } from "@/features/dashboard/mocks"
 
-async function getData(): Promise<Payment[]> {
+async function getData(): Promise<Employee[]> {
   // Fetch data from your API here.
-  return employeeData as Payment[]
+  return employeeData as Employee[]
 }
 
 const DashboardPage = async () => {
