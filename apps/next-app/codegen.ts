@@ -14,7 +14,7 @@ const config: CodegenConfig = {
       },
     },
   ],
-  documents: ["src/lib/graphql/queries.ts"],
+  documents: ["src/lib/graphql/queries.ts", "src/lib/graphql/mutations.ts"],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
     "./src/lib/graphql/generated/": {

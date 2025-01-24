@@ -1,12 +1,13 @@
 import { useQuery } from "@urql/next"
-import { GetAssignedTrainingsByUser } from "@/lib/graphql/queries"
+import { queryGetAssignedTrainings } from "@/lib/graphql/queries"
 
 export const useAssignedTrainings = () => {
   const [result] = useQuery({
-    query: GetAssignedTrainingsByUser.toString(),
+    query: queryGetAssignedTrainings.toString(),
     variables: {
       userId: 1, //TODO: use actual User ID
     },
+    // requestPolicy: "network-only",
   })
   const { data, error, fetching } = result
 
