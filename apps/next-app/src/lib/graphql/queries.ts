@@ -1,9 +1,9 @@
 import { graphql } from "./generated/gql"
 
-export const GetAllTrainings = graphql(`
-  query GetAllTrainings($isMandatory: Boolean) {
+export const queryGetAllActiveTrainings = graphql(`
+  query queryGetAllActiveTrainings($isMandatory: Boolean) {
     learning_resourceCollection(
-      filter: { is_mandatory: { eq: $isMandatory } }
+      filter: { is_mandatory: { eq: $isMandatory }, is_active: { eq: true } }
     ) {
       edges {
         node {
@@ -17,14 +17,38 @@ export const GetAllTrainings = graphql(`
             name
             description
           }
+          is_active
         }
       }
     }
   }
 `)
 
-export const GetAssignedTrainingsByUser = graphql(`
-  query GetAssignedTrainingsByUser($userId: Int!) {
+export const queryGetTraining = graphql(`
+  query queryGetTraining($id: Int!) {
+    learning_resourceCollection(filter: { id: { eq: $id } }) {
+      edges {
+        node {
+          id
+          name
+          description
+          url
+          is_mandatory
+          deadline_at
+          learning_resource_type {
+            id
+            name
+            description
+          }
+          is_active
+        }
+      }
+    }
+  }
+`)
+
+export const queryGetAssignedTrainings = graphql(`
+  query queryGetAssignedTrainings($userId: Int!) {
     assigned_learning_resourceCollection(filter: { user_id: { eq: $userId } }) {
       edges {
         node {
@@ -44,7 +68,6 @@ export const GetAssignedTrainingsByUser = graphql(`
             name
           }
           started_at
-          created_at
           completed_at
         }
       }
