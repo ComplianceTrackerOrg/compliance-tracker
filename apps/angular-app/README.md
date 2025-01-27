@@ -57,3 +57,14 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
+## Spartan UI
+
+To generate spartan UI components, use the following command:
+
+ng g @spartan-ng/cli:ui {component name}
+
+{component name} can be found here: [Components documentation](https://www.spartan.ng/components/accordion)
+
+Note: Used version 3 (3.4.13) of tailwindcss as this is peer dependency on `@spartan-ng/ui-core`
