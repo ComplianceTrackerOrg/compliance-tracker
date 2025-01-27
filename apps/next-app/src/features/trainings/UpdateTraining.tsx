@@ -249,7 +249,6 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
                         }
                         onSelect={field.onChange}
                         disabled={(date) => date < new Date("1900-01-01")}
-                        initialFocus
                       />
                     </PopoverContent>
                   </Popover>
