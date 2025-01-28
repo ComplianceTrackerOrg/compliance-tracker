@@ -21,3 +21,9 @@ export const LearningStatusLabel: Record<LearningStatus, string> = {
   [LearningStatus.IN_PROGRESS]: "In Progress",
   [LearningStatus.COMPLETED]: "Completed",
 }
+
+export const LearningStatusChangeLabel: Record<LearningStatus, string> = {
+  [LearningStatus.NOT_STARTED]: "Mark as Not Started",
+  [LearningStatus.IN_PROGRESS]: "Start Training",
+  [LearningStatus.COMPLETED]: "Mark as Completed",
+}

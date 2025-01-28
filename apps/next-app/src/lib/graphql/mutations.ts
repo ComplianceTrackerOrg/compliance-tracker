@@ -47,3 +47,18 @@ export const mutationDisableTraining = graphql(`
     }
   }
 `)
+
+export const mutationUpdateAssignedTrainingStatus = graphql(`
+  mutation mutationUpdateAssignedTrainingStatus(
+    $assignedTrainingId: BigInt!
+    $statusId: Int!
+  ) {
+    updateassigned_learning_resourceCollection(
+      set: { status_id: $statusId }
+      atMost: 1
+      filter: { id: { eq: $assignedTrainingId } }
+    ) {
+      affectedCount
+    }
+  }
+`)

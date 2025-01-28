@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -43,7 +43,12 @@ export function Combobox(props: ComboboxProps) {
     onItemSelected,
   } = props
   const [open, setOpen] = useState(false)
-  const [itemValue, setItemValue] = useState("")
+  const [itemValue, setItemValue] = useState<string | null>(null)
+
+  // Reset itemValue when the component is rerendered
+  useEffect(() => {
+    setItemValue(null)
+  }, [items])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -77,7 +82,7 @@ export function Combobox(props: ComboboxProps) {
                       value={value}
                       onSelect={(currentValue) => {
                         setItemValue(
-                          currentValue === itemValue ? "" : currentValue
+                          currentValue === itemValue ? null : currentValue
                         )
                         setOpen(false)
 

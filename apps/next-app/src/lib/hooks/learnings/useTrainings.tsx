@@ -1,5 +1,5 @@
 import { queryGetAllActiveTrainings } from "@/lib/graphql/queries"
-import { useQuery } from "urql"
+import { useQuery } from "@urql/next"
 
 export const useTrainings = (isMandatory?: boolean) => {
   const [{ data, error, fetching }, reexecuteQuery] = useQuery({

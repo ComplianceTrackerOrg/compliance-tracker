@@ -22,10 +22,10 @@ interface DisableTrainingProps {
 const DisableTraining = (props: DisableTrainingProps) => {
   const { id, name, trigger, onDisableSuccess, onDisableError } = props
   const [isOpen, setIsOpen] = useState(false)
-  const { RemoveTraining } = useTraining(id)
+  const { removeTraining } = useTraining(id)
 
   const handleSubmit = async () => {
-    const { data, error } = await RemoveTraining(id)
+    const { data, error } = await removeTraining(id)
 
     if (error) {
       console.error(`disable error : ${error.name}: ${error.message}`)
