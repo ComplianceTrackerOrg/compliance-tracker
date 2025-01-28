@@ -11,7 +11,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { Link } from '@/components/ui/link'
+import { Link } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
 
@@ -56,7 +56,7 @@ const components: { title: string; href: string; description: string }[] = [
 export function MainNav() {
   return (
     <div className="hidden md:flex justify-between container mx-auto mt-2">
-      <Link href='/'>
+      <Link href="/">
         <h1>Compliance Tracker Dashboard</h1>
       </Link>
       <NavigationMenu>
@@ -72,6 +72,13 @@ export function MainNav() {
             <Link href="/login" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Login
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/trainings" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Trainings
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
@@ -130,7 +137,6 @@ export function MainNav() {
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-
         </NavigationMenuList>
       </NavigationMenu>
     </div>

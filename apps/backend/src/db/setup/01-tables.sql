@@ -23,6 +23,7 @@ create table
     description character varying null,
     deadline_at timestamp with time zone null,
     is_mandatory boolean null,
+    is_active boolean null default false,
     created_at timestamp with time zone not null default (now() at time zone 'utc'::text),
     constraint learning_resource_pkey primary key (id),
     constraint learning_resource_id_key unique (id),
