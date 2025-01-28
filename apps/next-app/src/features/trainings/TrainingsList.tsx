@@ -20,7 +20,6 @@ export default function TrainingsList() {
 
   const handleChangeSuccess = async () => {
     fetchAgain()
-    console.log("training list reloaded")
   }
 
   return (

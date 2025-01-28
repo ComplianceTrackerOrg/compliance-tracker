@@ -224,21 +224,6 @@ export default function AddTraining(props: AddTrainingProps) {
               )}
             />
 
-            {/* Note: works but doesn't look good */}
-            {/* <FormField
-              control={form.control}
-              name="dueDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Due Date</FormLabel>
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-
             <FormField
               name="isMandatory"
               control={control}

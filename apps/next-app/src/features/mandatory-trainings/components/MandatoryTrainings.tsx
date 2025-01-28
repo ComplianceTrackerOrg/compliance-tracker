@@ -18,7 +18,7 @@ export default function MandatoryTrainings() {
   const { data: assignedTrainings } = useAssignedTrainings()
 
   const completedCount = assignedTrainings?.filter(
-    (item) => item.node.learning_status.id === LearningStatus.Completed
+    (item) => item.node.learning_status.id === LearningStatus.COMPLETED
   ).length
 
   const totalCount = assignedTrainings?.length
@@ -79,7 +79,7 @@ export default function MandatoryTrainings() {
                   )}
                 </div>
                 <div className="col-span-3 text-sm">
-                  {status.id === LearningStatus.NotStarted && (
+                  {status.id === LearningStatus.NOT_STARTED && (
                     <Button
                       variant="destructive"
                       className="rounded-full px-2.5 py-0.5 text-sm"
@@ -87,7 +87,7 @@ export default function MandatoryTrainings() {
                       {status.name}
                     </Button>
                   )}
-                  {status.id === LearningStatus.InProgress && (
+                  {status.id === LearningStatus.IN_PROGRESS && (
                     <Button
                       variant="default"
                       className="rounded-full px-2.5 py-0.5 text-sm bg-orange-400"
@@ -95,7 +95,7 @@ export default function MandatoryTrainings() {
                       {status.name}
                     </Button>
                   )}
-                  {status.id === LearningStatus.Completed && (
+                  {status.id === LearningStatus.COMPLETED && (
                     <Button
                       variant="secondary"
                       className="rounded-full px-2.5 py-0.5 text-sm bg-lime-500"
