@@ -53,7 +53,7 @@ interface UpdateTrainingProps {
 
 const UpdateTraining = (props: UpdateTrainingProps) => {
   const { id, trigger, onUpdateSuccess, onUpdateError } = props
-  const { data, EditTraining, GetTraining } = useTraining(id)
+  const { data, editTraining, getTraining } = useTraining(id)
   const [isOpen, setIsOpen] = useState(false)
 
   const form = useForm<EditTrainingModel>({
@@ -85,7 +85,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
 
   const handleOpenChange = (isModalOpen: boolean) => {
     if (isModalOpen) {
-      GetTraining()
+      getTraining()
     }
     setIsOpen(isModalOpen)
   }
@@ -105,7 +105,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
       },
     }
 
-    const { data: editedData, error } = await EditTraining(input)
+    const { data: editedData, error } = await editTraining(input)
 
     if (error) {
       console.error(`add error : ${error.name}: ${error.message}`)

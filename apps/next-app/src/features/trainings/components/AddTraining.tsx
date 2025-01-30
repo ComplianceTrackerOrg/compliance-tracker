@@ -49,7 +49,7 @@ interface AddTrainingProps {
 
 export default function AddTraining(props: AddTrainingProps) {
   const { trigger, onAddSuccess, onAddError } = props
-  const { AddTraining } = useTraining(0)
+  const { addTraining } = useTraining(0)
   const [isOpen, setIsOpen] = useState(false)
 
   const form = useForm<AddTrainingModel>({
@@ -78,7 +78,7 @@ export default function AddTraining(props: AddTrainingProps) {
     }
     console.log("onSubmit ~ input:", input)
 
-    const { data, error } = await AddTraining(input)
+    const { data, error } = await addTraining(input)
 
     if (error) {
       console.error(`add error : ${error.name}: ${error.message}`)

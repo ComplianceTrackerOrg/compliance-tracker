@@ -1,7 +1,7 @@
 "use client"
-import dayjs from "dayjs"
 import { Pencil, Plus, Trash2 } from "lucide-react"
 import { useTrainings } from "@/lib/hooks/learnings/useTrainings"
+import { formatDate } from "@/lib/utils"
 import {
   Card,
   CardContent,
@@ -70,7 +70,7 @@ export default function TrainingsList() {
                   <div className="col-span-2 text-sm">
                     {deadline_at && (
                       <time dateTime={deadline_at}>
-                        {dayjs(deadline_at).format("MMM D, YYYY")}
+                        {formatDate(deadline_at, "MMM D, YYYY")}
                       </time>
                     )}
                   </div>

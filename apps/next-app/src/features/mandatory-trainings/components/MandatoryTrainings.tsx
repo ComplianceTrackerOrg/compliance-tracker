@@ -1,6 +1,13 @@
-// TODO: update UI based on Figma design
+import Link from "next/link"
+
+import { LearningStatus } from "@/constants"
+import { formatDate } from "@/lib/utils"
+
+import SetAssignedTrainingStatus from "./SetAssignedTrainingStatus"
+import { useAssignedTrainings } from "@/lib/hooks/learnings/useAssignedTrainings"
+
+import TrainingStatus from "@/features/trainings/components/TrainingStatus"
 import { Progress } from "@/components/ui/progress"
-import { Button } from "@/components/ui/button"
 import {
   CardContent,
   Card,
@@ -9,13 +16,12 @@ import {
   CardDescription,
 } from "@/components/ui/card"
 
-import { LearningStatus } from "@/constants"
-
-import dayjs from "@/lib/dayjs"
-import { useAssignedTrainings } from "@/lib/hooks/learnings/useAssignedTrainings"
-
 export default function MandatoryTrainings() {
-  const { data: assignedTrainings } = useAssignedTrainings()
+  const {
+    data: assignedTrainings,
+    fetchAgain,
+    updateStatus,
+  } = useAssignedTrainings()
 
   const completedCount = assignedTrainings?.filter(
     (item) => item.node.learning_status.id === LearningStatus.COMPLETED
@@ -28,8 +34,21 @@ export default function MandatoryTrainings() {
       ? (completedCount / totalCount) * 100
       : 0
 
+  const handleStatusChange = async (id: string, status: string) => {
+    const { data, error } = await updateStatus(parseInt(id), parseInt(status))
+
+    if (error) {
+      console.error(`update error : ${error.name}: ${error.message}`)
+      return
+    }
+
+    if (data && data.updateassigned_learning_resourceCollection) {
+      fetchAgain()
+    }
+  }
+
   return (
-    <Card className="w-full max-w-4xl mx-auto">
+    <Card className="w-full max-w-6xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl">Your Mandatory Trainings</CardTitle>
         <CardDescription>
@@ -46,77 +65,62 @@ export default function MandatoryTrainings() {
         </div>
 
         <div className="border rounded-lg">
-          <div className="grid grid-cols-12 gap-4 p-4 border-b text-sm font-medium text-muted-foreground">
-            <div className="col-span-4">Training Name</div>
+          <div className="grid grid-cols-12 gap-4 p-4 border-b text-sm font-medium text-muted-foreground bg-gray-100">
+            <div className="col-span-5">Training Name</div>
             <div className="col-span-2">Due Date</div>
-            <div className="col-span-3">Status</div>
+            <div className="col-span-2">Status</div>
             <div className="col-span-3">Actions</div>
           </div>
 
           {assignedTrainings?.map((item) => {
             const { node } = item
             const {
-              id,
+              id: assignedTrainingId,
               learning_resource: resource,
               learning_status: status,
             } = node
+            const { name, description, deadline_at, url } = resource
             return (
               <div
-                key={id}
+                key={assignedTrainingId}
                 className="grid grid-cols-12 gap-4 p-4 border-b last:border-0 items-center"
               >
-                <div className="col-span-4">
-                  <h4 className="font-medium">{resource?.name}</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {resource?.description}
-                  </p>
+                <div className="col-span-5">
+                  <h4 className="font-medium">
+                    {url && (
+                      <Link
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline"
+                      >
+                        {name}
+                      </Link>
+                    )}
+                    {!url && name}
+                  </h4>
+                  <p className="text-sm text-muted-foreground">{description}</p>
                 </div>
+
                 <div className="col-span-2 text-sm">
-                  {resource?.deadline_at && (
-                    <time dateTime={resource?.deadline_at}>
-                      {dayjs(resource?.deadline_at).format("MMM D, YYYY")}
+                  {deadline_at && (
+                    <time dateTime={deadline_at}>
+                      {formatDate(deadline_at, "MMM D, YYYY")}
                     </time>
                   )}
                 </div>
-                <div className="col-span-3 text-sm">
-                  {status.id === LearningStatus.NOT_STARTED && (
-                    <Button
-                      variant="destructive"
-                      className="rounded-full px-2.5 py-0.5 text-sm"
-                    >
-                      {status.name}
-                    </Button>
-                  )}
-                  {status.id === LearningStatus.IN_PROGRESS && (
-                    <Button
-                      variant="default"
-                      className="rounded-full px-2.5 py-0.5 text-sm bg-orange-400"
-                    >
-                      {status.name}
-                    </Button>
-                  )}
-                  {status.id === LearningStatus.COMPLETED && (
-                    <Button
-                      variant="secondary"
-                      className="rounded-full px-2.5 py-0.5 text-sm bg-lime-500"
-                    >
-                      {status.name}
-                    </Button>
-                  )}
+
+                <div className="col-span-2 text-sm">
+                  <TrainingStatus id={status.id} />
                 </div>
-                {/* TODO: implement actions */}
-                {/* <div className="col-span-3">
-                  <Button
-                    variant={
-                      learning_status.name === "completed" ? "secondary" : "outline"
-                    }
-                    size="sm"
-                  >
-                    {learning_status.name === TRAINING_STATUS.COMPLETED
-                      ? "Review Training"
-                      : "Start Training"}
-                  </Button>
-                </div> */}
+
+                <div className="col-span-3">
+                  <SetAssignedTrainingStatus
+                    assignedTrainingId={assignedTrainingId}
+                    currentStatus={status.id}
+                    onStatusChange={handleStatusChange}
+                  />
+                </div>
               </div>
             )
           })}
@@ -125,5 +129,3 @@ export default function MandatoryTrainings() {
     </Card>
   )
 }
-
-export { MandatoryTrainings }

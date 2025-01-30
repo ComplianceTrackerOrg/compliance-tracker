@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
-
-import { MandatoryTrainings as UIMandatoryTrainings } from "@/features/mandatory-trainings/components/MandatoryTrainings"
+//TODO: fix mocking data
+import { Meta, StoryObj } from "@storybook/react"
+import { MandatoryTrainings as UIMandatoryTrainings } from "@/features/mandatory-trainings/"
 
 const trainingData = [
   {
@@ -47,8 +47,8 @@ const meta: Meta<typeof UIMandatoryTrainings> = {
     layout: "centered",
   },
   args: {
-    trainings: trainingData
-  }
+    trainings: trainingData,
+  },
 }
 
 export default meta

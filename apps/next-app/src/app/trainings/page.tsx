@@ -1,4 +1,4 @@
-import TrainingsList from "@/features/trainings/TrainingsList"
+import { TrainingsList } from "@/features/trainings"
 
 export default function TrainingsPage() {
   return <TrainingsList />

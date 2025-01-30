@@ -1,17 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Combobox as UICombobox } from "./combobox"
-import { CircleCheckBig, CirclePlay } from "lucide-react"
+import { CircleCheckBig, CirclePlay, Info } from "lucide-react"
 
 const mockData = [
   {
     value: "1",
-    label: "Start Training",
-    icon: <CirclePlay />,
+    label: "Not Started",
+    icon: <Info className="text-gray-500" />,
   },
   {
     value: "2",
+    label: "Start Training",
+    icon: <CirclePlay className="text-orange-500" />,
+  },
+  {
+    value: "3",
     label: "Mark as Completed",
-    icon: <CircleCheckBig color="#31C65E" />,
+    icon: <CircleCheckBig className="text-green-500" />,
   },
 ]
 

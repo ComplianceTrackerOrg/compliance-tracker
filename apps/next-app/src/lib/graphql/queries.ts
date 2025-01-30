@@ -62,6 +62,7 @@ export const queryGetAssignedTrainings = graphql(`
             name
             description
             deadline_at
+            url
           }
           learning_status {
             id

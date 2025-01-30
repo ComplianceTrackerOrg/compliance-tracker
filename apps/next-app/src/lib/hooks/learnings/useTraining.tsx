@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
-import { useMutation, useQuery } from "urql"
+import { useMutation, useQuery } from "@urql/next"
 import {
   mutationDisableTraining,
   mutationInsertTraining,
@@ -73,12 +73,12 @@ export const useTraining = (id: number) => {
     }
   }, [reexecuteQuery, displayNow])
 
-  const GetTraining = () => {
+  const getTraining = () => {
     // will trigger running the get training detail query
     setDisplayNow(true)
   }
 
-  const AddTraining = async (input: TrainingInput) => {
+  const addTraining = async (input: TrainingInput) => {
     const { data, error } = await insertTraining({
       input,
     })
@@ -86,7 +86,7 @@ export const useTraining = (id: number) => {
     return { data, error }
   }
 
-  const EditTraining = async (input: UpdateTrainingInput) => {
+  const editTraining = async (input: UpdateTrainingInput) => {
     const { data, error } = await updateTraining({
       resourceId: input.resourceId,
       resourceDetails: input.resourceDetails,
@@ -95,7 +95,7 @@ export const useTraining = (id: number) => {
     return { data, error }
   }
 
-  const RemoveTraining = async (id: number) => {
+  const removeTraining = async (id: number) => {
     if (isNaN(id)) {
       throw new Error("Invalid input for Int type: id must be a number")
     }
@@ -111,9 +111,9 @@ export const useTraining = (id: number) => {
   return {
     data: trainingData,
     fetching,
-    AddTraining,
-    EditTraining,
-    RemoveTraining,
-    GetTraining,
+    addTraining,
+    editTraining,
+    getTraining,
+    removeTraining,
   }
 }
