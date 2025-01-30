@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { LearningStatus } from "@/constants"
+import { ResourceStatus } from "@/constants"
 import { formatDate } from "@/lib/utils"
 
 import SetAssignedTrainingStatus from "./SetAssignedTrainingStatus"
@@ -24,7 +24,7 @@ export default function MandatoryTrainings() {
   } = useAssignedTrainings()
 
   const completedCount = assignedTrainings?.filter(
-    (item) => item.node.learning_status.id === LearningStatus.COMPLETED
+    (item) => item.node.resource_status.id === ResourceStatus.COMPLETED
   ).length
 
   const totalCount = assignedTrainings?.length
@@ -77,7 +77,7 @@ export default function MandatoryTrainings() {
             const {
               id: assignedTrainingId,
               learning_resource: resource,
-              learning_status: status,
+              resource_status: status,
             } = node
             const { name, description, deadline_at, url } = resource
             return (

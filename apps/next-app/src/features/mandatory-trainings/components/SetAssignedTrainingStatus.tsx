@@ -1,10 +1,10 @@
 import { CircleCheckBig, CirclePlay, Info } from "lucide-react"
-import { LearningStatus, LearningStatusChangeLabel } from "@/constants"
+import { ResourceStatus, LearningStatusChangeLabel } from "@/constants"
 import { Combobox } from "@/components/ui/combobox"
 
 interface SetAssignedTrainingStatusProps {
   assignedTrainingId: string
-  currentStatus: LearningStatus
+  currentStatus: ResourceStatus
   onStatusChange: (id: string, status: string) => void
 }
 
@@ -13,44 +13,44 @@ export default function SetAssignedTrainingStatus({
   currentStatus,
   onStatusChange,
 }: SetAssignedTrainingStatusProps) {
-  const GetStatuslist = (currentStatus: LearningStatus) => {
+  const GetStatuslist = (currentStatus: ResourceStatus) => {
     switch (currentStatus) {
-      case LearningStatus.NOT_STARTED:
+      case ResourceStatus.NOT_STARTED:
         return [
           {
-            value: LearningStatus.IN_PROGRESS.toString(),
-            label: LearningStatusChangeLabel[LearningStatus.IN_PROGRESS],
+            value: ResourceStatus.IN_PROGRESS.toString(),
+            label: LearningStatusChangeLabel[ResourceStatus.IN_PROGRESS],
             icon: <CirclePlay className="text-orange-500" />,
           },
           {
-            value: LearningStatus.COMPLETED.toString(),
-            label: LearningStatusChangeLabel[LearningStatus.COMPLETED],
+            value: ResourceStatus.COMPLETED.toString(),
+            label: LearningStatusChangeLabel[ResourceStatus.COMPLETED],
             icon: <CircleCheckBig className="text-green-500" />,
           },
         ]
-      case LearningStatus.IN_PROGRESS:
+      case ResourceStatus.IN_PROGRESS:
         return [
           {
-            value: LearningStatus.NOT_STARTED.toString(),
-            label: LearningStatusChangeLabel[LearningStatus.NOT_STARTED],
+            value: ResourceStatus.NOT_STARTED.toString(),
+            label: LearningStatusChangeLabel[ResourceStatus.NOT_STARTED],
             icon: <Info className="text-gray-500" />,
           },
           {
-            value: LearningStatus.COMPLETED.toString(),
-            label: LearningStatusChangeLabel[LearningStatus.COMPLETED],
+            value: ResourceStatus.COMPLETED.toString(),
+            label: LearningStatusChangeLabel[ResourceStatus.COMPLETED],
             icon: <CircleCheckBig className="text-green-500" />,
           },
         ]
       default:
         return [
           {
-            value: LearningStatus.NOT_STARTED.toString(),
-            label: LearningStatusChangeLabel[LearningStatus.NOT_STARTED],
+            value: ResourceStatus.NOT_STARTED.toString(),
+            label: LearningStatusChangeLabel[ResourceStatus.NOT_STARTED],
             icon: <Info className="text-gray-500" />,
           },
           {
-            value: LearningStatus.IN_PROGRESS.toString(),
-            label: LearningStatusChangeLabel[LearningStatus.IN_PROGRESS],
+            value: ResourceStatus.IN_PROGRESS.toString(),
+            label: LearningStatusChangeLabel[ResourceStatus.IN_PROGRESS],
             icon: <CirclePlay className="text-orange-500" />,
           },
         ]
