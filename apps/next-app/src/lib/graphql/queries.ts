@@ -75,3 +75,37 @@ export const queryGetAssignedTrainings = graphql(`
     }
   }
 `)
+
+export const queryGetRequirement = graphql(`
+  query queryGetRequirement($id: Int!) {
+    compliance_resourceCollection(filter: { id: { eq: $id } }) {
+      edges {
+        node {
+          id
+          name
+          description
+          url
+          deadline_at
+          is_active
+        }
+      }
+    }
+  }
+`)
+
+export const queryGetRequirements = graphql(`
+  query queryGetRequirements($isActive: Boolean) {
+    compliance_resourceCollection(filter: { is_active: { eq: $isActive } }) {
+      edges {
+        node {
+          id
+          name
+          description
+          url
+          deadline_at
+          is_active
+        }
+      }
+    }
+  }
+`)
