@@ -10,20 +10,20 @@ export const LearningResourceTypeLabel: Record<LearningResourceType, string> = {
   [LearningResourceType.VIRTUAL_CLASSROOM]: "Virtual Classroom",
 }
 
-export enum LearningStatus {
+export enum ResourceStatus {
   NOT_STARTED = 1,
   IN_PROGRESS = 2,
   COMPLETED = 3,
 }
 
-export const LearningStatusLabel: Record<LearningStatus, string> = {
-  [LearningStatus.NOT_STARTED]: "Not Started",
-  [LearningStatus.IN_PROGRESS]: "In Progress",
-  [LearningStatus.COMPLETED]: "Completed",
+export const LearningStatusLabel: Record<ResourceStatus, string> = {
+  [ResourceStatus.NOT_STARTED]: "Not Started",
+  [ResourceStatus.IN_PROGRESS]: "In Progress",
+  [ResourceStatus.COMPLETED]: "Completed",
 }
 
-export const LearningStatusChangeLabel: Record<LearningStatus, string> = {
-  [LearningStatus.NOT_STARTED]: "Mark as Not Started",
-  [LearningStatus.IN_PROGRESS]: "Start Training",
-  [LearningStatus.COMPLETED]: "Mark as Completed",
+export const LearningStatusChangeLabel: Record<ResourceStatus, string> = {
+  [ResourceStatus.NOT_STARTED]: "Mark as Not Started",
+  [ResourceStatus.IN_PROGRESS]: "Start Training",
+  [ResourceStatus.COMPLETED]: "Mark as Completed",
 }

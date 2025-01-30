@@ -1,4 +1,4 @@
-import { LearningStatus, LearningStatusLabel } from "@/constants"
+import { ResourceStatus, LearningStatusLabel } from "@/constants"
 import { Button } from "@/components/ui/button"
 
 interface TrainingStatusProps {
@@ -8,34 +8,34 @@ interface TrainingStatusProps {
 export default function TrainingStatus({ id }: TrainingStatusProps) {
   const DisplayTrainingStatus = (id: number) => {
     switch (id) {
-      case LearningStatus.NOT_STARTED:
+      case ResourceStatus.NOT_STARTED:
         return (
           <Button
             variant="destructive"
             size="sm"
             className="rounded-full cursor-default"
           >
-            {LearningStatusLabel[LearningStatus.NOT_STARTED]}
+            {LearningStatusLabel[ResourceStatus.NOT_STARTED]}
           </Button>
         )
-      case LearningStatus.IN_PROGRESS:
+      case ResourceStatus.IN_PROGRESS:
         return (
           <Button
             variant="default"
             size="sm"
             className="rounded-full bg-orange-400 cursor-default"
           >
-            {LearningStatusLabel[LearningStatus.IN_PROGRESS]}
+            {LearningStatusLabel[ResourceStatus.IN_PROGRESS]}
           </Button>
         )
-      case LearningStatus.COMPLETED:
+      case ResourceStatus.COMPLETED:
         return (
           <Button
             variant="secondary"
             size="sm"
             className="rounded-full bg-lime-500 cursor-default"
           >
-            {LearningStatusLabel[LearningStatus.COMPLETED]}
+            {LearningStatusLabel[ResourceStatus.COMPLETED]}
           </Button>
         )
       default:
