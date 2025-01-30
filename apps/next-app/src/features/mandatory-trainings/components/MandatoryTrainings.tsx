@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 import { LearningStatus } from "@/constants"
-import dayjs from "@/lib/dayjs"
+import { formatDate } from "@/lib/utils"
 
 import SetAssignedTrainingStatus from "./SetAssignedTrainingStatus"
 import { useAssignedTrainings } from "@/lib/hooks/learnings/useAssignedTrainings"
@@ -105,7 +105,7 @@ export default function MandatoryTrainings() {
                 <div className="col-span-2 text-sm">
                   {deadline_at && (
                     <time dateTime={deadline_at}>
-                      {dayjs(deadline_at).format("MMM D, YYYY")}
+                      {formatDate(deadline_at, "MMM D, YYYY")}
                     </time>
                   )}
                 </div>
