@@ -97,7 +97,7 @@ export const useTraining = (id: number) => {
 
   const removeTraining = async (id: number) => {
     if (isNaN(id)) {
-      throw new Error("Invalid input for Int type: id must be a number")
+      throw new Error("Invalid input: ID must be a number")
     }
 
     const resourceId = Number(id)

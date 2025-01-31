@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"
-import { useTraining } from "@/lib/hooks/learnings"
+import { useRequirement } from "@/lib/hooks/requirements"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 
-interface DisableTrainingProps {
+interface DisableRequirementProps {
   id: number
   name: string
   trigger: React.ReactNode
@@ -19,13 +19,13 @@ interface DisableTrainingProps {
   onDisableError?: (errorMesaage?: string) => void
 }
 
-const DisableTraining = (props: DisableTrainingProps) => {
+const DisableRequirement = (props: DisableRequirementProps) => {
   const { id, name, trigger, onDisableSuccess, onDisableError } = props
   const [isOpen, setIsOpen] = useState(false)
-  const { removeTraining } = useTraining(id)
+  const { removeRequirement } = useRequirement(id)
 
   const handleSubmit = async () => {
-    const { data, error } = await removeTraining(id)
+    const { data, error } = await removeRequirement(id)
 
     if (error) {
       console.error(`disable error : ${error.name}: ${error.message}`)
@@ -36,7 +36,7 @@ const DisableTraining = (props: DisableTrainingProps) => {
       return
     }
 
-    if (data && data.updatelearning_resourceCollection) {
+    if (data && data.updatecompliance_resourceCollection) {
       console.log("disable success")
       if (onDisableSuccess) {
         onDisableSuccess()
@@ -80,4 +80,4 @@ const DisableTraining = (props: DisableTrainingProps) => {
   )
 }
 
-export default DisableTraining
+export default DisableRequirement

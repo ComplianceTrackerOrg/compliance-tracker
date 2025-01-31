@@ -1,13 +1,16 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
-import { TrainingInput, useTraining } from "@/lib/hooks/learnings"
+import {
+  UpdateRequirementInput,
+  useRequirement,
+} from "@/lib/hooks/requirements"
 import { cn } from "@/lib/utils"
-import { AddTrainingModel, addTrainingSchema } from "@/types"
+import { EditRequirementModel, editRequirementSchema } from "@/types"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -32,85 +35,92 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
 
-interface AddTrainingProps {
+interface UpdateRequirementProps {
+  id: number
   trigger: React.ReactNode
-  onAddSuccess?: (message?: string) => void
-  onAddError?: (errorMesaage?: string) => void
+  onUpdateSuccess?: (message?: string) => void
+  onUpdateError?: (errorMesaage?: string) => void
 }
 
-export default function AddTraining(props: AddTrainingProps) {
-  const { trigger, onAddSuccess, onAddError } = props
-  const { addTraining } = useTraining(0)
+const UpdateRequirement = (props: UpdateRequirementProps) => {
+  const { id, trigger, onUpdateSuccess, onUpdateError } = props
+  const { data, editRequirement, getRequirement } = useRequirement(id)
   const [isOpen, setIsOpen] = useState(false)
 
-  const form = useForm<AddTrainingModel>({
-    resolver: zodResolver(addTrainingSchema),
+  const form = useForm<EditRequirementModel>({
+    resolver: zodResolver(editRequirementSchema),
     defaultValues: {
       name: "",
       description: "",
-      type: "",
       url: "",
       dueDate: null,
-      isMandatory: true,
     },
   })
 
-  const { control, handleSubmit, reset } = form
+  const { control, getValues } = form
 
-  const onSubmit = async (values: AddTrainingModel) => {
-    const { name, description, type, url, dueDate, isMandatory } = values
-    const input: TrainingInput = {
-      name: name,
-      description: description || "",
-      type_id: Number(type),
-      url: url || "",
-      deadline_at: dueDate ? new Date(dueDate).toISOString() : undefined,
-      is_mandatory: isMandatory,
+  useEffect(() => {
+    if (data && isOpen) {
+      form.reset({
+        name: data.name,
+        description: data.description,
+        url: data.url,
+        dueDate: data.deadline_at ? new Date(data.deadline_at) : undefined,
+      })
+    }
+  }, [data])
+
+  const handleOpenChange = (isModalOpen: boolean) => {
+    if (isModalOpen) {
+      getRequirement()
+    }
+    setIsOpen(isModalOpen)
+  }
+
+  const onSubmit = async (values: EditRequirementModel) => {
+    //TODO: handle client side errors
+    const { name, description, url, dueDate } = values
+    const input: UpdateRequirementInput = {
+      resourceId: id,
+      resourceDetails: {
+        name: name,
+        description: description,
+        url: url,
+        deadline_at: dueDate ? new Date(dueDate).toISOString() : undefined,
+      },
     }
 
-    const { data, error } = await addTraining(input)
+    const { data: editedData, error } = await editRequirement(input)
 
     if (error) {
       console.error(`add error : ${error.name}: ${error.message}`)
-      if (onAddError) {
-        onAddError()
+      if (onUpdateError) {
+        onUpdateError()
       }
-      reset()
       setIsOpen(false)
       return
     }
 
-    if (data && data.insertIntolearning_resourceCollection) {
-      if (onAddSuccess) {
-        onAddSuccess()
+    if (editedData && editedData.updatecompliance_resourceCollection) {
+      if (onUpdateSuccess) {
+        onUpdateSuccess()
       }
-      reset()
       setIsOpen(false)
     }
   }
 
-  // TODO: use modal component
+  // TODO: use modal component and fetching state
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Training</DialogTitle>
-          <DialogDescription>
-            Enter details for the new training.
-          </DialogDescription>
+          <DialogTitle>Edit Requirement</DialogTitle>
+          <DialogDescription>Update requirement information.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form className="space-y-4">
             <FormField
               name="name"
               control={control}
@@ -140,32 +150,6 @@ export default function AddTraining(props: AddTrainingProps) {
             />
 
             <FormField
-              name="type"
-              control={control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Training Type</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select type..." />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="1">Digital Learning</SelectItem>
-                      <SelectItem value="2">Classroom</SelectItem>
-                      <SelectItem value="3">Virtual Classroom</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
               name="url"
               control={control}
               render={({ field }) => (
@@ -179,12 +163,11 @@ export default function AddTraining(props: AddTrainingProps) {
               )}
             />
 
-            {/* Note: better looking date picker but doesn't work inside a modal */}
             <FormField
               name="dueDate"
               control={control}
               render={({ field }) => (
-                <FormItem className="flex flex-col py-2">
+                <FormItem className="flex flex-col">
                   <FormLabel>Due Date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -205,9 +188,10 @@ export default function AddTraining(props: AddTrainingProps) {
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 z-50" align="start">
+                    <PopoverContent className="w-auto p-0" align="start">
                       <Calendar
                         mode="single"
+                        className="z-50"
                         selected={
                           field.value ? new Date(field.value) : undefined
                         }
@@ -222,29 +206,18 @@ export default function AddTraining(props: AddTrainingProps) {
               )}
             />
 
-            <FormField
-              name="isMandatory"
-              control={control}
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 py-2">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>Is Mandatory?</FormLabel>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
-            />
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setIsOpen(false)}>
+                Cancel
+              </Button>
+              {/* Note: submit button does not work */}
               <Button
-                type="submit"
                 className="bg-blue-500 text-white"
                 variant="outline"
+                onClick={(e) => {
+                  e.preventDefault()
+                  onSubmit(getValues())
+                }}
               >
                 Save Changes
               </Button>
@@ -255,3 +228,5 @@ export default function AddTraining(props: AddTrainingProps) {
     </Dialog>
   )
 }
+
+export default UpdateRequirement

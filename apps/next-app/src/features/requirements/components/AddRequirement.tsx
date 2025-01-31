@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
-import { TrainingInput, useTraining } from "@/lib/hooks/learnings"
+import { RequirementInput, useRequirement } from "@/lib/hooks/requirements"
 import { cn } from "@/lib/utils"
-import { AddTrainingModel, addTrainingSchema } from "@/types"
+import { AddRequirementModel, addRequirementSchema } from "@/types"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -32,52 +32,40 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
 
-interface AddTrainingProps {
+interface AddRequirementProps {
   trigger: React.ReactNode
   onAddSuccess?: (message?: string) => void
   onAddError?: (errorMesaage?: string) => void
 }
 
-export default function AddTraining(props: AddTrainingProps) {
+export default function AddRequirement(props: AddRequirementProps) {
   const { trigger, onAddSuccess, onAddError } = props
-  const { addTraining } = useTraining(0)
+  const { addRequirement } = useRequirement(0)
   const [isOpen, setIsOpen] = useState(false)
 
-  const form = useForm<AddTrainingModel>({
-    resolver: zodResolver(addTrainingSchema),
+  const form = useForm<AddRequirementModel>({
+    resolver: zodResolver(addRequirementSchema),
     defaultValues: {
       name: "",
       description: "",
-      type: "",
       url: "",
       dueDate: null,
-      isMandatory: true,
     },
   })
 
   const { control, handleSubmit, reset } = form
 
-  const onSubmit = async (values: AddTrainingModel) => {
-    const { name, description, type, url, dueDate, isMandatory } = values
-    const input: TrainingInput = {
+  const onSubmit = async (values: AddRequirementModel) => {
+    const { name, description, url, dueDate } = values
+    const input: RequirementInput = {
       name: name,
       description: description || "",
-      type_id: Number(type),
       url: url || "",
       deadline_at: dueDate ? new Date(dueDate).toISOString() : undefined,
-      is_mandatory: isMandatory,
     }
 
-    const { data, error } = await addTraining(input)
+    const { data, error } = await addRequirement(input)
 
     if (error) {
       console.error(`add error : ${error.name}: ${error.message}`)
@@ -89,7 +77,7 @@ export default function AddTraining(props: AddTrainingProps) {
       return
     }
 
-    if (data && data.insertIntolearning_resourceCollection) {
+    if (data && data.insertIntocompliance_resourceCollection) {
       if (onAddSuccess) {
         onAddSuccess()
       }
@@ -104,9 +92,9 @@ export default function AddTraining(props: AddTrainingProps) {
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Training</DialogTitle>
+          <DialogTitle>Add Requirement</DialogTitle>
           <DialogDescription>
-            Enter details for the new training.
+            Enter details for the new requirement.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -134,32 +122,6 @@ export default function AddTraining(props: AddTrainingProps) {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="type"
-              control={control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Training Type</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select type..." />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="1">Digital Learning</SelectItem>
-                      <SelectItem value="2">Classroom</SelectItem>
-                      <SelectItem value="3">Virtual Classroom</SelectItem>
-                    </SelectContent>
-                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -222,24 +184,6 @@ export default function AddTraining(props: AddTrainingProps) {
               )}
             />
 
-            <FormField
-              name="isMandatory"
-              control={control}
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 py-2">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>Is Mandatory?</FormLabel>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
-            />
             <div className="flex justify-end">
               <Button
                 type="submit"

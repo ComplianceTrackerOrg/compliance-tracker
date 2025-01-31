@@ -62,3 +62,51 @@ export const mutationUpdateAssignedTrainingStatus = graphql(`
     }
   }
 `)
+
+export const mutationInsertRequirement = graphql(`
+  mutation mutationInsertRequirement($input: compliance_resourceInsertInput!) {
+    insertIntocompliance_resourceCollection(objects: [$input]) {
+      affectedCount
+      records {
+        nodeId
+        id
+        name
+        description
+        url
+        is_active
+        deadline_at
+        created_at
+      }
+    }
+  }
+`)
+
+export const mutationUpdateRequirement = graphql(`
+  mutation mutationUpdateRequirement(
+    $resourceId: Int!
+    $resourceDetails: compliance_resourceUpdateInput!
+  ) {
+    updatecompliance_resourceCollection(
+      set: $resourceDetails
+      atMost: 1
+      filter: { id: { eq: $resourceId } }
+    ) {
+      affectedCount
+      records {
+        id
+      }
+    }
+  }
+`)
+
+export const mutationDisableRequirement = graphql(`
+  mutation mutationDisableRequirement($resourceId: Int!) {
+    updatecompliance_resourceCollection(
+      set: { is_active: false }
+      atMost: 1
+      filter: { id: { eq: $resourceId } }
+    ) {
+      affectedCount
+    }
+  }
+`)

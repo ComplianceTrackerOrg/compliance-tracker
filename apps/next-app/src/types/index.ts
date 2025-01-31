@@ -32,3 +32,18 @@ export const editTrainingSchema = addTrainingSchema.extend({
 })
 
 export type EditTrainingModel = z.infer<typeof editTrainingSchema>
+
+export const addRequirementSchema = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  description: z.string().optional(),
+  url: z.string().optional(),
+  dueDate: z.date().nullish(),
+})
+
+export type AddRequirementModel = z.infer<typeof addRequirementSchema>
+
+export const editRequirementSchema = addRequirementSchema.extend({
+  id: z.string(),
+})
+
+export type EditRequirementModel = z.infer<typeof editRequirementSchema>
