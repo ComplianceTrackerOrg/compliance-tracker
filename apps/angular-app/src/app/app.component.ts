@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+
+import { CardComponent } from '~shared/components/ui/card/card.component';
+import { ButtonComponent } from '~shared/components/ui/button/button.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HlmButtonDirective],
+  imports: [RouterOutlet, CardComponent, ButtonComponent],
+  host: {
+    class: 'text-foreground block antialiased',
+  },
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'angular-app';
