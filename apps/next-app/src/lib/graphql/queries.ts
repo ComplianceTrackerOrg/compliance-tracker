@@ -109,3 +109,35 @@ export const queryGetRequirements = graphql(`
     }
   }
 `)
+
+export const queryGetAssignedRequirements = graphql(`
+  query queryGetAssignedRequirements($userId: Int!) {
+    assigned_compliance_resourceCollection(
+      filter: { user_id: { eq: $userId } }
+    ) {
+      edges {
+        node {
+          id
+          user {
+            id
+            first_name
+            last_name
+          }
+          compliance_resource {
+            id
+            name
+            description
+            url
+            deadline_at
+          }
+          resource_status {
+            id
+            name
+          }
+          started_at
+          completed_at
+        }
+      }
+    }
+  }
+`)

@@ -1,3 +1,4 @@
+"use client"
 import { RequirementsList } from "@/features/requirements"
 
 export default function RequirementsPage() {
