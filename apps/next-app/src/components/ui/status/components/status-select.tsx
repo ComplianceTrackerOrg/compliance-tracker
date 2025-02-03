@@ -1,30 +1,32 @@
 import { CircleCheckBig, CirclePlay, Info } from "lucide-react"
-import { ResourceStatus, LearningStatusChangeLabel } from "@/constants"
+import { ResourceStatus, StatusChangeLabel } from "@/constants"
 import { Combobox } from "@/components/ui/combobox"
 
-interface SetAssignedTrainingStatusProps {
-  assignedTrainingId: string
+interface StatusSelectProps {
+  assignedId: string
+  placeholder: string
   currentStatus: ResourceStatus
   onStatusChange: (id: string, status: string) => void
 }
 
-export default function SetAssignedTrainingStatus({
-  assignedTrainingId,
+export default function StatusSelect({
+  assignedId,
   currentStatus,
+  placeholder,
   onStatusChange,
-}: SetAssignedTrainingStatusProps) {
+}: StatusSelectProps) {
   const GetStatuslist = (currentStatus: ResourceStatus) => {
     switch (currentStatus) {
       case ResourceStatus.NOT_STARTED:
         return [
           {
             value: ResourceStatus.IN_PROGRESS.toString(),
-            label: LearningStatusChangeLabel[ResourceStatus.IN_PROGRESS],
+            label: StatusChangeLabel[ResourceStatus.IN_PROGRESS],
             icon: <CirclePlay className="text-orange-500" />,
           },
           {
             value: ResourceStatus.COMPLETED.toString(),
-            label: LearningStatusChangeLabel[ResourceStatus.COMPLETED],
+            label: StatusChangeLabel[ResourceStatus.COMPLETED],
             icon: <CircleCheckBig className="text-green-500" />,
           },
         ]
@@ -32,12 +34,12 @@ export default function SetAssignedTrainingStatus({
         return [
           {
             value: ResourceStatus.NOT_STARTED.toString(),
-            label: LearningStatusChangeLabel[ResourceStatus.NOT_STARTED],
+            label: StatusChangeLabel[ResourceStatus.NOT_STARTED],
             icon: <Info className="text-gray-500" />,
           },
           {
             value: ResourceStatus.COMPLETED.toString(),
-            label: LearningStatusChangeLabel[ResourceStatus.COMPLETED],
+            label: StatusChangeLabel[ResourceStatus.COMPLETED],
             icon: <CircleCheckBig className="text-green-500" />,
           },
         ]
@@ -45,12 +47,12 @@ export default function SetAssignedTrainingStatus({
         return [
           {
             value: ResourceStatus.NOT_STARTED.toString(),
-            label: LearningStatusChangeLabel[ResourceStatus.NOT_STARTED],
+            label: StatusChangeLabel[ResourceStatus.NOT_STARTED],
             icon: <Info className="text-gray-500" />,
           },
           {
             value: ResourceStatus.IN_PROGRESS.toString(),
-            label: LearningStatusChangeLabel[ResourceStatus.IN_PROGRESS],
+            label: StatusChangeLabel[ResourceStatus.IN_PROGRESS],
             icon: <CirclePlay className="text-orange-500" />,
           },
         ]
@@ -58,14 +60,14 @@ export default function SetAssignedTrainingStatus({
   }
 
   const handleStatusChange = (status: string) => {
-    onStatusChange(assignedTrainingId, status)
+    onStatusChange(assignedId, status)
   }
 
   return (
     <Combobox
-      key={assignedTrainingId}
+      key={assignedId}
       items={GetStatuslist(currentStatus)}
-      placeholder="Manage Training"
+      placeholder={placeholder || "Select"}
       onItemSelected={handleStatusChange}
     />
   )

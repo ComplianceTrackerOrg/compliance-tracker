@@ -1,9 +1,7 @@
 import Link from "next/link"
-
 import { ResourceStatus } from "@/constants"
 import { formatDate } from "@/lib/utils"
-import { useAssignedTrainings } from "@/lib/hooks/learnings"
-
+import { useAssignedRequirements } from "@/lib/hooks/requirements"
 import { Progress } from "@/components/ui/progress"
 import {
   CardContent,
@@ -14,18 +12,18 @@ import {
 } from "@/components/ui/card"
 import { StatusButton, StatusSelect } from "@/components/ui/status"
 
-export default function MandatoryTrainings() {
+export default function AssignedRequirements() {
   const {
-    data: assignedTrainings,
+    data: assignedRequirements,
     fetchAgain,
     updateStatus,
-  } = useAssignedTrainings()
+  } = useAssignedRequirements()
 
-  const completedCount = assignedTrainings?.filter(
+  const completedCount = assignedRequirements?.filter(
     (item) => item.node.resource_status.id === ResourceStatus.COMPLETED
   ).length
 
-  const totalCount = assignedTrainings?.length
+  const totalCount = assignedRequirements?.length
 
   const progressPercentage =
     completedCount && totalCount && totalCount > 0
@@ -40,7 +38,7 @@ export default function MandatoryTrainings() {
       return
     }
 
-    if (data && data.updateassigned_learning_resourceCollection) {
+    if (data && data.updateassigned_compliance_resourceCollection) {
       fetchAgain()
     }
   }
@@ -48,9 +46,9 @@ export default function MandatoryTrainings() {
   return (
     <Card className="w-full max-w-6xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl">Your Mandatory Trainings</CardTitle>
+        <CardTitle className="text-2xl">Your Assigned Requirements</CardTitle>
         <CardDescription>
-          Track and update your progress on required trainings
+          Track and update your progress on required requirements
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -70,17 +68,17 @@ export default function MandatoryTrainings() {
             <div className="col-span-3">Actions</div>
           </div>
 
-          {assignedTrainings?.map((item) => {
+          {assignedRequirements?.map((item) => {
             const { node } = item
             const {
-              id: assignedTrainingId,
-              learning_resource: resource,
+              id: assignedId,
+              compliance_resource: resource,
               resource_status: status,
             } = node
             const { name, description, deadline_at, url } = resource
             return (
               <div
-                key={assignedTrainingId}
+                key={assignedId}
                 className="grid grid-cols-12 gap-4 p-4 border-b last:border-0 items-center"
               >
                 <div className="col-span-5">
@@ -114,7 +112,7 @@ export default function MandatoryTrainings() {
 
                 <div className="col-span-3">
                   <StatusSelect
-                    assignedId={assignedTrainingId}
+                    assignedId={assignedId}
                     currentStatus={status.id}
                     onStatusChange={handleStatusChange}
                     placeholder="Select"

@@ -10,7 +10,7 @@ export const useAssignedTrainings = () => {
     },
   })
 
-  const [, updateAssignedTraining] = useMutation(
+  const [, updateAssignedTrainingStatus] = useMutation(
     mutationUpdateAssignedTrainingStatus.toString()
   )
 
@@ -19,7 +19,7 @@ export const useAssignedTrainings = () => {
   }
 
   const updateStatus = async (assignedTrainingId: number, statusId: number) => {
-    const { data, error } = await updateAssignedTraining({
+    const { data, error } = await updateAssignedTrainingStatus({
       assignedTrainingId,
       statusId,
     })

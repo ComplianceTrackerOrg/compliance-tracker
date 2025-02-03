@@ -16,14 +16,14 @@ export enum ResourceStatus {
   COMPLETED = 3,
 }
 
-export const LearningStatusLabel: Record<ResourceStatus, string> = {
+export const StatusLabel: Record<ResourceStatus, string> = {
   [ResourceStatus.NOT_STARTED]: "Not Started",
   [ResourceStatus.IN_PROGRESS]: "In Progress",
   [ResourceStatus.COMPLETED]: "Completed",
 }
 
-export const LearningStatusChangeLabel: Record<ResourceStatus, string> = {
+export const StatusChangeLabel: Record<ResourceStatus, string> = {
   [ResourceStatus.NOT_STARTED]: "Mark as Not Started",
-  [ResourceStatus.IN_PROGRESS]: "Start Training",
+  [ResourceStatus.IN_PROGRESS]: "Mark as In Progress",
   [ResourceStatus.COMPLETED]: "Mark as Completed",
 }

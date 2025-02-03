@@ -110,3 +110,18 @@ export const mutationDisableRequirement = graphql(`
     }
   }
 `)
+
+export const mutationUpdateAssignedRequirementStatus = graphql(`
+  mutation mutationUpdateAssignedRequirementStatus(
+    $assignedComplianceId: BigInt!
+    $statusId: Int!
+  ) {
+    updateassigned_compliance_resourceCollection(
+      set: { status_id: $statusId }
+      atMost: 1
+      filter: { id: { eq: $assignedComplianceId } }
+    ) {
+      affectedCount
+    }
+  }
+`)

@@ -1,13 +1,13 @@
 import { ResourceStatus, StatusLabel } from "@/constants"
 import { Button } from "@/components/ui/button"
 
-interface TrainingStatusProps {
-  id: number
+interface StatusButtonProps {
+  statusId: ResourceStatus
 }
 
-export default function TrainingStatus({ id }: TrainingStatusProps) {
-  const DisplayTrainingStatus = (id: number) => {
-    switch (id) {
+export default function StatusButton({ statusId }: StatusButtonProps) {
+  const DisplayStatus = (statusId: ResourceStatus) => {
+    switch (statusId) {
       case ResourceStatus.NOT_STARTED:
         return (
           <Button
@@ -42,5 +42,5 @@ export default function TrainingStatus({ id }: TrainingStatusProps) {
         return null
     }
   }
-  return <>{DisplayTrainingStatus(id)}</>
+  return <>{DisplayStatus(statusId)}</>
 }
