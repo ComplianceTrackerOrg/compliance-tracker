@@ -213,7 +213,6 @@ export default function AddTraining(props: AddTrainingProps) {
                         }
                         onSelect={field.onChange}
                         disabled={(date) => date < new Date("1900-01-01")}
-                        initialFocus
                       />
                     </PopoverContent>
                   </Popover>
