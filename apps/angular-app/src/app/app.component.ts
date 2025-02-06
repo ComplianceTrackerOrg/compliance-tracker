@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-
-import { CardComponent } from '~shared/components/ui/card/card.component';
-import { ButtonComponent } from '~shared/components/ui/button/button.component';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CardComponent, ButtonComponent],
+  imports: [RouterOutlet, RouterModule],
   host: {
     class: 'text-foreground block antialiased',
   },
