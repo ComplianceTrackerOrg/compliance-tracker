@@ -46,3 +46,32 @@ export const GET_TRAINING = gql`
     }
   }
 `
+
+export const GET_MY_TRAININGS = gql`
+  query queryGetAssignedTrainings($userId: Int!) {
+    assigned_learning_resourceCollection(filter: { user_id: { eq: $userId } }) {
+      edges {
+        node {
+          id
+          user {
+            id
+            first_name
+            last_name
+          }
+          learning_resource {
+            name
+            description
+            deadline_at
+            url
+          }
+          resource_status {
+            id
+            name
+          }
+          started_at
+          completed_at
+        }
+      }
+    }
+  }
+`
