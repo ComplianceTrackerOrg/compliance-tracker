@@ -33,6 +33,12 @@
       ],
       "@spartan-ng/ui-icon-helm": [
         "./src/libs/ui/ui-icon-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-table-helm": [
+        "./src/libs/ui/ui-table-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-spinner-helm": [
+        "./src/libs/ui/ui-spinner-helm/src/index.ts"
       ]
     }
   },
