@@ -1,6 +1,9 @@
 "use client"
 
-import * as React from "react"
+import React, { useEffect, useState } from "react"
+import { signOut } from "@/actions"
+import { isLoggedIn } from "@/lib/supabase/client"
+import { cn } from "@/lib/utils"
 
 import {
   NavigationMenu,
@@ -10,10 +13,22 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Link } from "@/components/ui/link"
-
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 export function MainNav() {
+  const [loggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const status = await isLoggedIn()
+      setIsLoggedIn(status)
+    }
+    checkSession()
+  }, [])
+
+  const handleSignOut = async () => {
+    await signOut()
+  }
   return (
     <div className="hidden md:flex justify-between container mx-auto mt-2">
       <Link href="/">
@@ -56,13 +71,28 @@ export function MainNav() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/login" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Login
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
+          {!loggedIn && (
+            <NavigationMenuItem>
+              <Link href="/login" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Login
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          )}
+          {loggedIn && (
+            <NavigationMenuItem>
+              <Button
+                variant="ghost"
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleSignOut()
+                }}
+              >
+                Log Out
+              </Button>
+            </NavigationMenuItem>
+          )}
         </NavigationMenuList>
       </NavigationMenu>
     </div>

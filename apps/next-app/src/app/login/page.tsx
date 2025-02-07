@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import Link from "next/link"
 
-import { UserAuthForm } from "@/features/login/components/UserAuthForm"
+import { GitHubAuth } from "@/features/login/components"
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -32,22 +32,24 @@ export default function AuthenticationPage() {
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;Monitor training progress across your team. Quickly identify employees who are on track, behind, or yet to start their required programs.&rdquo;
+                &ldquo;Monitor training progress across your team. Quickly
+                identify employees who are on track, behind, or yet to start
+                their required programs.&rdquo;
               </p>
             </blockquote>
           </div>
         </div>
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            <div className="flex flex-col space-y-2 text-center">
+            {/* <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
                 Login with your Deloitte account
               </h1>
               <p className="text-sm text-muted-foreground">
                 Enter your email below to login your account
               </p>
-            </div>
-            <UserAuthForm />
+            </div> */}
+            <GitHubAuth />
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link
