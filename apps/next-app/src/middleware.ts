@@ -32,9 +32,13 @@ const updateSession = async (request: NextRequest) => {
     data: { session },
   } = await supabase.auth.getSession()
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
   // Check if the session has expired
   //! Supabase's free tier doesn't allow updating the session settings (ie. timeout)
-  if (session && session.expires_at) {
+  if (user && session?.expires_at) {
     const expirationTime = new Date(session.expires_at * 1000) // Convert to milliseconds
     if (expirationTime <= new Date()) {
       // Session has expired, sign out the user
@@ -48,7 +52,7 @@ const updateSession = async (request: NextRequest) => {
   // If the user is not signed in and the current path is not /login or /auth/callback,
   // redirect the user to /login
   if (
-    !session &&
+    !user &&
     !pathname.startsWith("/login") &&
     !pathname.startsWith("/auth")
   ) {
@@ -58,7 +62,7 @@ const updateSession = async (request: NextRequest) => {
   }
 
   // If the user is signed in and the current path is / or /login, redirect to /dashboard
-  if (session && (pathname === "/" || pathname === "/login")) {
+  if (user && (pathname === "/" || pathname === "/login")) {
     return NextResponse.redirect(new URL("/dashboard", request.url))
   }
 
