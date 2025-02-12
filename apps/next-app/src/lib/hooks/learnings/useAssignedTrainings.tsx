@@ -2,11 +2,11 @@ import { useMutation, useQuery } from "@urql/next"
 import { queryGetAssignedTrainings } from "@/lib/graphql/queries"
 import { mutationUpdateAssignedTrainingStatus } from "@/lib/graphql/mutations"
 
-export const useAssignedTrainings = () => {
+export const useAssignedTrainings = (userId: number) => {
   const [{ data, error, fetching }, reexecuteQuery] = useQuery({
     query: queryGetAssignedTrainings.toString(),
     variables: {
-      userId: 1, //TODO: use actual User ID
+      userId,
     },
   })
 

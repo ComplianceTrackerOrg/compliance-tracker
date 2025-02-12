@@ -10,6 +10,12 @@ export type Employee = {
   completionDate: string | null
 }
 
+export type AuthenticatedUser = {
+  id: number
+  email: string
+  avatarUrl?: string
+}
+
 // TODO: update validation rules
 export const addTrainingSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),

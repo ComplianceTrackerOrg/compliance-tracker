@@ -1,22 +1,17 @@
 import { cookies } from "next/headers"
 import { createServerClient } from "@supabase/ssr"
 
-const SUPABASE_URL = process.env.SUPABASE_URL!
-const KEY = process.env.SUPABASE_API_KEY!
-
 /**
  * Creates a server-side Supabase client that handles cookies automatically.
  *
- * @returns A Supabase client configured for server-side usage.
+ * @param {string} url - The Supabase URL.
+ * @param {string} key - The Supabase API key.
+ * @returns {SupabaseClient} A Supabase client.
  */
-export const createClient = async () => {
-  if (!SUPABASE_URL || !KEY) {
-    throw new Error("Missing env variables")
-  }
-
+export const createClient = async (url: string, key: string) => {
   const cookieStore = await cookies()
 
-  return createServerClient(SUPABASE_URL, KEY, {
+  return createServerClient(url, key, {
     cookies: {
       getAll() {
         return cookieStore.getAll()
@@ -34,22 +29,4 @@ export const createClient = async () => {
       },
     },
   })
-}
-
-/**
- * Checks if a user is logged in.
- *
- * @returns A promise that resolves to a boolean indicating whether the user
- *          is logged in or not.
- */
-
-export const isLoggedIn = async () => {
-  const supabase = await createClient()
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-
-  if (session) return true
-
-  return false
 }

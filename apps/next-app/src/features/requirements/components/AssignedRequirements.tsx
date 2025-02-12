@@ -1,7 +1,8 @@
 import Link from "next/link"
 import { ResourceStatus } from "@/constants"
-import { formatDate } from "@/lib/utils"
+import { useAuth } from "@/lib/hooks/auth"
 import { useAssignedRequirements } from "@/lib/hooks/requirements"
+import { formatDate } from "@/lib/utils"
 import { Progress } from "@/components/ui/progress"
 import {
   CardContent,
@@ -13,11 +14,12 @@ import {
 import { StatusButton, StatusSelect } from "@/components/ui/status"
 
 export default function AssignedRequirements() {
+  const { authUser } = useAuth()
   const {
     data: assignedRequirements,
     fetchAgain,
     updateStatus,
-  } = useAssignedRequirements()
+  } = useAssignedRequirements(authUser?.id ?? 0)
 
   const completedCount = assignedRequirements?.filter(
     (item) => item.node.resource_status.id === ResourceStatus.COMPLETED
@@ -56,17 +58,23 @@ export default function AssignedRequirements() {
           <h3 className="text-sm font-medium">Overall Completion</h3>
           <Progress value={progressPercentage} className="h-2" />
           <p className="text-sm text-muted-foreground">
-            {completedCount} of {totalCount} trainings completed
+            {completedCount} of {totalCount} requirements completed
           </p>
         </div>
 
         <div className="border rounded-lg">
           <div className="grid grid-cols-12 gap-4 p-4 border-b text-sm font-medium text-muted-foreground bg-gray-100">
-            <div className="col-span-5">Training Name</div>
+            <div className="col-span-5">Requirement</div>
             <div className="col-span-2">Due Date</div>
             <div className="col-span-2">Status</div>
             <div className="col-span-3">Actions</div>
           </div>
+
+          {assignedRequirements?.length === 0 && (
+            <div className="p-4 text-center text-sm text-muted-foreground">
+              No requirement assigned
+            </div>
+          )}
 
           {assignedRequirements?.map((item) => {
             const { node } = item

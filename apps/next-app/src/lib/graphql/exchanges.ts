@@ -5,14 +5,12 @@ import {
   ssrExchange,
 } from "@urql/next"
 
-const API_KEY = process.env.NEXT_PUBLIC_SUPABASE_API_KEY as string
-
 export const ssr = ssrExchange({
   isClient: typeof window === "undefined",
 })
 
-export const initClient = () => {
-  return (url: string) => {
+export const initGraphqlClient = () => {
+  return (url: string, key: string) => {
     return createClient({
       url,
       exchanges: [cacheExchange, ssr, fetchExchange],
@@ -21,7 +19,7 @@ export const initClient = () => {
         return {
           headers: {
             "Content-Type": "application/json",
-            apiKey: API_KEY,
+            apiKey: key,
           },
         }
       },

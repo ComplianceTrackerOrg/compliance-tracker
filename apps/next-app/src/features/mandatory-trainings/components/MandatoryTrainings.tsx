@@ -1,9 +1,8 @@
 import Link from "next/link"
-
 import { ResourceStatus } from "@/constants"
-import { formatDate } from "@/lib/utils"
+import { useAuth } from "@/lib/hooks/auth"
 import { useAssignedTrainings } from "@/lib/hooks/learnings"
-
+import { formatDate } from "@/lib/utils"
 import { Progress } from "@/components/ui/progress"
 import {
   CardContent,
@@ -15,11 +14,12 @@ import {
 import { StatusButton, StatusSelect } from "@/components/ui/status"
 
 export default function MandatoryTrainings() {
+  const { authUser } = useAuth()
   const {
     data: assignedTrainings,
     fetchAgain,
     updateStatus,
-  } = useAssignedTrainings()
+  } = useAssignedTrainings(authUser?.id ?? 0)
 
   const completedCount = assignedTrainings?.filter(
     (item) => item.node.resource_status.id === ResourceStatus.COMPLETED
@@ -69,6 +69,12 @@ export default function MandatoryTrainings() {
             <div className="col-span-2">Status</div>
             <div className="col-span-3">Actions</div>
           </div>
+
+          {assignedTrainings?.length === 0 && (
+            <div className="p-4 text-center text-sm text-muted-foreground">
+              No trainings assigned
+            </div>
+          )}
 
           {assignedTrainings?.map((item) => {
             const { node } = item
