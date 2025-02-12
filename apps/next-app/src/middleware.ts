@@ -2,14 +2,18 @@ import { NextResponse, type NextRequest } from "next/server"
 import { createServerClient } from "@supabase/ssr"
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const KEY = process.env.NEXT_PUBLIC_SUPABASE_API_KEY!
+const API_KEY = process.env.NEXT_PUBLIC_SUPABASE_API_KEY!
 
 const updateSession = async (request: NextRequest) => {
+  if (!SUPABASE_URL || !API_KEY) {
+    throw new Error("URL or key not set")
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   })
 
-  const supabase = createServerClient(SUPABASE_URL, KEY, {
+  const supabase = createServerClient(SUPABASE_URL, API_KEY, {
     cookies: {
       getAll() {
         return request.cookies.getAll()
