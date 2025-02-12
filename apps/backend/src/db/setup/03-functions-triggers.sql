@@ -17,7 +17,7 @@ BEGIN
   )
   VALUES (
     NEW.id,
-    1, -- default role
+    2, -- default Individual Contributor role
     COALESCE(
       (NEW.raw_user_meta_data->>'email')::text,
       NEW.email
