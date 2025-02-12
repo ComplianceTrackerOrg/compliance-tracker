@@ -2,9 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { signOut } from "@/actions"
-import { isLoggedIn } from "@/lib/supabase/client"
-import { cn } from "@/lib/utils"
-
+import { useAuth } from "@/lib/hooks/auth"
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -15,16 +13,16 @@ import {
 import { Link } from "@/components/ui/link"
 import { Button } from "@/components/ui/button"
 
-export function MainNav() {
+//TODO: hide/display links based on user role
+const MainNav = () => {
   const [loggedIn, setIsLoggedIn] = useState(false)
+  const { authUser } = useAuth()
 
   useEffect(() => {
-    const checkSession = async () => {
-      const status = await isLoggedIn()
-      setIsLoggedIn(status)
+    if (authUser) {
+      setIsLoggedIn(true)
     }
-    checkSession()
-  }, [])
+  }, [authUser])
 
   const handleSignOut = async () => {
     await signOut()
@@ -67,7 +65,7 @@ export function MainNav() {
           <NavigationMenuItem>
             <Link href="/mandatory-trainings" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                MyTrainings
+                My Trainings
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
@@ -99,28 +97,4 @@ export function MainNav() {
   )
 }
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
+export default MainNav
