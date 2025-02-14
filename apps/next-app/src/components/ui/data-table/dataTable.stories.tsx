@@ -1,4 +1,4 @@
-//TODO: add mock columns for start and completion dates
+
 import type { Meta, StoryObj } from '@storybook/react';
 import { DataTable as UIDataTable } from '@/components/ui/data-table';
 
