@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { StatusSelect as UIStatusSelect } from "@/components/ui/status/"
-import { ResourceStatus } from "@/constants"
+import { ResourceStatus,StatusChangeLabel } from "@/constants"
 
 const meta: Meta<typeof UIStatusSelect> = {
   title: "UI/Status/StatusSelect",
@@ -9,7 +9,7 @@ const meta: Meta<typeof UIStatusSelect> = {
     layout: "centered",
   },
   args: {
-    assignedId: "1",
+    assignedId: StatusChangeLabel[ResourceStatus.NOT_STARTED],
     placeholder: "Select Status",
     currentStatus: ResourceStatus.NOT_STARTED,
   },
@@ -21,10 +21,15 @@ const meta: Meta<typeof UIStatusSelect> = {
       },
       // TODO: display option labels
       options: [
-        ResourceStatus.NOT_STARTED,
-        ResourceStatus.IN_PROGRESS,
-        ResourceStatus.COMPLETED,
+        StatusChangeLabel[ResourceStatus.NOT_STARTED],
+        StatusChangeLabel[ResourceStatus.IN_PROGRESS],
+        StatusChangeLabel[ResourceStatus.COMPLETED],
       ],
+      mapping: {
+        [StatusChangeLabel[ResourceStatus.NOT_STARTED]]: ResourceStatus.NOT_STARTED,
+        [StatusChangeLabel[ResourceStatus.IN_PROGRESS]]: ResourceStatus.IN_PROGRESS,
+        [StatusChangeLabel[ResourceStatus.COMPLETED]]: ResourceStatus.COMPLETED,
+      },
     },
   },
 }
