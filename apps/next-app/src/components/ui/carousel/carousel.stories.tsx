@@ -51,7 +51,7 @@ export const BasicCarousel: Story = {
 }
 
 //💡 @todo Fix the display of Vertical Carousel
-export const CustomizedCarousel: Story = {
+export const HorizontalCarousel: Story = {
   args: {
     orientation: "horizontal",
   },
@@ -76,3 +76,38 @@ export const CustomizedCarousel: Story = {
     </div>
   ),
 }
+
+export const VerticalCarousel: Story = {
+  args: {
+    orientation: "vertical",
+    children: (
+      <CarouselContent className="flex flex-col h-48 overflow-y-auto snap-y snap-mandatory">
+        {["First", "Second", "Third", "Fourth", "Fifth"].map(
+          (label, index) => (
+            <CarouselItem
+              key={index}
+              className="flex items-center justify-center h-48 w-full bg-gradient-to-r from-blue-500 to-purple-500 text-xl font-semibold text-white snap-start"
+            >
+              {label} Slide
+            </CarouselItem>
+          )
+        )}
+      </CarouselContent>
+    ),
+  },
+  render: (args) => (
+    <div className="pt-10 pb-10">
+      <Carousel {...args} className="relative max-w-lg mx-auto border p-4 h-48 overflow-hidden flex flex-col">
+        {/* Move Previous Button to Top */}
+        <CarouselPrevious className="bg-primary text-primary-foreground mb-2 rotate-90" />
+
+        {/* Children (Slides) are inside args */}
+        {args.children}
+
+        {/* Move Next Button to Bottom */}
+        <CarouselNext className="bg-primary text-primary-foreground mt-2 rotate-90" />
+      </Carousel>
+    </div>
+  ),
+};
+

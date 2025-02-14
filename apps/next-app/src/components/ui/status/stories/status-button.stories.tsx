@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { StatusButton as UIStatusButton } from "@/components/ui/status/"
-import { ResourceStatus } from "@/constants"
+import { ResourceStatus, StatusLabel } from "@/constants"
 
 const meta: Meta<typeof UIStatusButton> = {
   title: "UI/Status/StatusButton",
@@ -18,10 +18,15 @@ const meta: Meta<typeof UIStatusButton> = {
         "ResourceStatus ID, affects how the button will be displayed",
       // TODO: display option labels
       options: [
-        ResourceStatus.NOT_STARTED,
-        ResourceStatus.IN_PROGRESS,
-        ResourceStatus.COMPLETED,
+        StatusLabel[ResourceStatus.NOT_STARTED],
+        StatusLabel[ResourceStatus.IN_PROGRESS],
+        StatusLabel[ResourceStatus.COMPLETED],
       ],
+      mapping: {
+        [StatusLabel[ResourceStatus.NOT_STARTED]]: ResourceStatus.NOT_STARTED,
+        [StatusLabel[ResourceStatus.IN_PROGRESS]]: ResourceStatus.IN_PROGRESS,
+        [StatusLabel[ResourceStatus.COMPLETED]]: ResourceStatus.COMPLETED,
+      },
       control: { type: "radio" },
     },
   },
