@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { GET_ALL_TRAININGS, GET_MY_TRAININGS } from './trainings.graphql';
+import { ADD_TRAINING, GET_ALL_TRAININGS, GET_MY_TRAININGS } from './trainings.graphql';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,6 @@ export class TrainingsService {
       query: GET_ALL_TRAININGS
     })
       .valueChanges.pipe(map((result) => {
-        console.log('result', result?.data)
-        console.log('learning_resourceCollection', (result?.data as any)?.learning_resourceCollection?.edges)
         return (result?.data as any)?.learning_resourceCollection?.edges
       }))
   }
@@ -33,5 +31,17 @@ export class TrainingsService {
       .valueChanges.pipe(map((result) => {
         return (result?.data as any)?.assigned_learning_resourceCollection?.edges
       }))
+  }
+
+  postAddTraining(data: any): Observable<any> {
+    return this.apollo.mutate({
+      mutation: ADD_TRAINING,
+      variables: {
+        input: data
+      },
+      refetchQueries: [{
+        query: GET_ALL_TRAININGS
+      }]
+    })
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import {
@@ -8,9 +8,12 @@ import {
   HlmTrowComponent,
 } from '@spartan-ng/ui-table-helm';
 import { HlmSpinnerModule, HlmSpinnerComponent } from "@spartan-ng/ui-spinner-helm";
+import { HlmDialogService } from '@spartan-ng/ui-dialog-helm';
 import { ButtonComponent } from '~shared/components/ui/button/button.component';
 
 import { TrainingsService } from '../trainings.service';
+
+import { AddTrainingFormComponent } from '../add-training-form/add-training-form.component';
 
 @Component({
   imports: [
@@ -21,7 +24,7 @@ import { TrainingsService } from '../trainings.service';
     HlmTrowComponent,
     ButtonComponent,
     HlmSpinnerModule,
-    HlmSpinnerComponent
+    HlmSpinnerComponent,
   ],
   templateUrl: './training-list.component.html',
 })
@@ -30,7 +33,10 @@ export class TrainingListComponent implements OnInit {
   trainingsData: any[] = []
   loading: boolean = true
 
-  constructor(private trainingsService: TrainingsService) { }
+  constructor(
+    private trainingsService: TrainingsService,
+    private modalService: HlmDialogService,
+  ) { }
 
   ngOnInit(): void {
     this.trainingsService.getAllTrainings().subscribe({
@@ -43,5 +49,10 @@ export class TrainingListComponent implements OnInit {
         this.loading = false
       }
     })
+  }
+
+  // open modal for AddTrainingFormComponent
+  onOpenAddTraining() {
+    this.modalService.open(AddTrainingFormComponent, { closeOnBackdropClick: false, contentClass: 'custom-modal-width' })
   }
 }

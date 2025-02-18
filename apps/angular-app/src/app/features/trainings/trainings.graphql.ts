@@ -75,3 +75,21 @@ export const GET_MY_TRAININGS = gql`
     }
   }
 `
+
+export const ADD_TRAINING = gql`
+  mutation mutationInsertTraining($input: learning_resourceInsertInput!) {
+    insertIntolearning_resourceCollection(objects: [$input]) {
+      affectedCount
+      records {
+        id
+        type_id
+        name
+        url
+        description
+        deadline_at
+        is_mandatory
+        created_at
+      }
+    }
+  }
+`

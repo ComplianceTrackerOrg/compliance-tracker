@@ -6,7 +6,8 @@
 				<p class="text-sm text-muted-foreground">Add, edit, or remove trainings</p>
 			</div>
 			<div class="col-span-1 flex justify-end">
-				<spartan-button icon="lucidePlus" [disabled]="loading">Add training</spartan-button>
+				<spartan-button icon="lucidePlus" [disabled]="loading" (click)="onOpenAddTraining()">Add
+					training</spartan-button>
 			</div>
 		</div>
 	</div>

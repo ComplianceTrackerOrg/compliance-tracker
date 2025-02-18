@@ -63,3 +63,14 @@ color-scheme: dark;
 @apply border-border;
 }
 }
+
+/* for modal width in Add training */
+.custom-modal-width {
+	@media (min-width: 640px) {
+		width: 25rem !important;
+	}
+
+	@media (min-width: 768px) {
+		width: 32rem !important;
+	}
+}

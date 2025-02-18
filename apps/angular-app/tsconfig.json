@@ -39,6 +39,24 @@
       ],
       "@spartan-ng/ui-spinner-helm": [
         "./src/libs/ui/ui-spinner-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-dialog-helm": [
+        "./src/libs/ui/ui-dialog-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-label-helm": [
+        "./src/libs/ui/ui-label-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-input-helm": [
+        "./src/libs/ui/ui-input-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-formfield-helm": [
+        "./src/libs/ui/ui-formfield-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-select-helm": [
+        "./src/libs/ui/ui-select-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-checkbox-helm": [
+        "./src/libs/ui/ui-checkbox-helm/src/index.ts"
       ]
     }
   },
