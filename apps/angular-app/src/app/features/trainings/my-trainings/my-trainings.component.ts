@@ -30,13 +30,12 @@ export class MyTrainingsComponent implements OnInit {
   // TODO: type any
   myTrainingsData: any[] = []
   loading: boolean = true
-  newMyTrainingsData: any[] = []
 
   constructor(private trainingsService: TrainingsService) { }
 
   ngOnInit(): void {
     // TODO: make passed id dynamic
-    const userId = 1
+    const userId = 35
     if (userId) {
       this.trainingsService.getMyTrainings(userId).subscribe({
         next: (data) => {

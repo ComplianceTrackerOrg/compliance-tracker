@@ -25,6 +25,10 @@
 				<hlm-th class="flex-1">Due date</hlm-th>
 				<hlm-th class="justify-end w-40">Actions</hlm-th>
 			</hlm-trow>
+			<!-- When list is empty -->
+			<div *ngIf="!loading && trainingsData.length === 0" class="text-center my-5 text-gray-500">
+				No trainings available.
+			</div>
 			<hlm-trow *ngFor="let training of trainingsData">
 				<hlm-td truncate class="font-medium w-60">{{ training.node.name }}</hlm-td>
 				<hlm-td class="w-60">{{ training.node.description }}</hlm-td>
