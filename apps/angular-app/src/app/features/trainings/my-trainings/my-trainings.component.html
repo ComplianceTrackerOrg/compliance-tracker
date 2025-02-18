@@ -20,6 +20,10 @@
 				<hlm-th class="flex-1">Status</hlm-th>
 				<hlm-th class="justify-end w-40">Actions</hlm-th>
 			</hlm-trow>
+			<!-- When list is empty -->
+			<div *ngIf="!loading && myTrainingsData.length === 0" class="text-center my-5 text-gray-500">No trainings
+				assigned.</div>
+
 			<hlm-trow *ngFor="let training of myTrainingsData">
 				<hlm-td truncate class="font-medium w-60">
 					<!-- TODO: how to route this link -->
