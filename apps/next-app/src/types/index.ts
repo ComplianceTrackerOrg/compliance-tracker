@@ -1,5 +1,10 @@
 import * as z from "zod"
 
+export enum ResourceType {
+  Training = "1",
+  Requirement = "2",
+}
+
 export type Employee = {
   employeeId: string
   name: string
@@ -12,8 +17,10 @@ export type Employee = {
 
 export type AuthenticatedUser = {
   id: number
-  email: string
+  firstName: string
+  lastName?: string
   avatarUrl?: string
+  email?: string
 }
 
 // TODO: update validation rules

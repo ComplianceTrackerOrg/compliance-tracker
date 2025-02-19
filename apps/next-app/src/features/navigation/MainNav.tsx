@@ -42,6 +42,13 @@ const MainNav = () => {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
+            <Link href="/users" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Assign Users
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
             <Link href="/requirements" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Requirements
