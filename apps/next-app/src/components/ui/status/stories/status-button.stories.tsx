@@ -16,7 +16,6 @@ const meta: Meta<typeof UIStatusButton> = {
       defaultValue: ResourceStatus.NOT_STARTED,
       description:
         "ResourceStatus ID, affects how the button will be displayed",
-      // TODO: display option labels
       options: [
         StatusLabel[ResourceStatus.NOT_STARTED],
         StatusLabel[ResourceStatus.IN_PROGRESS],

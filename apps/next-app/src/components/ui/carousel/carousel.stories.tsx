@@ -27,7 +27,6 @@ const meta: Meta<typeof Carousel> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-//💡 @todo Fix the display of Vertical Carousel
 export const BasicCarousel: Story = {
   render: (args) => (
     <div className="pt-10 pb-10">
@@ -50,7 +49,6 @@ export const BasicCarousel: Story = {
   ),
 }
 
-//💡 @todo Fix the display of Vertical Carousel
 export const HorizontalCarousel: Story = {
   args: {
     orientation: "horizontal",
