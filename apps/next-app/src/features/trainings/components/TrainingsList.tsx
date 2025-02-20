@@ -15,11 +15,12 @@ import AddTraining from "./AddTraining"
 import DisableTraining from "./DisableTraining"
 import UpdateTraining from "./UpdateTraining"
 
+//TODO: include filter for inactive trainings
 export default function TrainingsList() {
-  const { data, fetchAgain } = useTrainings()
+  const { trainingListWithDetails: data, fetchListWithDetails } = useTrainings()
 
   const handleChangeSuccess = async () => {
-    fetchAgain()
+    fetchListWithDetails()
   }
 
   return (

@@ -1,7 +1,63 @@
 import { graphql } from "./generated/gql"
 
-export const queryGetAllActiveTrainings = graphql(`
-  query queryGetAllActiveTrainings($isMandatory: Boolean) {
+export const queryGetAllUsers = graphql(`
+  query queryGetAllUsers {
+    userCollection(
+      orderBy: [{ last_name: AscNullsFirst }, { first_name: AscNullsFirst }]
+    ) {
+      edges {
+        node {
+          id
+          user_role {
+            id
+            name
+          }
+          first_name
+          last_name
+        }
+      }
+    }
+  }
+`)
+
+export const queryGetAssignedUsersByTrainingResource = graphql(`
+  query queryGetAssignedUsersByTrainingResource($resourceId: Int!) {
+    assigned_learning_resourceCollection(
+      filter: { resource_id: { eq: $resourceId } }
+    ) {
+      edges {
+        node {
+          user {
+            id
+            first_name
+            last_name
+          }
+        }
+      }
+    }
+  }
+`)
+
+export const queryGetAssignedUsersByRequirementResource = graphql(`
+  query queryGetAssignedUsersByRequirementResource($resourceId: Int!) {
+    assigned_compliance_resourceCollection(
+      filter: { resource_id: { eq: $resourceId } }
+    ) {
+      edges {
+        node {
+          user {
+            id
+            first_name
+            last_name
+          }
+        }
+      }
+    }
+  }
+`)
+
+export const queryGetTrainings = graphql(`
+  query queryGetTrainings($isMandatory: Boolean) {
     learning_resourceCollection(
       filter: { is_mandatory: { eq: $isMandatory }, is_active: { eq: true } }
     ) {
@@ -18,6 +74,19 @@ export const queryGetAllActiveTrainings = graphql(`
             description
           }
           is_active
+        }
+      }
+    }
+  }
+`)
+
+export const queryGetTrainingList = graphql(`
+  query queryGetTrainingList {
+    learning_resourceCollection(filter: { is_active: { eq: true } }) {
+      edges {
+        node {
+          id
+          name
         }
       }
     }
@@ -104,6 +173,19 @@ export const queryGetRequirements = graphql(`
           url
           deadline_at
           is_active
+        }
+      }
+    }
+  }
+`)
+
+export const queryGetRequirementList = graphql(`
+  query queryGetRequirementList {
+    compliance_resourceCollection(filter: { is_active: { eq: true } }) {
+      edges {
+        node {
+          id
+          name
         }
       }
     }

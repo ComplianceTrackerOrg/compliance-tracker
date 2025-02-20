@@ -16,10 +16,11 @@ import DisableRequirement from "./DisableRequirement"
 
 export default function RequirementsList() {
   // TODO: filter to include deactivated requirements
-  const { data, fetchAgain } = useRequirements(true)
+  const { requirementListWithDetails: data, fetchListWithDetails } =
+    useRequirements(true)
 
   const handleChangeSuccess = async () => {
-    fetchAgain()
+    fetchListWithDetails()
   }
 
   return (

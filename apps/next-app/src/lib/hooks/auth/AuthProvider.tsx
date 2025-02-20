@@ -76,7 +76,9 @@ export const AuthUserProvider = ({
         const authenticatedUser: AuthenticatedUser = {
           id: supabaseUser ? supabaseUser.id : 0,
           email: user.email?.toLowerCase() ?? "",
-          avatarUrl: user.user_metadata.avatar_url,
+          firstName: user.user_metadata.first_name,
+          lastName: user.user_metadata.last_name ?? "",
+          avatarUrl: user.user_metadata.avatar_url ?? "",
         }
         setAuthUser(authenticatedUser)
       }
@@ -96,6 +98,7 @@ export const AuthUserProvider = ({
     return () => {
       subscription.unsubscribe()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
 
   return (

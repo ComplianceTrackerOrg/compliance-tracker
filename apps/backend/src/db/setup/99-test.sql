@@ -48,3 +48,7 @@ BEGIN
     DELETE FROM auth.users WHERE id = test_user_id;
 END;
 $$ LANGUAGE plpgsql;
+
+-- to check if these functions that return data exists
+SELECT * FROM pg_proc WHERE proname = 'get_unassigned_training_users';
+SELECT * FROM pg_proc WHERE proname = 'get_unassigned_requirements_users';
