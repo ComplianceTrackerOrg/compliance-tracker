@@ -1,3 +1,4 @@
+"use client"
 import { ResourceStatus, StatusLabel } from "@/constants"
 import { Button } from "@/components/ui/button"
 
