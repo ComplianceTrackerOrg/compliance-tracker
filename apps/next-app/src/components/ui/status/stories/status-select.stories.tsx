@@ -19,7 +19,6 @@ const meta: Meta<typeof UIStatusSelect> = {
       control: {
         type: "select",
       },
-      // TODO: display option labels
       options: [
         StatusChangeLabel[ResourceStatus.NOT_STARTED],
         StatusChangeLabel[ResourceStatus.IN_PROGRESS],
