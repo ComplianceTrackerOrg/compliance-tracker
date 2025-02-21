@@ -1,13 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { provideIcons, NgIcon } from '@ng-icons/core';
-import {
-  lucideMail,
-  lucideTrash2,
-  lucidePencil,
-  lucidePlus,
-} from '@ng-icons/lucide';
+import { NgIcon } from '@ng-icons/core';
 
 import { ButtonVariants, HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
