@@ -7,10 +7,19 @@ import {
   HlmThComponent,
   HlmTrowComponent,
 } from '@spartan-ng/ui-table-helm';
-import { HlmSpinnerModule, HlmSpinnerComponent } from "@spartan-ng/ui-spinner-helm";
+import {
+  HlmSpinnerModule,
+  HlmSpinnerComponent,
+} from '@spartan-ng/ui-spinner-helm';
 import { ButtonComponent } from '~shared/components/ui/button/button.component';
 
 import { TrainingsService } from '../trainings.service';
+import {
+  AssignedLearningResource,
+  LearningResource,
+  ResourceStatus,
+  TrainingData,
+} from '../trainings.model';
 
 @Component({
   selector: 'app-my-trainings',
@@ -27,11 +36,10 @@ import { TrainingsService } from '../trainings.service';
   templateUrl: './my-trainings.component.html',
 })
 export class MyTrainingsComponent implements OnInit {
-  // TODO: type any
-  myTrainingsData: any[] = []
-  loading: boolean = true
+  myTrainingsData: TrainingData[] = [];
+  loading: boolean = true;
 
-  constructor(private trainingsService: TrainingsService) { }
+  constructor(private trainingsService: TrainingsService) {}
 
   ngOnInit(): void {
     // TODO: make passed id dynamic
@@ -39,28 +47,35 @@ export class MyTrainingsComponent implements OnInit {
     if (userId) {
       this.trainingsService.getMyTrainings(userId).subscribe({
         next: (data) => {
-          this.myTrainingsData = data && data.map((item: any) => {
-            const { node } = item
-            const {
-              learning_resource: resource,
-              resource_status: status,
-            } = node
+          this.myTrainingsData =
+            data &&
+            data.map(
+              (item: {
+                node: AssignedLearningResource & {
+                  learning_resource: LearningResource;
+                  resource_status: ResourceStatus;
+                };
+              }) => {
+                const { node } = item;
+                const { learning_resource: resource, resource_status: status } =
+                  node;
 
-            return {
-              status: status.name,
-              trainingName: resource.name,
-              trainingDesc: resource.description,
-              dueDate: resource.deadline_at,
-              trainingUrl: resource.url,
-            }
-          })
-          this.loading = false
+                return {
+                  status: status.name,
+                  trainingName: resource.name,
+                  trainingDesc: resource.description,
+                  dueDate: resource.deadline_at,
+                  trainingUrl: resource.url,
+                };
+              }
+            );
+          this.loading = false;
         },
         error: (err) => {
-          console.error('Error fetching trainings data', err)
-          this.loading = false
-        }
-      })
+          console.error('Error fetching trainings data', err);
+          this.loading = false;
+        },
+      });
     }
   }
 }
