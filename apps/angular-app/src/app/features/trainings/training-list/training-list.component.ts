@@ -7,13 +7,21 @@ import {
   HlmThComponent,
   HlmTrowComponent,
 } from '@spartan-ng/ui-table-helm';
-import { HlmSpinnerModule, HlmSpinnerComponent } from "@spartan-ng/ui-spinner-helm";
+import {
+  HlmSpinnerModule,
+  HlmSpinnerComponent,
+} from '@spartan-ng/ui-spinner-helm';
 import { HlmDialogService } from '@spartan-ng/ui-dialog-helm';
 import { ButtonComponent } from '~shared/components/ui/button/button.component';
 
 import { TrainingsService } from '../trainings.service';
 
 import { AddTrainingFormComponent } from '../add-training-form/add-training-form.component';
+import {
+  LearningResource,
+  LearningResourceType,
+  TrainingData,
+} from '../trainings.model';
 
 @Component({
   imports: [
@@ -29,30 +37,50 @@ import { AddTrainingFormComponent } from '../add-training-form/add-training-form
   templateUrl: './training-list.component.html',
 })
 export class TrainingListComponent implements OnInit {
-  // TODO: type any
-  trainingsData: any[] = []
-  loading: boolean = true
+  trainingsData: TrainingData[] = [];
+  loading: boolean = true;
 
   constructor(
     private trainingsService: TrainingsService,
-    private modalService: HlmDialogService,
-  ) { }
+    private modalService: HlmDialogService
+  ) {}
 
   ngOnInit(): void {
     this.trainingsService.getAllTrainings().subscribe({
       next: (data) => {
-        this.trainingsData = data
-        this.loading = false
+
+        this.trainingsData =
+          data &&
+          data.map(
+            (item: {
+              node: LearningResource & {
+                learning_resource_type: LearningResourceType;
+              };
+            }) => {
+              const { node } = item;
+              const { name, description, is_mandatory, deadline_at } = node;
+              return {
+                trainingName: name,
+                trainingDesc: description,
+                isMandatory: is_mandatory,
+                dueDate: deadline_at,
+              };
+            }
+          );
+        this.loading = false;
       },
       error: (err) => {
-        console.error('Error fetching trainings data', err)
-        this.loading = false
-      }
-    })
+        console.error('Error fetching trainings data', err);
+        this.loading = false;
+      },
+    });
   }
 
   // open modal for AddTrainingFormComponent
   onOpenAddTraining() {
-    this.modalService.open(AddTrainingFormComponent, { closeOnBackdropClick: false, contentClass: 'custom-modal-width' })
+    this.modalService.open(AddTrainingFormComponent, {
+      closeOnBackdropClick: false,
+      contentClass: 'custom-modal-width',
+    });
   }
 }

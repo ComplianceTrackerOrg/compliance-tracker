@@ -40,14 +40,14 @@
       </div>
       <hlm-trow *ngFor="let training of trainingsData">
         <hlm-td truncate class="font-medium w-5/12">{{
-          training.node.name
+          training.trainingName
         }}</hlm-td>
-        <hlm-td class="w-2/12">{{ training.node.description }}</hlm-td>
+        <hlm-td class="w-2/12">{{ training.trainingDesc }}</hlm-td>
         <hlm-td class="w-2/12">{{
-          training.node.is_mandatory ? "Yes" : "No"
+          training.isMandatory ? "Yes" : "No"
         }}</hlm-td>
         <hlm-td class="w-2/12">{{
-          training.node.deadline_at | date : "MMM dd, YYYY"
+          training.dueDate | date : "MMM dd, YYYY"
         }}</hlm-td>
         <hlm-td class="justify-end w-1/12">
           <div class="grid grid-cols-2 gap-2">
