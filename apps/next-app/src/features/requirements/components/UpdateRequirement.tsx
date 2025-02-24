@@ -69,7 +69,7 @@ const UpdateRequirement = (props: UpdateRequirementProps) => {
         dueDate: data.deadline_at ? new Date(data.deadline_at) : undefined,
       })
     }
-  }, [data])
+  }, [data, form, isOpen])
 
   const handleOpenChange = (isModalOpen: boolean) => {
     if (isModalOpen) {
@@ -120,7 +120,10 @@ const UpdateRequirement = (props: UpdateRequirementProps) => {
           <DialogDescription>Update requirement information.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form className="space-y-4">
+          <form onSubmit={(e) => {
+                  e.preventDefault()
+                  onSubmit(getValues())
+                }} className="space-y-4">
             <FormField
               name="name"
               control={control}
@@ -211,13 +214,9 @@ const UpdateRequirement = (props: UpdateRequirementProps) => {
                 Cancel
               </Button>
               {/* Note: submit button does not work */}
-              <Button
+              <Button type="submit"
                 className="bg-blue-500 text-white"
                 variant="outline"
-                onClick={(e) => {
-                  e.preventDefault()
-                  onSubmit(getValues())
-                }}
               >
                 Save Changes
               </Button>

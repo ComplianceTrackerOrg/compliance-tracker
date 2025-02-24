@@ -25,11 +25,11 @@
   <ng-template #trainingListTable>
     <hlm-table class="w-full min-w-[400px]">
       <hlm-trow>
-        <hlm-th class="w-60">Name</hlm-th>
-        <hlm-th class="w-60">Description</hlm-th>
-        <hlm-th class="flex-1">Mandatory</hlm-th>
-        <hlm-th class="flex-1">Due date</hlm-th>
-        <hlm-th class="justify-end w-40">Actions</hlm-th>
+        <hlm-th class="w-5/12 font-bold">NAME</hlm-th>
+        <hlm-th class="w-2/12 font-bold">DESCRIPTION</hlm-th>
+        <hlm-th class="w-2/12 font-bold">MANDATORY</hlm-th>
+        <hlm-th class="w-2/12 font-bold">DUE DATE</hlm-th>
+        <hlm-th class="justify-end w-1/12 font-bold">ACTIONS</hlm-th>
       </hlm-trow>
       <!-- When list is empty -->
       <div
@@ -39,17 +39,17 @@
         No trainings available.
       </div>
       <hlm-trow *ngFor="let training of trainingsData">
-        <hlm-td truncate class="font-medium w-60">{{
+        <hlm-td truncate class="font-medium w-5/12">{{
           training.trainingName
         }}</hlm-td>
-        <hlm-td class="w-60">{{ training.trainingDesc }}</hlm-td>
-        <hlm-td class="flex-1">{{
+        <hlm-td class="w-2/12">{{ training.trainingDesc }}</hlm-td>
+        <hlm-td class="w-2/12">{{
           training.isMandatory ? "Yes" : "No"
         }}</hlm-td>
-        <hlm-td class="flex-1">{{
+        <hlm-td class="w-2/12">{{
           training.dueDate | date : "MMM dd, YYYY"
         }}</hlm-td>
-        <hlm-td class="justify-end w-40">
+        <hlm-td class="justify-end w-1/12">
           <div class="grid grid-cols-2 gap-2">
             <spartan-button
               variant="outline"
