@@ -13,8 +13,7 @@ import { TrainingData } from '../../trainings.model';
 })
 export class EditTrainingFormComponent {
   private context = injectBrnDialogContext<TrainingData>();
-  constructor(private dialogRef: BrnDialogRef<EditTrainingFormComponent>) {
-  }
+  constructor(private dialogRef: BrnDialogRef<EditTrainingFormComponent>) {}
   @Input() trainingData?: TrainingData = this.context;
   loading: boolean = false;
 
@@ -57,7 +56,7 @@ export class EditTrainingFormComponent {
       type: 'date',
       label: 'Due date',
       validations: { required: true },
-      value: this.trainingData?.dueDate.split('T')[0],
+      value: this.trainingData?.dueDate?.split('T')[0],
     },
     {
       name: 'isMandatory',
