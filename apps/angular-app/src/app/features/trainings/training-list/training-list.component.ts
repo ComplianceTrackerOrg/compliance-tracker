@@ -58,14 +58,21 @@ export class TrainingListComponent implements OnInit {
               };
             }) => {
               const { node } = item;
-              const { name, description, is_mandatory, deadline_at, url } =
-                node;
+              const {
+                name,
+                description,
+                is_mandatory,
+                deadline_at,
+                url,
+                learning_resource_type,
+              } = node;
               return {
                 trainingName: name,
                 trainingDesc: description,
                 isMandatory: is_mandatory,
                 dueDate: deadline_at,
                 trainingUrl: url,
+                resourceType: learning_resource_type.name,
               };
             }
           );

@@ -2,7 +2,7 @@ import {
   FormBuilderComponent,
   FormField,
 } from '@/app/shared/components/ui/form-builder/form-builder.component';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { TrainingData } from '../../trainings.model';
 
@@ -16,6 +16,12 @@ export class EditTrainingFormComponent {
   constructor(private dialogRef: BrnDialogRef<EditTrainingFormComponent>) {}
   @Input() trainingData?: TrainingData = this.context;
   loading: boolean = false;
+
+  resourceTypeOptions: { value: string; label: string }[] = [
+    { value: '1', label: 'Digital learning' },
+    { value: '2', label: 'Classroom' },
+    { value: '3', label: 'Virtual classroom' },
+  ];
 
   formFields: FormField[] = [
     {
@@ -38,11 +44,12 @@ export class EditTrainingFormComponent {
       type: 'select',
       label: 'Training type',
       placeholder: 'Select training type...',
-      options: [
-        { value: '1', label: 'Digital learning' },
-        { value: '2', label: 'Classroom' },
-        { value: '3', label: 'Virtual classroom' },
-      ],
+      options: this.resourceTypeOptions,
+      value: this.resourceTypeOptions?.find(
+        (option) =>
+          option.label.replace(/\s/g, '').toLowerCase() ===
+          this.trainingData?.resourceType?.replace(/\s/g, '')?.toLowerCase()
+      )?.value,
     },
     {
       name: 'trainingUrl',

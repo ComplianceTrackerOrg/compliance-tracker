@@ -5,6 +5,7 @@ export type TrainingData = {
   trainingUrl: string;
   status?: boolean;
   isMandatory?: boolean;
+  resourceType?: string;
 };
 
 export type LearningResource = {

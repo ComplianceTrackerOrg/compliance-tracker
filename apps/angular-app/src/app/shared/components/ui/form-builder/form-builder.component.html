@@ -41,7 +41,7 @@
       *ngIf="field.type === 'select'"
       [formControlName]="field.name"
       class="inline-block"
-      [placeholder]="field.placeholder || ''"
+      [placeholder]="getSelectedResourceType(field) || field.placeholder || ''"
     >
       <hlm-select-trigger class="w-full">
         <hlm-select-value />
