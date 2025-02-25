@@ -3,6 +3,8 @@ import { streamText } from "ai"
 
 import { presetMemory } from "./lib/memory"
 
+// @note @todo Add tooling capabilities for EllenAI
+// @note Checkout https://sdk.vercel.ai/docs/foundations/tools
 export async function POST(req: Request) {
   const OPEN_AI_KEYS = process.env.OPENAI_API_KEY
 
