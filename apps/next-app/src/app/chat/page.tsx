@@ -1,12 +1,13 @@
 "use client"
-
-import type React from "react"
-
+import React, { useRef, useEffect } from "react"
 import { useChat } from "@ai-sdk/react"
 import type { Message } from "ai"
-import ReactMarkdown from "react-markdown"
-import { useRef, useEffect } from "react"
 
+import ReactMarkdown from "react-markdown"
+
+// @note @todo Needs to make the chatbox very very responsive
+// @todo Needs to implement a design that is appropriate for a chatbox.
+// See v0 and Replit UIs for inspiration.
 export default function ChatPage() {
   const { messages, input, handleInputChange, handleSubmit } = useChat()
   const textareaRef = useRef<HTMLTextAreaElement>(null)

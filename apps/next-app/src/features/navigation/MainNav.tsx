@@ -13,7 +13,6 @@ import {
 import { Link } from "@/components/ui/link"
 import { Button } from "@/components/ui/button"
 
-//TODO: hide/display links based on user role
 const MainNav = () => {
   const [loggedIn, setIsLoggedIn] = useState(false)
   const { authUser } = useAuth()
@@ -84,6 +83,13 @@ const MainNav = () => {
                 <Link href="/mandatory-trainings" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     My Trainings
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/mandatory-trainings" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    🧠 EllenDyAI
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
