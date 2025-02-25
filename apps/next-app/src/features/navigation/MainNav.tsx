@@ -69,10 +69,18 @@ const MainNav = () => {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
+
           <NavigationMenuItem>
             <Link href="/mandatory-trainings" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 My Trainings
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/chat" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                🧠 EllenAI
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
