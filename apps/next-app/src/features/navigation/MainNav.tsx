@@ -34,48 +34,8 @@ const MainNav = () => {
       </Link>
       <NavigationMenu>
         <NavigationMenuList>
-          <NavigationMenuItem>
-            <Link href="/dashboard" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Dashboard
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/users" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Assign Users
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/requirements" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Requirements
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/my-requirements" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                My Requirements
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/trainings" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Trainings
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/mandatory-trainings" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                My Trainings
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
+          
+
           {!loggedIn && (
             <NavigationMenuItem>
               <Link href="/login" legacyBehavior passHref>
@@ -86,17 +46,53 @@ const MainNav = () => {
             </NavigationMenuItem>
           )}
           {loggedIn && (
-            <NavigationMenuItem>
-              <Button
-                variant="ghost"
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleSignOut()
-                }}
-              >
-                Log Out
-              </Button>
-            </NavigationMenuItem>
+                      <><NavigationMenuItem>
+              <Link href="/dashboard" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Dashboard
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem><NavigationMenuItem>
+                <Link href="/users" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Assign Users
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem><NavigationMenuItem>
+                <Link href="/requirements" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Requirements
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem><NavigationMenuItem>
+                <Link href="/my-requirements" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    My Requirements
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem><NavigationMenuItem>
+                <Link href="/trainings" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Trainings
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem><NavigationMenuItem>
+                <Link href="/mandatory-trainings" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    My Trainings
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem><NavigationMenuItem>
+                <Button
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleSignOut()
+                  } }
+                >
+                  Log Out
+                </Button>
+              </NavigationMenuItem></>
           )}
         </NavigationMenuList>
       </NavigationMenu>
