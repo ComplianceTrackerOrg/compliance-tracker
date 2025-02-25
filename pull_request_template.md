@@ -1,6 +1,6 @@
 ## Issue Links
 
-- **Issue** [Item #XXX](https://github.com/mestaciodel/compliance-tracker/issues/XXX)  
+- **Issue:** [Item #XXX](https://github.com/mestaciodel/compliance-tracker/issues/XXX)  
   _Link to the related issue or task. Sample: https://github.com/mestaciodel/compliance-tracker/issues/29_
 
 ## Type of Change 💻
@@ -10,16 +10,6 @@
 
   - [ ] **New Feature 🚀** – Introducing a new feature or functionality.
   - [ ] **Bug Fix 🐛** – Resolving a bug or issue.
-
-  _Provide a brief description of the nature of the change._
-
-## Affected Components
-
-_Please select if the change relates to any of the following repos:_
-
-- [ ] **Next.js** – Changes affecting the Next.js frontend.
-- [ ] **Angular** – Changes related to the Angular frontend.
-- [ ] **Backend** – Changes involving the backend server or API.
 
 ## Description 📜
 
@@ -32,4 +22,4 @@ _Example:_
 
 ## Screenshots 📸
 
-\_Please attach screenshots, videos, or GIFs that demonstrate the visual changes or new features. If applicable, show before and after
+_Please attach screenshots, videos, or GIFs that demonstrate the visual changes or new features. If applicable, show before and after_

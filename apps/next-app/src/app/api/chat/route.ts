@@ -18,8 +18,6 @@ export async function POST(req: Request) {
 
   const { messages } = await req.json()
 
-  console.log("memory", presetMemory)
-
   const conversationWithPresetMemory = [
     {
       role: "system",
