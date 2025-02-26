@@ -1,21 +1,41 @@
 "use client"
 import { useEffect, useState } from "react"
-import { AuthenticatedUser, ResourceType } from "@/types"
-import UserTable from "./UserTable"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-
+import { FormProvider, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import SelectResourceType from "./SelectResourceType"
 import SelectResource from "./SelectResource"
+import UserTable from "./UserTable"
 import useAssignUsers from "@/lib/hooks/assignment/useAssignUsers"
+import {
+  AuthenticatedUser,
+  ResourceType,
+  UserAssignmentModel,
+  userAssignmentSchema,
+} from "@/types"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const AssignUsers = () => {
+  const methods = useForm<UserAssignmentModel>({
+    resolver: zodResolver(userAssignmentSchema),
+    defaultValues: {
+      assignedUserIds: [],
+      unassignedUserIds: [],
+    },
+  })
+  const {
+    formState: { isDirty },
+    reset,
+    setValue,
+  } = methods
+
   const {
     fetchAssignedRequirementUsers,
     fetchAssignedTrainingUsers,
     fetchUnassignedRequirementUsers,
     fetchUnassignedTrainingUsers,
+    saveUserList,
   } = useAssignUsers()
 
   const [selectedResourceType, setResourceType] = useState<ResourceType>(
@@ -100,6 +120,22 @@ const AssignUsers = () => {
     }
   }
 
+  // TODO: implement restore to defaults
+  const onCancel = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    reset()
+  }
+
+  // TODO: save only when form is "dirty"
+  const onSubmit = async (data: UserAssignmentModel) => {
+    if (!isDirty) {
+      console.log("form is clean, no need to save")
+      return
+    }
+
+    await saveUserList(selectedResource, data)
+  }
+
   useEffect(() => {
     if (!selectedResourceType || !selectedResource) return
 
@@ -118,63 +154,88 @@ const AssignUsers = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedResourceType, selectedResource])
 
+  useEffect(() => {
+    setValue(
+      "unassignedUserIds",
+      Array.from(availableUsers.map((user) => user.id))
+    )
+    setValue(
+      "assignedUserIds",
+      Array.from(assignedUsers.map((user) => user.id))
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [availableUsers, assignedUsers])
+
   return (
-    <div className="w-full max-w-6xl mx-auto">
-      <Card>
-        <CardHeader>
-          <CardTitle>Requirement / Training Selection</CardTitle>
-        </CardHeader>
-        <CardContent className="grid grid-cols-3 gap-4">
-          <SelectResourceType onSelect={handleResourceTypeSelection} />
-          <div className="col-span-2">
-            <SelectResource
-              mode={selectedResourceType}
-              onSelect={handleResourceSelection}
-            />
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <div className="w-full max-w-6xl mx-auto">
+          <Card>
+            <CardHeader>
+              <CardTitle>Requirement / Training Selection</CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-3 gap-4">
+              <SelectResourceType onSelect={handleResourceTypeSelection} />
+              <div className="col-span-2">
+                <SelectResource
+                  mode={selectedResourceType}
+                  onSelect={handleResourceSelection}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="flex gap-6 mt-10">
+            <div className="flex-1">
+              <UserTable
+                fieldName="unassignedUserIds"
+                users={availableUsers}
+                title="All Users"
+                selected={selectedAvailable}
+                onSelect={setSelectedAvailable}
+                onAddAll={handleAddAllUsers}
+              />
+            </div>
+
+            <div className="flex flex-col items-center justify-center gap-4">
+              <Button
+                variant="default"
+                size="icon"
+                onClick={moveToAssigned}
+                disabled={selectedAvailable.size === 0}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="default"
+                size="icon"
+                onClick={moveToAvailable}
+                disabled={selectedAssigned.size === 0}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="flex-1">
+              <UserTable
+                fieldName="assignedUserIds"
+                users={assignedUsers}
+                title="Assigned Users"
+                selected={selectedAssigned}
+                onSelect={setSelectedAssigned}
+                onRemoveAll={handleRemoveAllUsers}
+              />
+            </div>
           </div>
-        </CardContent>
-      </Card>
 
-      <div className="flex gap-6 mt-10">
-        <UserTable
-          users={availableUsers}
-          title="All Users"
-          selected={selectedAvailable}
-          onSelect={setSelectedAvailable}
-          onAddAll={handleAddAllUsers}
-        />
-        <div className="flex flex-col items-center justify-center gap-4">
-          <Button
-            variant="default"
-            size="icon"
-            onClick={moveToAssigned}
-            disabled={selectedAvailable.size === 0}
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="default"
-            size="icon"
-            onClick={moveToAvailable}
-            disabled={selectedAssigned.size === 0}
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
+          <div className="flex justify-end gap-4 mt-10">
+            <Button variant="outline" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button type="submit">Save</Button>
+          </div>
         </div>
-        <UserTable
-          users={assignedUsers}
-          title="Assigned Users"
-          selected={selectedAssigned}
-          onSelect={setSelectedAssigned}
-          onRemoveAll={handleRemoveAllUsers}
-        />
-      </div>
-
-      <div className="flex justify-end gap-4 mt-10">
-        <Button variant="outline">Cancel</Button>
-        <Button>Save</Button>
-      </div>
-    </div>
+      </form>
+    </FormProvider>
   )
 }
 
