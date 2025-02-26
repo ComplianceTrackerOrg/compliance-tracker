@@ -15,6 +15,8 @@
     "codegen:watch": "graphql-codegen --watch"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^1.1.13",
+    "@ai-sdk/react": "^1.1.17",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@hookform/resolvers": "^3.10.0",
     "@next/env": "^15.1.4",
@@ -30,6 +32,7 @@
     "@supabase/supabase-js": "^2.48.1",
     "@tanstack/react-table": "^8.20.5",
     "@urql/next": "^1.1.3",
+    "ai": "^4.1.45",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
@@ -44,6 +47,7 @@
     "react-day-picker": "8.10.1",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
+    "react-markdown": "^10.0.0",
     "sonner": "^1.7.2",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",

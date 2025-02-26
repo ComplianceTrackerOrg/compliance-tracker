@@ -13,7 +13,6 @@ import {
 import { Link } from "@/components/ui/link"
 import { Button } from "@/components/ui/button"
 
-//TODO: hide/display links based on user role
 const MainNav = () => {
   const [loggedIn, setIsLoggedIn] = useState(false)
   const { authUser } = useAuth()
@@ -34,8 +33,6 @@ const MainNav = () => {
       </Link>
       <NavigationMenu>
         <NavigationMenuList>
-          
-
           {!loggedIn && (
             <NavigationMenuItem>
               <Link href="/login" legacyBehavior passHref>
@@ -46,53 +43,68 @@ const MainNav = () => {
             </NavigationMenuItem>
           )}
           {loggedIn && (
-                      <><NavigationMenuItem>
-              <Link href="/dashboard" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Dashboard
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem><NavigationMenuItem>
+            <>
+              <NavigationMenuItem>
+                <Link href="/dashboard" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Dashboard
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
                 <Link href="/users" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Assign Users
                   </NavigationMenuLink>
                 </Link>
-              </NavigationMenuItem><NavigationMenuItem>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
                 <Link href="/requirements" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Requirements
                   </NavigationMenuLink>
                 </Link>
-              </NavigationMenuItem><NavigationMenuItem>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
                 <Link href="/my-requirements" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     My Requirements
                   </NavigationMenuLink>
                 </Link>
-              </NavigationMenuItem><NavigationMenuItem>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
                 <Link href="/trainings" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Trainings
                   </NavigationMenuLink>
                 </Link>
-              </NavigationMenuItem><NavigationMenuItem>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
                 <Link href="/mandatory-trainings" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     My Trainings
                   </NavigationMenuLink>
                 </Link>
-              </NavigationMenuItem><NavigationMenuItem>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/mandatory-trainings" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    🧠 EllenDyAI
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
                 <Button
                   variant="ghost"
                   onClick={(e) => {
                     e.preventDefault()
                     handleSignOut()
-                  } }
+                  }}
                 >
                   Log Out
                 </Button>
-              </NavigationMenuItem></>
+              </NavigationMenuItem>
+            </>
           )}
         </NavigationMenuList>
       </NavigationMenu>
