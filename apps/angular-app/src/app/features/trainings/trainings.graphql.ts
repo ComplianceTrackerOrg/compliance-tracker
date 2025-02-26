@@ -10,6 +10,7 @@ export const GET_ALL_TRAININGS = gql`
           id
           name
           description
+          url
           is_mandatory
           deadline_at
           learning_resource_type {
@@ -22,7 +23,7 @@ export const GET_ALL_TRAININGS = gql`
       }
     }
   }
-`
+`;
 
 export const GET_TRAINING = gql`
   query queryGetTraining($id: Int!) {
@@ -45,7 +46,7 @@ export const GET_TRAINING = gql`
       }
     }
   }
-`
+`;
 
 export const GET_MY_TRAININGS = gql`
   query queryGetAssignedTrainings($userId: Int!) {
@@ -74,7 +75,7 @@ export const GET_MY_TRAININGS = gql`
       }
     }
   }
-`
+`;
 
 export const ADD_TRAINING = gql`
   mutation mutationInsertTraining($input: learning_resourceInsertInput!) {
@@ -92,4 +93,4 @@ export const ADD_TRAINING = gql`
       }
     }
   }
-`
+`;

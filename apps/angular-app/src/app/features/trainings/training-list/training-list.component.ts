@@ -16,7 +16,8 @@ import { ButtonComponent } from '~shared/components/ui/button/button.component';
 
 import { TrainingsService } from '../trainings.service';
 
-import { AddTrainingFormComponent } from '../add-training-form/add-training-form.component';
+import { AddTrainingFormComponent } from '../actions/add-training-form/add-training-form.component';
+import { EditTrainingFormComponent } from '../actions/edit-training-form/edit-training-form.component';
 import {
   LearningResource,
   LearningResourceType,
@@ -48,7 +49,6 @@ export class TrainingListComponent implements OnInit {
   ngOnInit(): void {
     this.trainingsService.getAllTrainings().subscribe({
       next: (data) => {
-
         this.trainingsData =
           data &&
           data.map(
@@ -58,12 +58,21 @@ export class TrainingListComponent implements OnInit {
               };
             }) => {
               const { node } = item;
-              const { name, description, is_mandatory, deadline_at } = node;
+              const {
+                name,
+                description,
+                is_mandatory,
+                deadline_at,
+                url,
+                learning_resource_type,
+              } = node;
               return {
                 trainingName: name,
                 trainingDesc: description,
                 isMandatory: is_mandatory,
                 dueDate: deadline_at,
+                trainingUrl: url,
+                resourceType: learning_resource_type.name,
               };
             }
           );
@@ -79,6 +88,15 @@ export class TrainingListComponent implements OnInit {
   // open modal for AddTrainingFormComponent
   onOpenAddTraining() {
     this.modalService.open(AddTrainingFormComponent, {
+      closeOnBackdropClick: false,
+      contentClass: 'custom-modal-width',
+    });
+  }
+
+  // open modal for EditTrainingFormComponent
+  onOpenEditTraining(training: TrainingData) {
+    this.modalService.open(EditTrainingFormComponent, {
+      context: training,
       closeOnBackdropClick: false,
       contentClass: 'custom-modal-width',
     });

@@ -3,7 +3,7 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog'
 
 import { FormBuilderComponent, FormField } from "~shared/components/ui/form-builder/form-builder.component";
 
-import { TrainingsService } from '../trainings.service';
+import { TrainingsService } from '../../trainings.service';
 
 @Component({
   selector: 'app-add-training-form',
