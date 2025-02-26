@@ -87,7 +87,7 @@ const MainNav = () => {
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/mandatory-trainings" legacyBehavior passHref>
+                <Link href="/chat" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     🧠 EllenDyAI
                   </NavigationMenuLink>
