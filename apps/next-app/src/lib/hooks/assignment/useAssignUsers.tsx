@@ -1,7 +1,7 @@
 import { useClient } from "@urql/next"
 import { createClient } from "@/lib/supabase/client"
 import { getUnassignedUsers, saveUserAssignments } from "@/lib/supabase/service"
-import { AuthenticatedUser, ResourceType, UserAssignmentModel } from "@/types"
+import { AuthenticatedUser, ResourceType } from "@/types"
 import {
   queryGetAssignedUsersByRequirementResource,
   queryGetAssignedUsersByTrainingResource,
@@ -113,10 +113,18 @@ const useAssignUsers = () => {
   }
 
   const saveUserList = async (
+    resourceType: ResourceType,
     resourceId: number,
-    data: UserAssignmentModel
+    newUnassignedUserIds: number[],
+    newAssignedUserIds: number[]
   ) => {
-    await saveUserAssignments(supabase, resourceId, data)
+    await saveUserAssignments(
+      supabase,
+      resourceType,
+      resourceId,
+      newUnassignedUserIds,
+      newAssignedUserIds
+    )
   }
 
   return {

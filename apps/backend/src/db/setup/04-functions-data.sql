@@ -50,3 +50,36 @@ BEGIN
   WHERE acr.resource_id = requirement_resource_id;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION save_user_assignments(
+    resource_type smallint,
+    resource_value smallint,
+    unassigned_user_ids bigint[],
+    assigned_user_ids bigint[]
+) 
+RETURNS void 
+SECURITY DEFINER 
+SET search_path = public
+AS $$
+BEGIN
+    IF resource_type = 1 THEN
+        DELETE FROM assigned_learning_resource alr1
+        WHERE resource_id = resource_value
+          AND user_id = ANY(unassigned_user_ids);
+
+        INSERT INTO assigned_learning_resource (resource_id, user_id) 
+        SELECT resource_value, unnest(assigned_user_ids);
+
+    ELSIF resource_type = 2 THEN
+        DELETE FROM assigned_compliance_resource
+        WHERE resource_id = resource_value
+          AND user_id = ANY(unassigned_user_ids);
+
+        INSERT INTO assigned_compliance_resource (resource_id, user_id)
+        SELECT resource_value, unnest(assigned_user_ids);
+
+    ELSE
+        RAISE EXCEPTION 'Invalid resource_type';
+    END IF;
+END;
+$$ LANGUAGE plpgsql;

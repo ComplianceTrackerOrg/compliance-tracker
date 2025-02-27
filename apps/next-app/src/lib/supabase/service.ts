@@ -1,6 +1,6 @@
 // TODO: Which is better, passing the SupabaseClient instance or creating it on each function?
 
-import { AuthenticatedUser, ResourceType, UserAssignmentModel } from "@/types"
+import { AuthenticatedUser, ResourceType } from "@/types"
 import { SupabaseClient, User } from "@supabase/supabase-js"
 
 const GET_UNASSIGNED_TRAINING_USERS = "get_unassigned_training_users"
@@ -135,27 +135,27 @@ const getUnassignedRequirementUsers = async (
  * Saves user assignments for a specific resource.
  *
  * @param {SupabaseClient} client - The Supabase client instance
+ * @param {ResourceType} resourceType - The type of resource (Training or Requirement)
  * @param {number} resourceId - The ID of the resource
- * @param {UserAssignmentModel} userLists - The lists of assigned and unassigned user IDs
+ * @param {number[]} newUnassignedUserIds - Array of user IDs to be unassigned
+ * @param {number[]} newAssignedUserIds - Array of user IDs to be assigned
  * @returns {Promise<void>} A promise that resolves when the operation is complete
  */
 export const saveUserAssignments = async (
   client: SupabaseClient,
+  resourceType: ResourceType,
   resourceId: number,
-  userLists: UserAssignmentModel
+  newUnassignedUserIds: number[],
+  newAssignedUserIds: number[]
 ) => {
-  const { unassignedUserIds, assignedUserIds } = userLists
-  console.log("saveUserAssignments > unassignedUserIds:", unassignedUserIds)
-  console.log("saveUserAssignments > assignedUserIds:", assignedUserIds)
+  const { error } = await client.rpc("save_user_assignments", {
+    resource_type: resourceType,
+    resource_value: resourceId,
+    unassigned_user_ids: newUnassignedUserIds,
+    assigned_user_ids: newAssignedUserIds,
+  })
 
-  //TODO: implement saving user assignments
-  // const { error } = await client.rpc("save_user_assignments", {
-  //   resource_id: resourceId,
-  //   unassigned_user_ids: unassignedUserIds,
-  //   assigned_user_ids: assignedUserIds,
-  // })
-
-  // if (error) {
-  //   throw new Error(`Error saving user assignments: ${error.message}`)
-  // }
+  if (error) {
+    throw new Error(`Error saving user assignments: ${error.message}`)
+  }
 }

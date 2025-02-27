@@ -39,6 +39,7 @@ const UserTable = (props: UserTableProps) => {
               {onAddAll && (
                 <Button
                   size="sm"
+                  className="bg-blue-500 text-white"
                   onClick={() => {
                     field.onChange([])
                     onAddAll()
@@ -50,6 +51,7 @@ const UserTable = (props: UserTableProps) => {
               {onRemoveAll && (
                 <Button
                   size="sm"
+                  className="bg-blue-500 text-white"
                   onClick={() => {
                     field.onChange([])
                     onRemoveAll()
