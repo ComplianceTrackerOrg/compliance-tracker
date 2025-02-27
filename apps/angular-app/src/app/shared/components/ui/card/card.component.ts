@@ -6,20 +6,16 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="p-4">
+    <div class="p-4 border rounded-lg">
       <h3 class="text-lg font-semibold">{{ title }}</h3>
-      <!-- TODO: modify to accept like ReactNode type -->
-      <p class="text-gray-500">{{ content }}</p>
-
+      <ng-content />
       <div *ngIf="footer" class="mt-4 text-sm text-gray-600">
         {{ footer }}
       </div>
     </div>
-  `
+  `,
 })
-
 export class CardComponent {
   @Input() title: string = 'Card Title';
-  @Input() content: string = 'This is the card content.';
   @Input() footer?: string; // Optional footer
 }
