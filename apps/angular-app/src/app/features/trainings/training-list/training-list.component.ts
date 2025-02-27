@@ -19,10 +19,13 @@ import { TrainingsService } from '../trainings.service';
 import { AddTrainingFormComponent } from '../actions/add-training-form/add-training-form.component';
 import { EditTrainingFormComponent } from '../actions/edit-training-form/edit-training-form.component';
 import {
+  LearningResourceData,
+  TrainingData,
+} from '../../../shared/components/models/trainings.model';
+import {
   LearningResource,
   LearningResourceType,
-  TrainingData,
-} from '../trainings.model';
+} from '@/app/shared/components/models/globals.model';
 
 @Component({
   imports: [
@@ -48,34 +51,28 @@ export class TrainingListComponent implements OnInit {
 
   ngOnInit(): void {
     this.trainingsService.getAllTrainings().subscribe({
-      next: (data) => {
+      next: (data: LearningResourceData[]) => {
         this.trainingsData =
           data &&
-          data.map(
-            (item: {
-              node: LearningResource & {
-                learning_resource_type: LearningResourceType;
-              };
-            }) => {
-              const { node } = item;
-              const {
-                name,
-                description,
-                is_mandatory,
-                deadline_at,
-                url,
-                learning_resource_type,
-              } = node;
-              return {
-                trainingName: name,
-                trainingDesc: description,
-                isMandatory: is_mandatory,
-                dueDate: deadline_at,
-                trainingUrl: url,
-                resourceType: learning_resource_type.name,
-              };
-            }
-          );
+          data.map((item) => {
+            const { node } = item;
+            const {
+              name,
+              description,
+              is_mandatory,
+              deadline_at,
+              url,
+              learning_resource_type,
+            } = node;
+            return {
+              trainingName: name,
+              trainingDesc: description,
+              isMandatory: is_mandatory,
+              dueDate: deadline_at,
+              trainingUrl: url,
+              resourceType: learning_resource_type.name,
+            };
+          });
         this.loading = false;
       },
       error: (err) => {

@@ -4,7 +4,7 @@ import {
 } from '@/app/shared/components/ui/form-builder/form-builder.component';
 import { Component, Input } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
-import { TrainingData } from '../../trainings.model';
+import { TrainingData } from '../../../../shared/components/models/trainings.model';
 
 @Component({
   selector: 'app-edit-training-form',
@@ -39,7 +39,6 @@ export class EditTrainingFormComponent {
       value: this.trainingData?.trainingDesc,
     },
     {
-      // TODO: Bind current training value for training type
       name: 'trainingType',
       type: 'select',
       label: 'Training type',

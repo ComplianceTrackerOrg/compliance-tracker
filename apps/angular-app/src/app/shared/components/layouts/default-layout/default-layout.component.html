@@ -1,23 +1,23 @@
 <div class="flex flex-col min-h-screen">
-	<!-- Header -->
-	<header class="bg-primary text-white p-4 shadow-md">
-		<div class="container mx-auto flex justify-between items-center">
-			<h1 class="text-xl font-bold">My Angular App</h1>
-			<nav>
-				<a routerLink="/dashboard" class="px-4 py-2">Dashboard</a>
-				<a routerLink="/manage-trainings" class="px-4 py-2">Manage trainings</a>
-				<a routerLink="/my-trainings" class="px-4 py-2">My trainings</a>
-			</nav>
-		</div>
-	</header>
+  <!-- Header -->
+  <header class="bg-primary text-white p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold">Compliance Tracker</h1>
+      <nav>
+        <a routerLink="/dashboard" class="px-4 py-2">Dashboard</a>
+        <a routerLink="/manage-trainings" class="px-4 py-2">Manage trainings</a>
+        <a routerLink="/my-trainings" class="px-4 py-2">My trainings</a>
+      </nav>
+    </div>
+  </header>
 
-	<!-- Main Content -->
-	<main class="flex-1 container mx-auto p-6">
-		<router-outlet></router-outlet>
-	</main>
+  <!-- Main Content -->
+  <main class="flex-1 container mx-auto p-6">
+    <router-outlet></router-outlet>
+  </main>
 
-	<!-- Footer -->
-	<footer class="bg-gray-500 text-white text-center p-4 mt-6">
-		&copy; 2025 My Angular App
-	</footer>
+  <!-- Footer -->
+  <footer class="bg-gray-500 text-white text-center p-4 mt-6">
+    &copy; 2025 Compliance Tracker
+  </footer>
 </div>

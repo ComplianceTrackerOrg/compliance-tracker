@@ -9,28 +9,33 @@ import { MyTrainingsComponent } from 'features/trainings/my-trainings/my-trainin
 // TODO:
 // find more efficient way to use layout component once user is loggedin here in routing
 export const routes: Routes = [
-	{
-		path: 'login',
-		component: LoginComponent,
-	},
-	{
-		path: '',
-		component: DefaultLayoutComponent,
-		children: [
-			{
-				path: 'dashboard',
-				component: DashboardComponent,
-			},
-			{
-				path: 'manage-trainings',
-				component: TrainingListComponent
-			},
-			// User
-			{
-				path: 'my-trainings',
-				component: MyTrainingsComponent
-			},
-		]
-	},
-	{ path: '**', redirectTo: 'login' },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: '',
+    component: DefaultLayoutComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+      },
+      {
+        path: 'manage-trainings',
+        component: TrainingListComponent,
+      },
+      // User
+      {
+        path: 'my-trainings',
+        component: MyTrainingsComponent,
+      },
+    ],
+  },
+  { path: '**', redirectTo: 'login' },
 ];

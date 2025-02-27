@@ -15,11 +15,14 @@ import { ButtonComponent } from '~shared/components/ui/button/button.component';
 
 import { TrainingsService } from '../trainings.service';
 import {
+  AssignedLearningResourceData,
+  TrainingData,
+} from '../../../shared/components/models/trainings.model';
+import {
   AssignedLearningResource,
   LearningResource,
   ResourceStatus,
-  TrainingData,
-} from '../trainings.model';
+} from '@/app/shared/components/models/globals.model';
 
 @Component({
   selector: 'app-my-trainings',
@@ -43,19 +46,14 @@ export class MyTrainingsComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO: make passed id dynamic
-    const userId = 35
+    const userId = 1;
     if (userId) {
       this.trainingsService.getMyTrainings(userId).subscribe({
-        next: (data) => {
+        next: (data: AssignedLearningResourceData[]) => {
           this.myTrainingsData =
             data &&
             data.map(
-              (item: {
-                node: AssignedLearningResource & {
-                  learning_resource: LearningResource;
-                  resource_status: ResourceStatus;
-                };
-              }) => {
+              (item) => {
                 const { node } = item;
                 const { learning_resource: resource, resource_status: status } =
                   node;

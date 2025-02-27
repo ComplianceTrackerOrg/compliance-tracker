@@ -1,13 +1,3 @@
-export type TrainingData = {
-  trainingName: string;
-  trainingDesc: string;
-  dueDate: string;
-  trainingUrl: string;
-  status?: boolean;
-  isMandatory?: boolean;
-  resourceType?: string;
-};
-
 export type LearningResource = {
   id: number;
   type_id: number;
