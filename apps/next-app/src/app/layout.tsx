@@ -5,6 +5,7 @@ import { MainNav } from "@/features/navigation"
 
 import "./globals.css"
 import { AuthProvider } from "@/lib/hooks/auth"
+import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = localFont({
   src: "../../public/assets/fonts/GeistVF.woff",
@@ -35,6 +36,7 @@ export default function RootLayout({
         <AuthProvider>
           <MainNav />
           {children}
+          <Toaster />
         </AuthProvider>
       </body>
     </html>

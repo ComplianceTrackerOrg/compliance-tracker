@@ -62,8 +62,8 @@ export const editRequirementSchema = addRequirementSchema.extend({
 export type EditRequirementModel = z.infer<typeof editRequirementSchema>
 
 export const userAssignmentSchema = z.object({
-  assignedUserIds: z.array(z.number()).optional(),
-  unassignedUserIds: z.array(z.number()).optional(),
+  movedToAssigned: z.array(z.number()).optional(),
+  movedToUnassigned: z.array(z.number()).optional(),
 })
 
 export type UserAssignmentModel = z.infer<typeof userAssignmentSchema>
