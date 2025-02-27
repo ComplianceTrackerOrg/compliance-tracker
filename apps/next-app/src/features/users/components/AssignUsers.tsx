@@ -15,13 +15,14 @@ import {
 } from "@/types"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { toast } from "sonner"
 
 const AssignUsers = () => {
   const methods = useForm<UserAssignmentModel>({
     resolver: zodResolver(userAssignmentSchema),
     defaultValues: {
-      assignedUserIds: [],
-      unassignedUserIds: [],
+      movedToAssigned: [],
+      movedToUnassigned: [],
     },
   })
   const {
@@ -48,6 +49,12 @@ const AssignUsers = () => {
     new Set()
   )
   const [selectedAssigned, setSelectedAssigned] = useState<Set<number>>(
+    new Set()
+  )
+  const [originalAssignedIds, setOriginalAssignedIds] = useState<Set<number>>(
+    new Set()
+  )
+  const [originalAvailableIds, setOriginalAvailableIds] = useState<Set<number>>(
     new Set()
   )
 
@@ -102,9 +109,11 @@ const AssignUsers = () => {
 
     if (unassigned) {
       setAvailableUsers(unassigned)
+      setOriginalAvailableIds(new Set(unassigned.map((user) => user.id)))
     }
     if (assigned) {
       setAssignedUsers(assigned)
+      setOriginalAssignedIds(new Set(assigned.map((user) => user.id)))
     }
   }
 
@@ -114,9 +123,11 @@ const AssignUsers = () => {
 
     if (unassigned) {
       setAvailableUsers(unassigned)
+      setOriginalAvailableIds(new Set(unassigned.map((user) => user.id)))
     }
     if (assigned) {
       setAssignedUsers(assigned)
+      setOriginalAssignedIds(new Set(assigned.map((user) => user.id)))
     }
   }
 
@@ -128,12 +139,35 @@ const AssignUsers = () => {
 
   // TODO: save only when form is "dirty"
   const onSubmit = async (data: UserAssignmentModel) => {
+    const { movedToUnassigned, movedToAssigned } = data
+
+    const unAssignedUsersSet = new Set(movedToUnassigned)
+    const newUnassignedUserIds =
+      unAssignedUsersSet.difference(originalAvailableIds)
+
+    const assignedUsersSet = new Set(movedToAssigned)
+    const newAssignedUserIds = assignedUsersSet.difference(originalAssignedIds)
+
     if (!isDirty) {
-      console.log("form is clean, no need to save")
+      toast.info("No changes made")
       return
     }
 
-    await saveUserList(selectedResource, data)
+    try {
+      await saveUserList(
+        selectedResourceType,
+        selectedResource,
+        [...newUnassignedUserIds],
+        [...newAssignedUserIds]
+      )
+
+      setOriginalAvailableIds(new Set(movedToUnassigned))
+      setOriginalAssignedIds(new Set(movedToAssigned))
+      reset(data)
+      toast.info("Users assigned successfully")
+    } catch {
+      toast.error("Error assigning users")
+    }
   }
 
   useEffect(() => {
@@ -156,11 +190,11 @@ const AssignUsers = () => {
 
   useEffect(() => {
     setValue(
-      "unassignedUserIds",
+      "movedToUnassigned",
       Array.from(availableUsers.map((user) => user.id))
     )
     setValue(
-      "assignedUserIds",
+      "movedToAssigned",
       Array.from(assignedUsers.map((user) => user.id))
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -188,7 +222,7 @@ const AssignUsers = () => {
           <div className="flex gap-6 mt-10">
             <div className="flex-1">
               <UserTable
-                fieldName="unassignedUserIds"
+                fieldName="movedToUnassigned"
                 users={availableUsers}
                 title="All Users"
                 selected={selectedAvailable}
@@ -217,7 +251,7 @@ const AssignUsers = () => {
             </div>
             <div className="flex-1">
               <UserTable
-                fieldName="assignedUserIds"
+                fieldName="movedToAssigned"
                 users={assignedUsers}
                 title="Assigned Users"
                 selected={selectedAssigned}
@@ -231,7 +265,9 @@ const AssignUsers = () => {
             <Button variant="outline" onClick={onCancel}>
               Cancel
             </Button>
-            <Button type="submit">Save</Button>
+            <Button type="submit" className="bg-blue-500 text-white">
+              Save
+            </Button>
           </div>
         </div>
       </form>
