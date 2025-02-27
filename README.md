@@ -64,6 +64,22 @@ Github Projects: https://github.com/users/mestaciodel/projects/2
 
 Figma (In-progress): https://www.figma.com/design/oMqoDKjiCLmZ9DkFvyemBr/mandatory-tracker-version-1?node-id=0-1&p=f&t=Hu9mk0CPfu0h52FK-0
 
+### .env file content
+
+NEXT_PUBLIC_SUPABASE_GRAPHQL_URL=
+
+SUPABASE_GRAPHQL_URL=
+
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_API_KEY=
+NEXT_PUBLIC_AUTH_CALLBACK=
+
+SUPABASE_URL=
+SUPABASE_API_KEY=
+
+AUTH_CALLBACK=
+OPENAI_API_KEY=
+
 ### NOTE
 
 If you're unable to login to the dashboard in the next app, you'll need to add a 'Name' to your github profile then try logging in.
