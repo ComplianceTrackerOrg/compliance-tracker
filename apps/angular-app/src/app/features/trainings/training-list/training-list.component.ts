@@ -20,12 +20,10 @@ import { AddTrainingFormComponent } from '../actions/add-training-form/add-train
 import { EditTrainingFormComponent } from '../actions/edit-training-form/edit-training-form.component';
 import {
   LearningResourceData,
+  ResourceTypeData,
+  ResourceTypeOption,
   TrainingData,
 } from '../../../shared/components/models/trainings.model';
-import {
-  LearningResource,
-  LearningResourceType,
-} from '@/app/shared/components/models/globals.model';
 
 @Component({
   imports: [
@@ -41,6 +39,7 @@ import {
   templateUrl: './training-list.component.html',
 })
 export class TrainingListComponent implements OnInit {
+  resourceTypeOptions: ResourceTypeOption[] = [];
   trainingsData: TrainingData[] = [];
   loading: boolean = true;
 
@@ -57,6 +56,7 @@ export class TrainingListComponent implements OnInit {
           data.map((item) => {
             const { node } = item;
             const {
+              id,
               name,
               description,
               is_mandatory,
@@ -65,6 +65,7 @@ export class TrainingListComponent implements OnInit {
               learning_resource_type,
             } = node;
             return {
+              id,
               trainingName: name,
               trainingDesc: description,
               isMandatory: is_mandatory,
@@ -73,10 +74,29 @@ export class TrainingListComponent implements OnInit {
               resourceType: learning_resource_type.name,
             };
           });
-        this.loading = false;
       },
       error: (err) => {
         console.error('Error fetching trainings data', err);
+        this.loading = false;
+      },
+    });
+
+    this.trainingsService.getAllTrainingTypes().subscribe({
+      next: (data: ResourceTypeData[]) => {
+        this.resourceTypeOptions =
+          data &&
+          data.map((item) => {
+            const { node } = item;
+            const { id, name } = node;
+            return {
+              value: id.toString(),
+              label: name,
+            };
+          });
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching training types data', err);
         this.loading = false;
       },
     });
@@ -93,7 +113,7 @@ export class TrainingListComponent implements OnInit {
   // open modal for EditTrainingFormComponent
   onOpenEditTraining(training: TrainingData) {
     this.modalService.open(EditTrainingFormComponent, {
-      context: training,
+      context: { ...training, resourceTypeOptions: this.resourceTypeOptions },
       closeOnBackdropClick: false,
       contentClass: 'custom-modal-width',
     });

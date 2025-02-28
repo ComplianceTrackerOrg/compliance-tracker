@@ -4,7 +4,11 @@ import {
 } from '@/app/shared/components/ui/form-builder/form-builder.component';
 import { Component, Input } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
-import { TrainingData } from '../../../../shared/components/models/trainings.model';
+import {
+  ResourceTypeOption,
+  TrainingData,
+} from '../../../../shared/components/models/trainings.model';
+import { TrainingsService } from '../../trainings.service';
 
 @Component({
   selector: 'app-edit-training-form',
@@ -12,16 +16,17 @@ import { TrainingData } from '../../../../shared/components/models/trainings.mod
   templateUrl: './edit-training-form.component.html',
 })
 export class EditTrainingFormComponent {
-  private context = injectBrnDialogContext<TrainingData>();
-  constructor(private dialogRef: BrnDialogRef<EditTrainingFormComponent>) {}
-  @Input() trainingData?: TrainingData = this.context;
+  private context = injectBrnDialogContext<
+    TrainingData & { resourceTypeOptions: ResourceTypeOption[] }
+  >();
+  constructor(
+    private dialogRef: BrnDialogRef<EditTrainingFormComponent>,
+    private trainingsService: TrainingsService
+  ) {}
+  @Input() trainingData?: TrainingData & {
+    resourceTypeOptions: ResourceTypeOption[];
+  } = this.context;
   loading: boolean = false;
-
-  resourceTypeOptions: { value: string; label: string }[] = [
-    { value: '1', label: 'Digital learning' },
-    { value: '2', label: 'Classroom' },
-    { value: '3', label: 'Virtual classroom' },
-  ];
 
   formFields: FormField[] = [
     {
@@ -43,8 +48,8 @@ export class EditTrainingFormComponent {
       type: 'select',
       label: 'Training type',
       placeholder: 'Select training type...',
-      options: this.resourceTypeOptions,
-      value: this.resourceTypeOptions?.find(
+      options: this.trainingData?.resourceTypeOptions,
+      value: this.trainingData?.resourceTypeOptions?.find(
         (option) =>
           option.label.replace(/\s/g, '').toLowerCase() ===
           this.trainingData?.resourceType?.replace(/\s/g, '')?.toLowerCase()
@@ -73,7 +78,30 @@ export class EditTrainingFormComponent {
   ];
 
   handleFormSubmit(formData: any) {
+    const newFormData = {
+      resourceId: this.trainingData?.id,
+      resourceDetails: {
+        deadline_at: formData.dueDate
+          ? new Date(formData.dueDate).toISOString()
+          : undefined,
+        description: formData.description || '',
+        type_id: Number(formData.trainingType),
+        url: formData.trainingUrl || '',
+        name: formData.name,
+        is_mandatory: formData.isMandatory,
+      },
+    };
     this.loading = true;
-    this.dialogRef.close();
+
+    this.trainingsService.postUpdateTraining(newFormData).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.dialogRef.close();
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error('Error editing product:', err);
+      },
+    });
   }
 }
