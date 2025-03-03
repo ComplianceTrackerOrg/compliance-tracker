@@ -18,6 +18,7 @@ import { TrainingsService } from '../trainings.service';
 
 import { AddTrainingFormComponent } from '../actions/add-training-form/add-training-form.component';
 import { EditTrainingFormComponent } from '../actions/edit-training-form/edit-training-form.component';
+import { DisableTrainingFormComponent } from '../actions/disable-training-form/disable-training-form.component';
 import {
   LearningResourceData,
   ResourceTypeData,
@@ -105,6 +106,7 @@ export class TrainingListComponent implements OnInit {
   // open modal for AddTrainingFormComponent
   onOpenAddTraining() {
     this.modalService.open(AddTrainingFormComponent, {
+      context: { resourceTypeOptions: this.resourceTypeOptions },
       closeOnBackdropClick: false,
       contentClass: 'custom-modal-width',
     });
@@ -114,6 +116,14 @@ export class TrainingListComponent implements OnInit {
   onOpenEditTraining(training: TrainingData) {
     this.modalService.open(EditTrainingFormComponent, {
       context: { ...training, resourceTypeOptions: this.resourceTypeOptions },
+      closeOnBackdropClick: false,
+      contentClass: 'custom-modal-width',
+    });
+  }
+
+  onOpenRemoveTraining(training: TrainingData) {
+    this.modalService.open(DisableTrainingFormComponent, {
+      context: training,
       closeOnBackdropClick: false,
       contentClass: 'custom-modal-width',
     });
