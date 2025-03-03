@@ -52,21 +52,23 @@ export class MyTrainingsComponent implements OnInit {
         next: (data: AssignedLearningResourceData[]) => {
           this.myTrainingsData =
             data &&
-            data.map(
-              (item) => {
-                const { node } = item;
-                const { learning_resource: resource, resource_status: status } =
-                  node;
+            data.map((item) => {
+              const { node } = item;
+              const {
+                learning_resource: resource,
+                resource_status: status,
+                id,
+              } = node;
 
-                return {
-                  status: status.name,
-                  trainingName: resource.name,
-                  trainingDesc: resource.description,
-                  dueDate: resource.deadline_at,
-                  trainingUrl: resource.url,
-                };
-              }
-            );
+              return {
+                id,
+                status: status.name,
+                trainingName: resource.name,
+                trainingDesc: resource.description,
+                dueDate: resource.deadline_at,
+                trainingUrl: resource.url,
+              };
+            });
           this.loading = false;
         },
         error: (err) => {

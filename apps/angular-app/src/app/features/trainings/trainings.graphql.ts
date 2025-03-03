@@ -77,6 +77,20 @@ export const GET_MY_TRAININGS = gql`
   }
 `;
 
+export const GET_ALL_TRAINING_TYPES = gql`
+  query Learning_resource_typeCollection {
+    learning_resource_typeCollection {
+      edges {
+        node {
+          id
+          name
+          description
+        }
+      }
+    }
+  }
+`;
+
 export const ADD_TRAINING = gql`
   mutation mutationInsertTraining($input: learning_resourceInsertInput!) {
     insertIntolearning_resourceCollection(objects: [$input]) {
@@ -94,3 +108,21 @@ export const ADD_TRAINING = gql`
     }
   }
 `;
+
+export const UPDATE_TRAINING = gql(`
+  mutation mutationUpdateTraining(
+    $resourceId: Int!
+    $resourceDetails: learning_resourceUpdateInput!
+  ) {
+    updatelearning_resourceCollection(
+      set: $resourceDetails
+      atMost: 1
+      filter: { id: { eq: $resourceId } }
+    ) {
+      affectedCount
+      records {
+        id
+      }
+    }
+  }
+`)

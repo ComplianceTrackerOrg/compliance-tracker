@@ -6,6 +6,7 @@ import {
 } from './globals.model';
 
 export type TrainingData = {
+  id: number;
   trainingName: string;
   trainingDesc: string;
   dueDate: string;
@@ -13,6 +14,19 @@ export type TrainingData = {
   status?: string;
   isMandatory?: boolean;
   resourceType?: string;
+};
+
+export type ResourceTypeOption = {
+  value: string;
+  label: string;
+};
+
+export type ResourceTypeData = {
+  node: {
+    id: number;
+    name: string;
+    description: string;
+  };
 };
 
 export type LearningResourceData = {
