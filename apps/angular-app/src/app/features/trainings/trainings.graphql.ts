@@ -126,3 +126,15 @@ export const UPDATE_TRAINING = gql(`
     }
   }
 `)
+
+export const DISABLE_TRAINING = gql(`
+  mutation mutationDisableTraining($resourceId: Int!) {
+    updatelearning_resourceCollection(
+      set: { is_active: false }
+      atMost: 1
+      filter: { id: { eq: $resourceId } }
+    ) {
+      affectedCount
+    }
+  }
+`)

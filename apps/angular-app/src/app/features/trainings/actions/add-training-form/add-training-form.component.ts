@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import { BrnDialogRef } from '@spartan-ng/brain/dialog'
+import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 
-import { FormBuilderComponent, FormField } from "~shared/components/ui/form-builder/form-builder.component";
+import {
+  FormBuilderComponent,
+  FormField,
+} from '~shared/components/ui/form-builder/form-builder.component';
 
 import { TrainingsService } from '../../trainings.service';
+import { ResourceTypeOption } from '@/app/shared/components/models/trainings.model';
 
 @Component({
   selector: 'app-add-training-form',
@@ -11,22 +15,52 @@ import { TrainingsService } from '../../trainings.service';
   templateUrl: './add-training-form.component.html',
 })
 export class AddTrainingFormComponent {
+  private context = injectBrnDialogContext<{
+    resourceTypeOptions: ResourceTypeOption[];
+  }>();
   constructor(
     private dialogRef: BrnDialogRef<AddTrainingFormComponent>,
     private trainingsService: TrainingsService
-  ) { }
+  ) {}
 
   loading: boolean = false;
   successMessage = '';
   isSuccess: boolean = false;
 
   formFields: FormField[] = [
-    { name: 'name', type: 'text', label: 'Name', validations: { required: true, minLength: 3 }, placeholder: 'Enter name' },
+    {
+      name: 'name',
+      type: 'text',
+      label: 'Name',
+      validations: { required: true, minLength: 3 },
+      placeholder: 'Enter name',
+    },
     { name: 'description', type: 'email', label: 'Description' },
-    { name: 'trainingType', type: 'select', label: 'Training type', placeholder: 'Select training type...', options: [{ value: '1', label: 'Digital learning' }, { value: '2', label: 'Classroom' }, { value: '3', label: 'Virtual classroom' }] },
-    { name: 'trainingUrl', type: 'url', label: 'URL', validations: { required: true, url: true } },
-    { name: 'dueDate', type: 'date', label: 'Due date', validations: { required: true } },
-    { name: 'isMandatory', type: 'checkbox', label: 'Is mandatory?', value: true },
+    {
+      name: 'trainingType',
+      type: 'select',
+      label: 'Training type',
+      placeholder: 'Select training type...',
+      options: this.context.resourceTypeOptions,
+    },
+    {
+      name: 'trainingUrl',
+      type: 'url',
+      label: 'URL',
+      validations: { required: true, url: true },
+    },
+    {
+      name: 'dueDate',
+      type: 'date',
+      label: 'Due date',
+      validations: { required: true },
+    },
+    {
+      name: 'isMandatory',
+      type: 'checkbox',
+      label: 'Is mandatory?',
+      value: true,
+    },
   ];
 
   handleFormSubmit(formData: any) {
@@ -39,9 +73,11 @@ export class AddTrainingFormComponent {
       description: formData.description || '',
       type_id: Number(formData.trainingType),
       url: formData.trainingUrl || '',
-      deadline_at: formData.dueDate ? new Date(formData.dueDate).toISOString() : undefined,
+      deadline_at: formData.dueDate
+        ? new Date(formData.dueDate).toISOString()
+        : undefined,
       is_mandatory: formData.isMandatory,
-    }
+    };
 
     // TODO: displaying of error message in html
     this.trainingsService.postAddTraining(newFormData).subscribe({
@@ -50,13 +86,13 @@ export class AddTrainingFormComponent {
         this.isSuccess = true;
         this.successMessage = 'Training added successfully!';
         // close this modal
-        this.dialogRef.close()
+        this.dialogRef.close();
       },
       error: (err) => {
         this.loading = false;
         this.isSuccess = false;
         console.error('Error adding product:', err);
-      }
+      },
     });
   }
 }
