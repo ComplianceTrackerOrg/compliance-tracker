@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import {
   ADD_TRAINING,
+  DISABLE_TRAINING,
   GET_ALL_TRAINING_TYPES,
   GET_ALL_TRAININGS,
   GET_MY_TRAININGS,
@@ -78,6 +79,20 @@ export class TrainingsService {
       mutation: ADD_TRAINING,
       variables: {
         input: data,
+      },
+      refetchQueries: [
+        {
+          query: GET_ALL_TRAININGS,
+        },
+      ],
+    });
+  }
+
+  postRemoveTraining(data: any): Observable<any> {
+    return this.apollo.mutate({
+      mutation: DISABLE_TRAINING,
+      variables: {
+        resourceId: data?.id,
       },
       refetchQueries: [
         {

@@ -16,7 +16,7 @@ const GET_UNASSIGNED_REQUIREMENT_USERS = "get_unassigned_requirements_users"
 export const getSupabaseUser = async (client: SupabaseClient, user: User) => {
   const { data: supabaseUser } = await client
     .from("user")
-    .select("id,first_name,last_name")
+    .select("id,first_name,last_name,role_id")
     .eq("auth_id", user.id)
     .single()
 

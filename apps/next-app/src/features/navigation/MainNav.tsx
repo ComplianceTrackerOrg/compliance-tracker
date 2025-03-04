@@ -4,12 +4,18 @@ import { signOut } from "@/actions"
 import { useAuth } from "@/lib/hooks/auth"
 import { Link } from "@/components/ui/link"
 import { Button } from "@/components/ui/button"
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar"
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from "@/components/ui/menubar"
 import { ChevronDown } from "lucide-react"
 
 const MainNav = () => {
   const [loggedIn, setIsLoggedIn] = useState(false)
-  const { authUser } = useAuth()
+  const { authUser, isManager } = useAuth()
 
   useEffect(() => {
     if (authUser) {
@@ -20,7 +26,7 @@ const MainNav = () => {
   const handleSignOut = async () => {
     await signOut()
   }
-  return(
+  return (
     <div className="hidden md:flex justify-between container mx-auto mt-2">
       <Link href="/">
         <h1>Compliance Tracker Dashboard</h1>
@@ -38,25 +44,28 @@ const MainNav = () => {
 
         {loggedIn && (
           <>
-            <MenubarMenu>
-              <MenubarTrigger>
-                <Link href="/dashboard">Dashboard</Link>
-              </MenubarTrigger>
-            </MenubarMenu>
+            {isManager && (
+              <>
+                <MenubarMenu>
+                  <MenubarTrigger>
+                    <Link href="/dashboard">Dashboard</Link>
+                  </MenubarTrigger>
+                </MenubarMenu>
 
-            <MenubarMenu>
-              <MenubarTrigger>
-                <Link href="/users">Assign Users</Link>
-              </MenubarTrigger>
-            </MenubarMenu>
+                <MenubarMenu>
+                  <MenubarTrigger>
+                    <Link href="/users">Assign Users</Link>
+                  </MenubarTrigger>
+                </MenubarMenu>
+              </>
+            )}
 
             {/* Requirements Dropdown */}
             <MenubarMenu>
               <MenubarTrigger className="flex items-center">
-          Requirements 
-          <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-
-        </MenubarTrigger>
+                Requirements
+                <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              </MenubarTrigger>
               <MenubarContent>
                 <MenubarItem>
                   <Link href="/requirements">View</Link>
@@ -69,12 +78,11 @@ const MainNav = () => {
 
             {/* Trainings Dropdown */}
             <MenubarMenu>
-              <MenubarTrigger>Trainings
-
-              <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-
+              <MenubarTrigger>
+                Trainings
+                <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
               </MenubarTrigger>
-              
+
               <MenubarContent>
                 <MenubarItem>
                   <Link href="/trainings">View</Link>
