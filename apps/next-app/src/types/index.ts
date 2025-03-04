@@ -27,14 +27,9 @@ export type AuthenticatedUser = {
 export const addTrainingSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   description: z.string().optional(),
-  type: z.string(),
+  type: z.string().min(1, { message: "Please choose a training type" }),
   url: z.string().optional(),
-  // url: z.string().url().optional(),
-  dueDate: z.date().nullish(),
-  // dueDate: z
-  //   .string()
-  //   .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use mm-dd-yyyy")
-  //   .refine((date) => !isNaN(Date.parse(date)), "Invalid date"),
+  dueDate: z.date({ required_error: "Due date is required" }),
   isMandatory: z.boolean().default(true),
 })
 
@@ -50,7 +45,7 @@ export const addRequirementSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   description: z.string().optional(),
   url: z.string().optional(),
-  dueDate: z.date().nullish(),
+  dueDate: z.date({ required_error: "Due date is required" }),
 })
 
 export type AddRequirementModel = z.infer<typeof addRequirementSchema>

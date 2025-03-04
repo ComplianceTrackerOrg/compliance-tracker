@@ -52,24 +52,27 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
   const { id, trigger, onUpdateSuccess, onUpdateError } = props
   const { data, editTraining, getTraining } = useTraining(id)
   const [isOpen, setIsOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<EditTrainingModel>({
     resolver: zodResolver(editTrainingSchema),
     defaultValues: {
+      id: id.toString(),
       name: "",
       description: "",
       type: "",
       url: "",
-      dueDate: null,
+      dueDate: undefined,
       isMandatory: true,
     },
   })
 
-  const { control, getValues } = form
+  const { control, handleSubmit } = form
 
   useEffect(() => {
     if (data && isOpen) {
       form.reset({
+        id: id.toString(),
         name: data.name,
         description: data.description,
         type: data.learning_resource_type.id.toString(),
@@ -78,7 +81,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
         isMandatory: data.is_mandatory,
       })
     }
-  }, [data, form, isOpen])
+  }, [id, data, form, isOpen])
 
   const handleOpenChange = (isModalOpen: boolean) => {
     if (isModalOpen) {
@@ -89,6 +92,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
 
   const onSubmit = async (values: EditTrainingModel) => {
     //TODO: handle client side errors
+    setIsLoading(true)
     const { name, description, type, url, dueDate, isMandatory } = values
     const input: UpdateTrainingInput = {
       resourceId: id,
@@ -110,6 +114,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
         onUpdateError()
       }
       setIsOpen(false)
+      setIsLoading(false)
       return
     }
 
@@ -118,6 +123,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
         onUpdateSuccess()
       }
       setIsOpen(false)
+      setIsLoading(false)
     }
   }
 
@@ -131,13 +137,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
           <DialogDescription>Update training information.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              onSubmit(getValues())
-            }}
-            className="space-y-4"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               name="name"
               control={control}
@@ -281,7 +281,11 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
             />
 
             <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+                disabled={isLoading}
+              >
                 Cancel
               </Button>
               {/* Note: submit button does not work */}
@@ -289,6 +293,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
                 className="bg-blue-500 text-white"
                 variant="outline"
                 type="submit"
+                disabled={isLoading}
               >
                 Save Changes
               </Button>
