@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button"
 
 const MainNav = () => {
   const [loggedIn, setIsLoggedIn] = useState(false)
-  const { authUser } = useAuth()
+  const { authUser, isManager } = useAuth()
 
   useEffect(() => {
     if (authUser) {
@@ -44,27 +44,38 @@ const MainNav = () => {
           )}
           {loggedIn && (
             <>
-              <NavigationMenuItem>
-                <Link href="/dashboard" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Dashboard
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/users" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Assign Users
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/requirements" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Requirements
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+              {isManager && (
+                <>
+                  <NavigationMenuItem>
+                    <Link href="/dashboard" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                      >
+                        Dashboard
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <Link href="/users" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                      >
+                        Assign Users
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <Link href="/requirements" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                      >
+                        Requirements
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                </>
+              )}
+
               <NavigationMenuItem>
                 <Link href="/my-requirements" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -72,13 +83,17 @@ const MainNav = () => {
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/trainings" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Trainings
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+              {isManager && (
+                <NavigationMenuItem>
+                  <Link href="/trainings" legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      Trainings
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              )}
               <NavigationMenuItem>
                 <Link href="/mandatory-trainings" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
