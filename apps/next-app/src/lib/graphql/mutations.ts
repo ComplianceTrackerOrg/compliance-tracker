@@ -1,5 +1,29 @@
 import { graphql } from "./generated/gql"
 
+export const mutationDisableUser = graphql(`
+  mutation mutationDisableUser($userId: Int!) {
+    updateuserCollection(
+      atMost: 1
+      set: { is_active: false }
+      filter: { id: { eq: $userId } }
+    ) {
+      affectedCount
+    }
+  }
+`)
+
+export const mutationUpdateUser = graphql(`
+  mutation mutationUpdateUser($userId: Int!, $userDetails: userUpdateInput!) {
+    updateuserCollection(
+      set: $userDetails
+      atMost: 1
+      filter: { id: { eq: $userId } }
+    ) {
+      affectedCount
+    }
+  }
+`)
+
 export const mutationInsertTraining = graphql(`
   mutation mutationInsertTraining($input: learning_resourceInsertInput!) {
     insertIntolearning_resourceCollection(objects: [$input]) {

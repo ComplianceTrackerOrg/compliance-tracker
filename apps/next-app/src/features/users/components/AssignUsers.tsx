@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import SelectResourceType from "./SelectResourceType"
 import SelectResource from "./SelectResource"
 import UserTable from "./UserTable"
-import useAssignUsers from "@/lib/hooks/assignment/useAssignUsers"
+import { useAssignUsers } from "@/lib/hooks/users/"
 import {
   AuthenticatedUser,
   ResourceType,

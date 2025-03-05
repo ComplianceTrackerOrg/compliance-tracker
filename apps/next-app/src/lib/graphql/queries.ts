@@ -1,5 +1,25 @@
 import { graphql } from "./generated/gql"
 
+export const queryGetUser = graphql(`
+  query queryGetUser($userId: Int!) {
+    userCollection(filter: { id: { eq: $userId } }) {
+      edges {
+        node {
+          id
+          user_role {
+            id
+            name
+          }
+          first_name
+          last_name
+          email
+          is_active
+        }
+      }
+    }
+  }
+`)
+
 export const queryGetAllUsers = graphql(`
   query queryGetAllUsers {
     userCollection(
@@ -14,6 +34,8 @@ export const queryGetAllUsers = graphql(`
           }
           first_name
           last_name
+          email
+          is_active
         }
       }
     }
