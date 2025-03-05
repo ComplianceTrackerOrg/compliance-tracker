@@ -51,25 +51,27 @@ const UpdateRequirement = (props: UpdateRequirementProps) => {
   const form = useForm<EditRequirementModel>({
     resolver: zodResolver(editRequirementSchema),
     defaultValues: {
+      id: id.toString(),
       name: "",
       description: "",
       url: "",
-      dueDate: null,
+      dueDate: undefined,
     },
   })
 
-  const { control, getValues } = form
+  const { control, handleSubmit } = form
 
   useEffect(() => {
     if (data && isOpen) {
       form.reset({
+        id: id.toString(),
         name: data.name,
         description: data.description,
         url: data.url,
         dueDate: data.deadline_at ? new Date(data.deadline_at) : undefined,
       })
     }
-  }, [data, form, isOpen])
+  }, [id, data, form, isOpen])
 
   const handleOpenChange = (isModalOpen: boolean) => {
     if (isModalOpen) {
@@ -120,10 +122,7 @@ const UpdateRequirement = (props: UpdateRequirementProps) => {
           <DialogDescription>Update requirement information.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={(e) => {
-                  e.preventDefault()
-                  onSubmit(getValues())
-                }} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               name="name"
               control={control}
@@ -210,11 +209,16 @@ const UpdateRequirement = (props: UpdateRequirementProps) => {
             />
 
             <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+              >
                 Cancel
               </Button>
               {/* Note: submit button does not work */}
-              <Button type="submit"
+              <Button
+                type="submit"
                 className="bg-blue-500 text-white"
                 variant="outline"
               >
