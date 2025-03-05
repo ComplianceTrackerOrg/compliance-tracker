@@ -283,6 +283,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
             <div className="flex justify-end gap-2">
               <Button
                 variant="outline"
+                type="button"
                 onClick={() => setIsOpen(false)}
                 disabled={isLoading}
               >

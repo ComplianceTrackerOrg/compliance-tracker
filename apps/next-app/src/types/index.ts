@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { UserRoleType } from "@/constants"
+import { LearningResourceType, UserRoleType } from "@/constants"
 
 export enum ResourceType {
   Training = "1",
@@ -35,7 +35,12 @@ export type AuthenticatedUser = {
 export const addTrainingSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   description: z.string().optional(),
-  type: z.string().min(1, { message: "Please choose a training type" }),
+  type: z
+    .string()
+    .refine(
+      (val) => Object.values(LearningResourceType).includes(Number(val)),
+      { message: "Invalid type" }
+    ),
   url: z.string().optional(),
   dueDate: z.date({ required_error: "Due date is required" }),
   isMandatory: z.boolean().default(true),
