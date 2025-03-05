@@ -51,6 +51,7 @@ export default function AddTraining(props: AddTrainingProps) {
   const { trigger, onAddSuccess, onAddError } = props
   const { addTraining } = useTraining(0)
   const [isOpen, setIsOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<AddTrainingModel>({
     resolver: zodResolver(addTrainingSchema),
@@ -59,7 +60,7 @@ export default function AddTraining(props: AddTrainingProps) {
       description: "",
       type: "",
       url: "",
-      dueDate: null,
+      dueDate: undefined,
       isMandatory: true,
     },
   })
@@ -67,6 +68,7 @@ export default function AddTraining(props: AddTrainingProps) {
   const { control, handleSubmit, reset } = form
 
   const onSubmit = async (values: AddTrainingModel) => {
+    setIsLoading(true)
     const { name, description, type, url, dueDate, isMandatory } = values
     const input: TrainingInput = {
       name: name,
@@ -86,6 +88,7 @@ export default function AddTraining(props: AddTrainingProps) {
       }
       reset()
       setIsOpen(false)
+      setIsLoading(false)
       return
     }
 
@@ -95,12 +98,21 @@ export default function AddTraining(props: AddTrainingProps) {
       }
       reset()
       setIsOpen(false)
+      setIsLoading(false)
     }
   }
 
   // TODO: use modal component
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        setIsOpen(open)
+        if (!open) {
+          reset()
+        }
+      }}
+    >
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -245,6 +257,7 @@ export default function AddTraining(props: AddTrainingProps) {
                 type="submit"
                 className="bg-blue-500 text-white"
                 variant="outline"
+                disabled={isLoading}
               >
                 Save Changes
               </Button>

@@ -50,7 +50,7 @@ export default function AddRequirement(props: AddRequirementProps) {
       name: "",
       description: "",
       url: "",
-      dueDate: null,
+      dueDate: undefined,
     },
   })
 
@@ -88,7 +88,15 @@ export default function AddRequirement(props: AddRequirementProps) {
 
   // TODO: use modal component
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        setIsOpen(open)
+        if (!open) {
+          reset()
+        }
+      }}
+    >
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
