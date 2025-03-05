@@ -1,8 +1,14 @@
 import * as z from "zod"
+import { UserRoleType } from "@/constants"
 
 export enum ResourceType {
   Training = "1",
   Requirement = "2",
+}
+
+export type UserRole = {
+  id: UserRoleType
+  name: string
 }
 
 export type Employee = {
@@ -19,8 +25,10 @@ export type AuthenticatedUser = {
   id: number
   firstName: string
   lastName?: string
+  role?: UserRole
   avatarUrl?: string
   email?: string
+  isActive?: boolean
 }
 
 // TODO: update validation rules

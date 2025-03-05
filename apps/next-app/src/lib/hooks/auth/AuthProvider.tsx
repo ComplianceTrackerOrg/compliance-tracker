@@ -10,6 +10,7 @@ import React, {
 } from "react"
 import { useRouter } from "next/navigation"
 import { UrqlProvider } from "@urql/next"
+import { UserRoleLabel, UserRoleType } from "@/constants"
 import { initGraphqlClient, ssr } from "@/lib/graphql/exchanges"
 import { createClient } from "@/lib/supabase/client"
 import { getSupabaseUser } from "@/lib/supabase/service"
@@ -33,9 +34,13 @@ interface AuthUserProviderProps {
 
 interface AuthUserContextProps {
   authUser: AuthenticatedUser | null
+  isManager: boolean
 }
 
-const AuthUserContext = createContext<AuthUserContextProps>({ authUser: null })
+const AuthUserContext = createContext<AuthUserContextProps>({
+  authUser: null,
+  isManager: false,
+})
 
 const createGraphqlClient = initGraphqlClient()
 
@@ -61,6 +66,7 @@ export const AuthUserProvider = ({
   url,
 }: AuthUserProviderProps) => {
   const [authUser, setAuthUser] = useState<AuthenticatedUser | null>(null)
+  const [isManager, setIsManager] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -73,14 +79,24 @@ export const AuthUserProvider = ({
 
       if (user) {
         const supabaseUser = await getSupabaseUser(supabase, user)
+        const roleType = supabaseUser
+          ? (supabaseUser.role_id as UserRoleType)
+          : UserRoleType.IC
         const authenticatedUser: AuthenticatedUser = {
           id: supabaseUser ? supabaseUser.id : 0,
+          role: {
+            id: roleType,
+            name: UserRoleLabel[roleType],
+          },
           email: user.email?.toLowerCase() ?? "",
-          firstName: user.user_metadata.first_name,
+          firstName: user.user_metadata.full_name,
           lastName: user.user_metadata.last_name ?? "",
           avatarUrl: user.user_metadata.avatar_url ?? "",
         }
         setAuthUser(authenticatedUser)
+
+        //TODO: feature flags
+        setIsManager(roleType === UserRoleType.Manager)
       }
     }
 
@@ -102,7 +118,7 @@ export const AuthUserProvider = ({
   }, [router])
 
   return (
-    <AuthUserContext.Provider value={{ authUser }}>
+    <AuthUserContext.Provider value={{ authUser, isManager }}>
       {children}
     </AuthUserContext.Provider>
   )

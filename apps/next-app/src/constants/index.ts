@@ -27,3 +27,13 @@ export const StatusChangeLabel: Record<ResourceStatus, string> = {
   [ResourceStatus.IN_PROGRESS]: "Mark as In Progress",
   [ResourceStatus.COMPLETED]: "Mark as Completed",
 }
+
+export enum UserRoleType {
+  Manager = 1,
+  IC = 2,
+}
+
+export const UserRoleLabel: Record<UserRoleType, string> = {
+  [UserRoleType.Manager]: "Manager",
+  [UserRoleType.IC]: "Individual Contributor",
+}
