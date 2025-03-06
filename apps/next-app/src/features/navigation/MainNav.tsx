@@ -85,7 +85,7 @@ const MainNav = () => {
                   <Link href="/requirements">Manage</Link>
                 </MenubarItem>
                 <MenubarItem>
-                  <Link href="/my-requirements">View</Link>
+                  <Link href="/my-requirements">My Requirements</Link>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
@@ -102,7 +102,7 @@ const MainNav = () => {
                   <Link href="/trainings">Manage</Link>
                 </MenubarItem>
                 <MenubarItem>
-                  <Link href="/mandatory-trainings">View</Link>
+                  <Link href="/mandatory-trainings">My Trainings</Link>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>

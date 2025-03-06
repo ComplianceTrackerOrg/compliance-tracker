@@ -13,6 +13,10 @@ import {
 } from "@/components/ui/card"
 import { StatusButton, StatusSelect } from "@/components/ui/status"
 
+/**
+ * @deprecated This component is deprecated and is replaced with AssignedTrainings component
+ * @see AssignedTrainings
+ */
 export default function MandatoryTrainings() {
   const { authUser } = useAuth()
   const {

@@ -14,8 +14,8 @@ import { Button } from "@/components/ui/button"
 import AddTraining from "./AddTraining"
 import DisableTraining from "./DisableTraining"
 import UpdateTraining from "./UpdateTraining"
+import AssignedTrainingUsers from "./AssignedTrainingUsers"
 
-//TODO: include filter for inactive trainings
 export default function TrainingsList() {
   const { trainingListWithDetails: data, fetchListWithDetails } = useTrainings()
 
@@ -49,9 +49,9 @@ export default function TrainingsList() {
           <div className="grid grid-cols-12 gap-4 p-4 border-b text-sm font-medium text-muted-foreground bg-gray-100">
             <div className="col-span-3">Name</div>
             <div className="col-span-3">Description</div>
-            <div className="col-span-2">Mandatory</div>
-            <div className="col-span-2">Due Date</div>
-            <div className="col-span-2">Actions</div>
+            <div className="col-span-1">Mandatory</div>
+            <div className="col-span-2 text-right">Due Date</div>
+            <div className="col-span-3 text-right">Actions</div>
           </div>
 
           {data &&
@@ -61,21 +61,21 @@ export default function TrainingsList() {
               return (
                 <div
                   key={id}
-                  className="grid grid-cols-12 gap-4 p-4 border-b last:border-0 items-center"
+                  className="grid grid-cols-12 gap-4 p-4 border-b last:border-0 items-center text-sm"
                 >
-                  <div className="col-span-3 text-sm">{name}</div>
-                  <div className="col-span-3 text-sm">{description}</div>
-                  <div className="col-span-2 text-sm">
+                  <div className="col-span-3">{name}</div>
+                  <div className="col-span-3">{description}</div>
+                  <div className="col-span-1 text-right">
                     {is_mandatory ? "Yes" : "No"}
                   </div>
-                  <div className="col-span-2 text-sm">
+                  <div className="col-span-2 text-right">
                     {deadline_at && (
                       <time dateTime={deadline_at}>
                         {formatDate(deadline_at, "MMM D, YYYY")}
                       </time>
                     )}
                   </div>
-                  <div className="col-span-2 flex justify-start space-x-2">
+                  <div className="col-span-3 flex justify-end space-x-2">
                     <span className="border rounded-lg p-1">
                       <UpdateTraining
                         id={id}
@@ -91,6 +91,12 @@ export default function TrainingsList() {
                         onDisableSuccess={handleChangeSuccess}
                       />
                     </span>
+                    <AssignedTrainingUsers
+                      trainingId={id}
+                      name={name}
+                      description={description ?? ""}
+                      trigger={<Button variant="outline">View Details</Button>}
+                    />
                   </div>
                 </div>
               )

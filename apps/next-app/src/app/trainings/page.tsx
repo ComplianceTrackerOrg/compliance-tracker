@@ -1,3 +1,4 @@
+"use client"
 import { TrainingsList } from "@/features/trainings"
 
 export default function TrainingsPage() {

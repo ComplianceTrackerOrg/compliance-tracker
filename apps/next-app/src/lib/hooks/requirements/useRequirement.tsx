@@ -1,12 +1,16 @@
 "use client"
 import { useEffect, useState } from "react"
 import { useMutation, useQuery } from "@urql/next"
-import { queryGetRequirement } from "@/lib/graphql/queries"
+import {
+  queryGetAssignedUsersByRequirementResource,
+  queryGetRequirement,
+} from "@/lib/graphql/queries"
 import {
   mutationDisableRequirement,
   mutationInsertRequirement,
   mutationUpdateRequirement,
 } from "@/lib/graphql/mutations"
+import { AssignedUser } from "@/types"
 
 interface RequirementModel {
   id: number
@@ -31,20 +35,28 @@ export const useRequirement = (id: number) => {
   //TODO: handle no ID for add scenarios
   const [requirementData, setRequirementData] =
     useState<RequirementModel | null>(null)
-  const [displayNow, setDisplayNow] = useState(false)
 
   if (isNaN(id)) {
     throw new Error("Invalid input: ID must be a number")
   }
 
   const value = Number(id)
-  const [{ data: queryData, fetching }, reexecuteQuery] = useQuery({
+  const [{ data: queryData, fetching }, reexecuteGetRequirement] = useQuery({
     query: queryGetRequirement.toString(),
     variables: {
       id: value,
     },
     pause: true, // run query only when needed
   })
+
+  const [{ data: assignedUserList, fetching: fetchingUserList }, getUsers] =
+    useQuery({
+      query: queryGetAssignedUsersByRequirementResource.toString(),
+      variables: {
+        resourceId: value,
+      },
+      pause: true,
+    })
 
   const [, insertRequirement] = useMutation(
     mutationInsertRequirement.toString()
@@ -65,15 +77,8 @@ export const useRequirement = (id: number) => {
     )
   }, [queryData, fetching])
 
-  useEffect(() => {
-    if (displayNow) {
-      reexecuteQuery()
-    }
-  }, [reexecuteQuery, displayNow])
-
   const getRequirement = () => {
-    // will trigger running the get training detail query
-    setDisplayNow(true)
+    reexecuteGetRequirement({ requestPolicy: "network-only" })
   }
 
   const addRequirement = async (input: RequirementInput) => {
@@ -102,12 +107,34 @@ export const useRequirement = (id: number) => {
     return { data, error }
   }
 
+  const getAssignedUsers = () => {
+    getUsers({ requestPolicy: "network-only" })
+  }
+
   return {
     data: requirementData,
+    assignedUserList:
+      assignedUserList?.assigned_compliance_resourceCollection?.edges.map(
+        (item) => {
+          const { node } = item
+          const { user, completed_at, status_id } = node
+          const assignedUser: AssignedUser = {
+            id: user.id,
+            firstName: user.first_name,
+            lastName: user.last_name ?? "",
+            statusId: status_id,
+            completionDate: completed_at ? new Date(completed_at) : undefined,
+          }
+
+          return assignedUser
+        }
+      ),
     fetching,
-    getRequirement,
+    fetchingUserList,
     addRequirement,
     editRequirement,
+    getAssignedUsers,
+    getRequirement,
     removeRequirement,
   }
 }
