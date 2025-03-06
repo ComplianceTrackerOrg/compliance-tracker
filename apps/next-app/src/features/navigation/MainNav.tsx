@@ -27,7 +27,7 @@ const MainNav = () => {
   }, [authUser])
 
   if (!isMounted) return null
-  
+
   const handleSignOut = async () => {
     await signOut()
   }
@@ -42,7 +42,8 @@ const MainNav = () => {
         {!loggedIn && (
           <MenubarMenu>
             <MenubarTrigger>
-            <Link href="/login">Login</Link></MenubarTrigger>            
+              <Link href="/login">Login</Link>
+            </MenubarTrigger>
           </MenubarMenu>
         )}
 
@@ -57,9 +58,18 @@ const MainNav = () => {
                 </MenubarMenu>
 
                 <MenubarMenu>
-                  <MenubarTrigger>
-                    <Link href="/users">Assign Users</Link>
+                  <MenubarTrigger className="flex items-center">
+                    Users
+                    <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                   </MenubarTrigger>
+                  <MenubarContent>
+                    <MenubarItem>
+                      <Link href="/user-list">Manage</Link>
+                    </MenubarItem>
+                    <MenubarItem>
+                      <Link href="/users">Assign</Link>
+                    </MenubarItem>
+                  </MenubarContent>
                 </MenubarMenu>
               </>
             )}
@@ -72,10 +82,10 @@ const MainNav = () => {
               </MenubarTrigger>
               <MenubarContent>
                 <MenubarItem>
-                  <Link href="/requirements">View</Link>
+                  <Link href="/requirements">Manage</Link>
                 </MenubarItem>
                 <MenubarItem>
-                  <Link href="/my-requirements">Manage</Link>
+                  <Link href="/my-requirements">View</Link>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
@@ -89,10 +99,10 @@ const MainNav = () => {
 
               <MenubarContent>
                 <MenubarItem>
-                  <Link href="/trainings">View</Link>
+                  <Link href="/trainings">Manage</Link>
                 </MenubarItem>
                 <MenubarItem>
-                  <Link href="/mandatory-trainings">My Trainings</Link>
+                  <Link href="/mandatory-trainings">View</Link>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>

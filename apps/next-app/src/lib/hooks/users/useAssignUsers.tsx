@@ -10,7 +10,7 @@ import {
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const API_KEY = process.env.NEXT_PUBLIC_SUPABASE_API_KEY!
 
-const useAssignUsers = () => {
+export const useAssignUsers = () => {
   const apiClient = useClient()
   const supabase = createClient(SUPABASE_URL, API_KEY)
 
@@ -135,5 +135,3 @@ const useAssignUsers = () => {
     saveUserList,
   }
 }
-
-export default useAssignUsers
