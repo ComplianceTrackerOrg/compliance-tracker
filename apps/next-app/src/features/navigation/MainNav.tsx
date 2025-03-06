@@ -1,28 +1,33 @@
 "use client"
-
 import React, { useEffect, useState } from "react"
-import { signOut } from "@/actions"
 import { useAuth } from "@/lib/hooks/auth"
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+import { signOut } from "@/actions"
 import { Link } from "@/components/ui/link"
 import { Button } from "@/components/ui/button"
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from "@/components/ui/menubar"
+import { ChevronDown } from "lucide-react"
 
 const MainNav = () => {
+  const [isMounted, setIsMounted] = useState(false)
   const [loggedIn, setIsLoggedIn] = useState(false)
   const { authUser, isManager } = useAuth()
-
+  useEffect(() => {
+    setIsMounted(true) // ✅ Ensure client-side rendering
+  }, [])
   useEffect(() => {
     if (authUser) {
       setIsLoggedIn(true)
     }
   }, [authUser])
 
+  if (!isMounted) return null
+  
   const handleSignOut = async () => {
     await signOut()
   }
@@ -31,98 +36,87 @@ const MainNav = () => {
       <Link href="/">
         <h1>Compliance Tracker Dashboard</h1>
       </Link>
-      <NavigationMenu>
-        <NavigationMenuList>
-          {!loggedIn && (
-            <NavigationMenuItem>
-              <Link href="/login" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Login
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          )}
-          {loggedIn && (
-            <>
-              {isManager && (
-                <>
-                  <NavigationMenuItem>
-                    <Link href="/dashboard" legacyBehavior passHref>
-                      <NavigationMenuLink
-                        className={navigationMenuTriggerStyle()}
-                      >
-                        Dashboard
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <Link href="/users" legacyBehavior passHref>
-                      <NavigationMenuLink
-                        className={navigationMenuTriggerStyle()}
-                      >
-                        Assign Users
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <Link href="/requirements" legacyBehavior passHref>
-                      <NavigationMenuLink
-                        className={navigationMenuTriggerStyle()}
-                      >
-                        Requirements
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                </>
-              )}
 
-              <NavigationMenuItem>
-                <Link href="/my-requirements" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    My Requirements
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              {isManager && (
-                <NavigationMenuItem>
-                  <Link href="/trainings" legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      Trainings
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              )}
-              <NavigationMenuItem>
-                <Link href="/mandatory-trainings" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    My Trainings
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/chat" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    🧠 EllenDyAI
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Button
-                  variant="ghost"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleSignOut()
-                  }}
-                >
-                  Log Out
-                </Button>
-              </NavigationMenuItem>
-            </>
-          )}
-        </NavigationMenuList>
-      </NavigationMenu>
+      {/* Menubar for Navigation */}
+      <Menubar>
+        {!loggedIn && (
+          <MenubarMenu>
+            <MenubarTrigger>
+            <Link href="/login">Login</Link></MenubarTrigger>            
+          </MenubarMenu>
+        )}
+
+        {loggedIn && (
+          <>
+            {isManager && (
+              <>
+                <MenubarMenu>
+                  <MenubarTrigger>
+                    <Link href="/dashboard">Dashboard</Link>
+                  </MenubarTrigger>
+                </MenubarMenu>
+
+                <MenubarMenu>
+                  <MenubarTrigger>
+                    <Link href="/users">Assign Users</Link>
+                  </MenubarTrigger>
+                </MenubarMenu>
+              </>
+            )}
+
+            {/* Requirements Dropdown */}
+            <MenubarMenu>
+              <MenubarTrigger className="flex items-center">
+                Requirements
+                <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              </MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>
+                  <Link href="/requirements">View</Link>
+                </MenubarItem>
+                <MenubarItem>
+                  <Link href="/my-requirements">Manage</Link>
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+
+            {/* Trainings Dropdown */}
+            <MenubarMenu>
+              <MenubarTrigger>
+                Trainings
+                <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              </MenubarTrigger>
+
+              <MenubarContent>
+                <MenubarItem>
+                  <Link href="/trainings">View</Link>
+                </MenubarItem>
+                <MenubarItem>
+                  <Link href="/mandatory-trainings">My Trainings</Link>
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+
+            <MenubarMenu>
+              <MenubarTrigger>
+                <Link href="/chat">🧠 EllenDyAI</Link>
+              </MenubarTrigger>
+            </MenubarMenu>
+
+            <MenubarMenu>
+              <Button
+                variant="ghost"
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleSignOut()
+                }}
+              >
+                Log Out
+              </Button>
+            </MenubarMenu>
+          </>
+        )}
+      </Menubar>
     </div>
   )
 }
