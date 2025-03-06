@@ -65,6 +65,7 @@ const updateSession = async (request: NextRequest) => {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 
+  //TODO: redirect to /dashboard if user is a manager role
   // If the user is signed in and the current path is / or /login, redirect to /dashboard
   if (user && (pathname === "/" || pathname === "/login")) {
     return NextResponse.redirect(new URL("/dashboard", request.url))

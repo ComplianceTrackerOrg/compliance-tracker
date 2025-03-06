@@ -31,6 +31,21 @@ export type AuthenticatedUser = {
   isActive?: boolean
 }
 
+export const editUserSchema = z.object({
+  id: z.number(),
+  firstName: z.string().min(1, { message: "First name is required" }),
+  lastName: z.string().optional(),
+  email: z.string().email({ message: "Invalid email address" }),
+  roleId: z
+    .string()
+    .refine((val) => Object.values(UserRoleType).includes(Number(val)), {
+      message: "Invalid role",
+    }),
+  isActive: z.boolean().default(true),
+})
+
+export type EditUserModel = z.infer<typeof editUserSchema>
+
 // TODO: update validation rules
 export const addTrainingSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
