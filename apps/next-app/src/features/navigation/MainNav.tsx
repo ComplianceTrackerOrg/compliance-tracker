@@ -17,7 +17,6 @@ const MainNav = () => {
   const [isMounted, setIsMounted] = useState(false)
   const [loggedIn, setIsLoggedIn] = useState(false)
   const { authUser, isManager } = useAuth()
-  console.log(" MainNav ~ isManager:", isManager)
   useEffect(() => {
     setIsMounted(true) // ✅ Ensure client-side rendering
   }, [])
