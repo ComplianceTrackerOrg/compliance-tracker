@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react"
-import { signOut } from "@/actions"
 import { useAuth } from "@/lib/hooks/auth"
+import { signOut } from "@/actions"
 import { Link } from "@/components/ui/link"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,15 +14,20 @@ import {
 import { ChevronDown } from "lucide-react"
 
 const MainNav = () => {
+  const [isMounted, setIsMounted] = useState(false)
   const [loggedIn, setIsLoggedIn] = useState(false)
   const { authUser, isManager } = useAuth()
-
+  useEffect(() => {
+    setIsMounted(true) // ✅ Ensure client-side rendering
+  }, [])
   useEffect(() => {
     if (authUser) {
       setIsLoggedIn(true)
     }
   }, [authUser])
 
+  if (!isMounted) return null
+  
   const handleSignOut = async () => {
     await signOut()
   }
@@ -37,8 +42,7 @@ const MainNav = () => {
         {!loggedIn && (
           <MenubarMenu>
             <MenubarTrigger>
-              <Link href="/login">Login</Link>
-            </MenubarTrigger>
+            <Link href="/login">Login</Link></MenubarTrigger>            
           </MenubarMenu>
         )}
 
@@ -100,17 +104,15 @@ const MainNav = () => {
             </MenubarMenu>
 
             <MenubarMenu>
-              <MenubarTrigger>
-                <Button
-                  variant="ghost"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleSignOut()
-                  }}
-                >
-                  Log Out
-                </Button>
-              </MenubarTrigger>
+              <Button
+                variant="ghost"
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleSignOut()
+                }}
+              >
+                Log Out
+              </Button>
             </MenubarMenu>
           </>
         )}
