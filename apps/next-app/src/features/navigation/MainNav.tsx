@@ -17,6 +17,7 @@ const MainNav = () => {
   const [isMounted, setIsMounted] = useState(false)
   const [loggedIn, setIsLoggedIn] = useState(false)
   const { authUser, isManager } = useAuth()
+  console.log(" MainNav ~ isManager:", isManager)
   useEffect(() => {
     setIsMounted(true) // ✅ Ensure client-side rendering
   }, [])
@@ -56,13 +57,25 @@ const MainNav = () => {
                     <Link href="/dashboard">Dashboard</Link>
                   </MenubarTrigger>
                 </MenubarMenu>
-
-                <MenubarMenu>
-                  <MenubarTrigger>
-                    <Link href="/users">Assign Users</Link>
-                  </MenubarTrigger>
-                </MenubarMenu>
               </>
+            )}
+
+            {/* Users Menu */}
+            {isManager && (
+              <MenubarMenu>
+                <MenubarTrigger className="flex items-center">
+                  Users
+                  <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </MenubarTrigger>
+                <MenubarContent>
+                  <MenubarItem>
+                    <Link href="/user-list">Manage</Link>
+                  </MenubarItem>
+                  <MenubarItem>
+                    <Link href="/users">Assign</Link>
+                  </MenubarItem>
+                </MenubarContent>
+              </MenubarMenu>
             )}
 
             {/* Requirements Dropdown */}
@@ -72,11 +85,13 @@ const MainNav = () => {
                 <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
               </MenubarTrigger>
               <MenubarContent>
+                {isManager && (
+                  <MenubarItem>
+                    <Link href="/requirements">Manage</Link>
+                  </MenubarItem>
+                )}
                 <MenubarItem>
-                  <Link href="/requirements">View</Link>
-                </MenubarItem>
-                <MenubarItem>
-                  <Link href="/my-requirements">Manage</Link>
+                  <Link href="/my-requirements">View</Link>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
@@ -89,11 +104,13 @@ const MainNav = () => {
               </MenubarTrigger>
 
               <MenubarContent>
+                {isManager && (
+                  <MenubarItem>
+                    <Link href="/trainings">Manage</Link>
+                  </MenubarItem>
+                )}
                 <MenubarItem>
-                  <Link href="/trainings">View</Link>
-                </MenubarItem>
-                <MenubarItem>
-                  <Link href="/mandatory-trainings">My Trainings</Link>
+                  <Link href="/mandatory-trainings">View</Link>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>

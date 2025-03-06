@@ -1,12 +1,12 @@
 //TODO: fix Users routing - https://nextjs.org/docs/app/getting-started/project-structure
-import { AssignUsers } from "@/features/users/components"
+import UserList from "@/features/users/components/UserList"
 
-const AssignUsersPage = () => {
+const UserListPage = () => {
   return (
     <div className="mt-10">
-      <AssignUsers />
+      <UserList />
     </div>
   )
 }
 
-export default AssignUsersPage
+export default UserListPage
