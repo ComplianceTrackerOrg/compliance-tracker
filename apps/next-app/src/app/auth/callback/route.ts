@@ -18,13 +18,12 @@ export async function GET(request: Request) {
   }
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get("code")
-  const homePage = "dashboard"
 
   if (code) {
     const supabase = await createClient(SUPABASE_URL, KEY)
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      return NextResponse.redirect(`${origin}/${homePage}`)
+      return NextResponse.redirect(`${origin}/`)
     }
   }
 

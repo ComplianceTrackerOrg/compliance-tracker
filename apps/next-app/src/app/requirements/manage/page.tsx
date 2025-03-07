@@ -1,7 +1,6 @@
-"use client"
 import { RequirementsList } from "@/features/requirements"
 
-export default function RequirementsPage() {
+export default function RequirementsListPage() {
   return (
     <div className="mt-10">
       <RequirementsList />

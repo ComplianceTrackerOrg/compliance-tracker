@@ -1,5 +1,4 @@
 "use client"
-import React, { useEffect, useState } from "react"
 import { useAuth } from "@/lib/hooks/auth"
 import { signOut } from "@/actions"
 import { Link } from "@/components/ui/link"
@@ -13,41 +12,102 @@ import {
 } from "@/components/ui/menubar"
 import { ChevronDown } from "lucide-react"
 
-const MainNav = () => {
-  const [isMounted, setIsMounted] = useState(false)
-  const [loggedIn, setIsLoggedIn] = useState(false)
-  const { authUser, isManager } = useAuth()
-  useEffect(() => {
-    setIsMounted(true) // ✅ Ensure client-side rendering
-  }, [])
-  useEffect(() => {
-    if (authUser) {
-      setIsLoggedIn(true)
-    }
-  }, [authUser])
+interface MenuProps {
+  isManager: boolean
+}
 
-  if (!isMounted) return null
+const DisplayUsersMenu = () => {
+  return (
+    <MenubarMenu>
+      <MenubarTrigger className="flex items-center">
+        Users
+        <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+      </MenubarTrigger>
+      <MenubarContent>
+        <MenubarItem>
+          <Link href="/users/manage">Manage</Link>
+        </MenubarItem>
+        <MenubarItem>
+          <Link href="/users/assign">Assign</Link>
+        </MenubarItem>
+      </MenubarContent>
+    </MenubarMenu>
+  )
+}
+
+const DisplayRequirementsMenu = ({ isManager }: MenuProps) => {
+  if (isManager) {
+    return (
+      <MenubarMenu>
+        <MenubarTrigger className="flex items-center">
+          Requirements
+          <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        </MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>
+            <Link href="/requirements/manage">Manage</Link>
+          </MenubarItem>
+          <MenubarItem>
+            <Link href="/requirements/assigned">My Requirements</Link>
+          </MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    )
+  } else {
+    return (
+      <MenubarMenu>
+        <MenubarTrigger>
+          <Link href="/requirements/assigned">My Requirements</Link>
+        </MenubarTrigger>
+      </MenubarMenu>
+    )
+  }
+}
+
+const DisplayTrainingsMenu = ({ isManager }: MenuProps) => {
+  if (isManager) {
+    return (
+      <MenubarMenu>
+        <MenubarTrigger>
+          Trainings
+          <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        </MenubarTrigger>
+
+        <MenubarContent>
+          <MenubarItem>
+            <Link href="/trainings/manage">Manage</Link>
+          </MenubarItem>
+          <MenubarItem>
+            <Link href="/trainings/assigned">My Trainings</Link>
+          </MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    )
+  } else {
+    return (
+      <MenubarMenu>
+        <MenubarTrigger>
+          <Link href="/trainings/assigned">My Trainings</Link>
+        </MenubarTrigger>
+      </MenubarMenu>
+    )
+  }
+}
+
+const MainNav = () => {
+  const { isManager, isLoggedIn } = useAuth()
 
   const handleSignOut = async () => {
     await signOut()
   }
+
   return (
-    <div className="hidden md:flex justify-between container mx-auto mt-2">
+    <div className="flex justify-between items-center container mx-auto mt-4 mb-4">
       <Link href="/">
         <h1>Compliance Tracker Dashboard</h1>
       </Link>
-
-      {/* Menubar for Navigation */}
-      <Menubar>
-        {!loggedIn && (
-          <MenubarMenu>
-            <MenubarTrigger>
-              <Link href="/login">Login</Link>
-            </MenubarTrigger>
-          </MenubarMenu>
-        )}
-
-        {loggedIn && (
+      {isLoggedIn && (
+        <Menubar>
           <>
             {isManager && (
               <>
@@ -57,55 +117,12 @@ const MainNav = () => {
                   </MenubarTrigger>
                 </MenubarMenu>
 
-                <MenubarMenu>
-                  <MenubarTrigger className="flex items-center">
-                    Users
-                    <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                  </MenubarTrigger>
-                  <MenubarContent>
-                    <MenubarItem>
-                      <Link href="/user-list">Manage</Link>
-                    </MenubarItem>
-                    <MenubarItem>
-                      <Link href="/users">Assign</Link>
-                    </MenubarItem>
-                  </MenubarContent>
-                </MenubarMenu>
+                <DisplayUsersMenu />
               </>
             )}
 
-            {/* Requirements Dropdown */}
-            <MenubarMenu>
-              <MenubarTrigger className="flex items-center">
-                Requirements
-                <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-              </MenubarTrigger>
-              <MenubarContent>
-                <MenubarItem>
-                  <Link href="/requirements">Manage</Link>
-                </MenubarItem>
-                <MenubarItem>
-                  <Link href="/my-requirements">My Requirements</Link>
-                </MenubarItem>
-              </MenubarContent>
-            </MenubarMenu>
-
-            {/* Trainings Dropdown */}
-            <MenubarMenu>
-              <MenubarTrigger>
-                Trainings
-                <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-              </MenubarTrigger>
-
-              <MenubarContent>
-                <MenubarItem>
-                  <Link href="/trainings">Manage</Link>
-                </MenubarItem>
-                <MenubarItem>
-                  <Link href="/mandatory-trainings">My Trainings</Link>
-                </MenubarItem>
-              </MenubarContent>
-            </MenubarMenu>
+            <DisplayRequirementsMenu isManager={isManager} />
+            <DisplayTrainingsMenu isManager={isManager} />
 
             <MenubarMenu>
               <MenubarTrigger>
@@ -125,8 +142,8 @@ const MainNav = () => {
               </Button>
             </MenubarMenu>
           </>
-        )}
-      </Menubar>
+        </Menubar>
+      )}
     </div>
   )
 }

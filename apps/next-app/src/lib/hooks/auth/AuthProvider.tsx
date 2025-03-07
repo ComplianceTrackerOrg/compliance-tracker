@@ -35,11 +35,13 @@ interface AuthUserProviderProps {
 interface AuthUserContextProps {
   authUser: AuthenticatedUser | null
   isManager: boolean
+  isLoggedIn: boolean
 }
 
 const AuthUserContext = createContext<AuthUserContextProps>({
   authUser: null,
   isManager: false,
+  isLoggedIn: false,
 })
 
 const createGraphqlClient = initGraphqlClient()
@@ -67,6 +69,7 @@ export const AuthUserProvider = ({
 }: AuthUserProviderProps) => {
   const [authUser, setAuthUser] = useState<AuthenticatedUser | null>(null)
   const [isManager, setIsManager] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -97,6 +100,7 @@ export const AuthUserProvider = ({
 
         //TODO: feature flags
         setIsManager(roleType === UserRoleType.Manager)
+        setIsLoggedIn(true)
       }
     }
 
@@ -118,7 +122,7 @@ export const AuthUserProvider = ({
   }, [router])
 
   return (
-    <AuthUserContext.Provider value={{ authUser, isManager }}>
+    <AuthUserContext.Provider value={{ authUser, isManager, isLoggedIn }}>
       {children}
     </AuthUserContext.Provider>
   )

@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { createServerClient } from "@supabase/ssr"
+import { getSupabaseUser } from "./lib/supabase/service"
+import { UserRoleType } from "./constants"
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const API_KEY = process.env.NEXT_PUBLIC_SUPABASE_API_KEY!
@@ -65,10 +67,15 @@ const updateSession = async (request: NextRequest) => {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 
-  //TODO: redirect to /dashboard if user is a manager role
-  // If the user is signed in and the current path is / or /login, redirect to /dashboard
   if (user && (pathname === "/" || pathname === "/login")) {
-    return NextResponse.redirect(new URL("/dashboard", request.url))
+    const authUser = await getSupabaseUser(supabase, user)
+
+    if (authUser?.role_id == UserRoleType.Manager)
+      return NextResponse.redirect(new URL("/dashboard", request.url))
+    else
+      return NextResponse.redirect(
+        new URL("/requirements/assigned", request.url)
+      )
   }
 
   return supabaseResponse
