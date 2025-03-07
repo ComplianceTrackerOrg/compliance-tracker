@@ -1,11 +1,9 @@
-"use client"
-
-import { MandatoryTrainings } from "@/features/mandatory-trainings"
+import { AssignedTrainings } from "@/features/trainings"
 
 export default function MandatoryTrainingsPage() {
   return (
     <div className="mt-10">
-      <MandatoryTrainings />
+      <AssignedTrainings />
     </div>
   )
 }

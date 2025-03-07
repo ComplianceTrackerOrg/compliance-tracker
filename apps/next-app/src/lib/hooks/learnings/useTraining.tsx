@@ -6,7 +6,11 @@ import {
   mutationInsertTraining,
   mutationUpdateTraining,
 } from "@/lib/graphql/mutations"
-import { queryGetTraining } from "@/lib/graphql/queries"
+import {
+  queryGetAssignedUsersByTrainingResource,
+  queryGetTraining,
+} from "@/lib/graphql/queries"
+import { AssignedUser } from "@/types"
 
 interface TrainingModel {
   id: number
@@ -38,20 +42,28 @@ export interface UpdateTrainingInput {
 export const useTraining = (id: number) => {
   //TODO: handle no ID for add scenarios
   const [trainingData, setTrainingData] = useState<TrainingModel | null>(null)
-  const [displayNow, setDisplayNow] = useState(false)
 
   if (isNaN(id)) {
     throw new Error("Invalid input: ID must be a number")
   }
 
   const value = Number(id)
-  const [{ data: queryData, fetching }, reexecuteQuery] = useQuery({
+  const [{ data: queryData, fetching }, reexecuteGetTraining] = useQuery({
     query: queryGetTraining.toString(),
     variables: {
       id: value,
     },
     pause: true, // run query only when needed
   })
+
+  const [{ data: assignedUserList, fetching: fetchingUserList }, getUsers] =
+    useQuery({
+      query: queryGetAssignedUsersByTrainingResource.toString(),
+      variables: {
+        resourceId: id,
+      },
+      pause: true,
+    })
 
   const [, insertTraining] = useMutation(mutationInsertTraining.toString())
   const [, updateTraining] = useMutation(mutationUpdateTraining.toString())
@@ -67,15 +79,8 @@ export const useTraining = (id: number) => {
     )
   }, [queryData, fetching])
 
-  useEffect(() => {
-    if (displayNow) {
-      reexecuteQuery()
-    }
-  }, [reexecuteQuery, displayNow])
-
   const getTraining = () => {
-    // will trigger running the get training detail query
-    setDisplayNow(true)
+    reexecuteGetTraining({ requestPolicy: "network-only" })
   }
 
   const addTraining = async (input: TrainingInput) => {
@@ -108,11 +113,33 @@ export const useTraining = (id: number) => {
     return { data, error }
   }
 
+  const getAssignedUsers = () => {
+    getUsers({ requestPolicy: "network-only" })
+  }
+
   return {
     data: trainingData,
+    assignedUserList:
+      assignedUserList?.assigned_learning_resourceCollection?.edges.map(
+        (item) => {
+          const { node } = item
+          const { user, completed_at, status_id } = node
+          const assignedUser: AssignedUser = {
+            id: user.id,
+            firstName: user.first_name,
+            lastName: user.last_name ?? "",
+            statusId: status_id,
+            completionDate: completed_at ? new Date(completed_at) : undefined,
+          }
+
+          return assignedUser
+        }
+      ),
     fetching,
+    fetchingUserList,
     addTraining,
     editTraining,
+    getAssignedUsers,
     getTraining,
     removeTraining,
   }

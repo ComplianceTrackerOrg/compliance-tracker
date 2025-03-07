@@ -1,4 +1,3 @@
-"use client"
 import { AssignedRequirements } from "@/features/requirements"
 
 export default function MyRequirementsPage() {

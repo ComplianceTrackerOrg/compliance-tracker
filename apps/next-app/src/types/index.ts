@@ -21,14 +21,22 @@ export type Employee = {
   completionDate: string | null
 }
 
-export type AuthenticatedUser = {
+export type User = {
   id: number
   firstName: string
   lastName?: string
+}
+
+export type AuthenticatedUser = User & {
   role?: UserRole
   avatarUrl?: string
   email?: string
   isActive?: boolean
+}
+
+export type AssignedUser = User & {
+  statusId: number
+  completionDate?: Date
 }
 
 export const editUserSchema = z.object({

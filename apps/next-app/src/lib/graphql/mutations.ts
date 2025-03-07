@@ -76,9 +76,17 @@ export const mutationUpdateAssignedTrainingStatus = graphql(`
   mutation mutationUpdateAssignedTrainingStatus(
     $assignedTrainingId: BigInt!
     $statusId: Int!
+    $modifiedAt: Datetime!
+    $startedAt: Datetime
+    $completedAt: Datetime
   ) {
     updateassigned_learning_resourceCollection(
-      set: { status_id: $statusId }
+      set: {
+        status_id: $statusId
+        started_at: $startedAt
+        completed_at: $completedAt
+        modified_at: $modifiedAt
+      }
       atMost: 1
       filter: { id: { eq: $assignedTrainingId } }
     ) {
@@ -139,9 +147,17 @@ export const mutationUpdateAssignedRequirementStatus = graphql(`
   mutation mutationUpdateAssignedRequirementStatus(
     $assignedComplianceId: BigInt!
     $statusId: Int!
+    $modifiedAt: Datetime!
+    $startedAt: Datetime
+    $completedAt: Datetime
   ) {
     updateassigned_compliance_resourceCollection(
-      set: { status_id: $statusId }
+      set: {
+        status_id: $statusId
+        started_at: $startedAt
+        completed_at: $completedAt
+        modified_at: $modifiedAt
+      }
       atMost: 1
       filter: { id: { eq: $assignedComplianceId } }
     ) {

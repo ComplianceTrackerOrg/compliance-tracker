@@ -54,6 +54,8 @@ export const queryGetAssignedUsersByTrainingResource = graphql(`
             first_name
             last_name
           }
+          status_id
+          completed_at
         }
       }
     }
@@ -72,6 +74,8 @@ export const queryGetAssignedUsersByRequirementResource = graphql(`
             first_name
             last_name
           }
+          status_id
+          completed_at
         }
       }
     }

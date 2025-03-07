@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { ResourceStatus } from "@/constants"
 import { useAuth } from "@/lib/hooks/auth"
-import { useAssignedRequirements } from "@/lib/hooks/requirements"
+import { useAssignedTrainings } from "@/lib/hooks/learnings"
 import { formatDate } from "@/lib/utils"
 import { Progress } from "@/components/ui/progress"
 import {
@@ -15,19 +15,19 @@ import {
 import { StatusButton, StatusSelect } from "@/components/ui/status"
 import { toast } from "sonner"
 
-export default function AssignedRequirements() {
+export default function AssignedTrainings() {
   const { authUser } = useAuth()
   const {
-    data: assignedRequirements,
+    data: assignedTrainings,
     fetchAgain,
     updateStatus,
-  } = useAssignedRequirements(authUser?.id ?? 0)
+  } = useAssignedTrainings(authUser?.id ?? 0)
 
-  const completedCount = assignedRequirements?.filter(
+  const completedCount = assignedTrainings?.filter(
     (item) => item.node.resource_status.id === ResourceStatus.COMPLETED
   ).length
 
-  const totalCount = assignedRequirements?.length
+  const totalCount = assignedTrainings?.length
 
   const progressPercentage =
     completedCount && totalCount && totalCount > 0
@@ -43,7 +43,7 @@ export default function AssignedRequirements() {
       return
     }
 
-    if (data && data.updateassigned_compliance_resourceCollection) {
+    if (data && data.updateassigned_learning_resourceCollection) {
       toast.info("Status updated successfully")
       fetchAgain()
     }
@@ -52,9 +52,9 @@ export default function AssignedRequirements() {
   return (
     <Card className="w-full max-w-6xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl">Your Assigned Requirements</CardTitle>
+        <CardTitle className="text-2xl">Your Mandatory Trainings</CardTitle>
         <CardDescription>
-          Track and update your progress on required requirements
+          Track and update your progress on required trainings
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -62,35 +62,35 @@ export default function AssignedRequirements() {
           <h3 className="text-sm font-medium">Overall Completion</h3>
           <Progress value={progressPercentage} className="h-2" />
           <p className="text-sm text-muted-foreground">
-            {completedCount} of {totalCount} requirements completed
+            {completedCount} of {totalCount} trainings completed
           </p>
         </div>
 
         <div className="border rounded-lg">
           <div className="grid grid-cols-12 gap-4 p-4 border-b text-sm font-medium text-muted-foreground bg-gray-100">
-            <div className="col-span-5">Requirement</div>
+            <div className="col-span-5">Training Name</div>
             <div className="col-span-2">Due Date</div>
             <div className="col-span-2">Status</div>
             <div className="col-span-3">Actions</div>
           </div>
 
-          {assignedRequirements?.length === 0 && (
+          {assignedTrainings?.length === 0 && (
             <div className="p-4 text-center text-sm text-muted-foreground">
-              No requirement assigned
+              No trainings assigned
             </div>
           )}
 
-          {assignedRequirements?.map((item) => {
+          {assignedTrainings?.map((item) => {
             const { node } = item
             const {
-              id: assignedId,
-              compliance_resource: resource,
+              id: assignedTrainingId,
+              learning_resource: resource,
               resource_status: status,
             } = node
             const { name, description, deadline_at, url } = resource
             return (
               <div
-                key={assignedId}
+                key={assignedTrainingId}
                 className="grid grid-cols-12 gap-4 p-4 border-b last:border-0 items-center"
               >
                 <div className="col-span-5">
@@ -124,7 +124,7 @@ export default function AssignedRequirements() {
 
                 <div className="col-span-3">
                   <StatusSelect
-                    assignedId={assignedId}
+                    assignedId={assignedTrainingId}
                     currentStatus={status.id}
                     onStatusChange={handleStatusChange}
                     placeholder="Select"
