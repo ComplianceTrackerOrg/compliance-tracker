@@ -1,11 +1,11 @@
-export type LearningResource = {
+export type ResourceData = {
   id: number;
-  type_id: number;
+  type_id?: number;
   name: string;
   url: string;
   description: string;
   deadline_at: string;
-  is_mandatory: boolean;
+  is_mandatory?: boolean;
   is_active: boolean;
   created_at: string;
 };
