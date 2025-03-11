@@ -4,11 +4,11 @@ import { CommonModule } from '@angular/common';
 import { HlmDialogService } from '@/libs/ui/ui-dialog-helm/src';
 import { RequirementsService } from '../requirements.service';
 import { ButtonComponent } from '~shared/components/ui/button/button.component';
-import { HlmSpinnerComponent } from '../../../../libs/ui/ui-spinner-helm/src/lib/hlm-spinner.component';
-import { HlmTableComponent } from '../../../../libs/ui/ui-table-helm/src/lib/hlm-table.component';
-import { HlmThComponent } from '../../../../libs/ui/ui-table-helm/src/lib/hlm-th.component';
-import { HlmTrowComponent } from '../../../../libs/ui/ui-table-helm/src/lib/hlm-trow.component';
-import { HlmTdComponent } from '../../../../libs/ui/ui-table-helm/src/lib/hlm-td.component';
+import { HlmSpinnerComponent } from '@/libs/ui/ui-spinner-helm/src/lib/hlm-spinner.component';
+import { HlmTableComponent } from '@/libs/ui/ui-table-helm/src/lib/hlm-table.component';
+import { HlmThComponent } from '@/libs/ui/ui-table-helm/src/lib/hlm-th.component';
+import { HlmTrowComponent } from '@/libs/ui/ui-table-helm/src/lib/hlm-trow.component';
+import { HlmTdComponent } from '@/libs/ui/ui-table-helm/src/lib/hlm-td.component';
 import {
   RequirementData,
   RequirementResourceData,
