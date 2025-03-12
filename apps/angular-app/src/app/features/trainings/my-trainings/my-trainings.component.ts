@@ -18,11 +18,6 @@ import {
   AssignedLearningResourceData,
   TrainingData,
 } from '../../../shared/components/models/trainings.model';
-import {
-  AssignedLearningResource,
-  LearningResource,
-  ResourceStatus,
-} from '@/app/shared/components/models/globals.model';
 
 @Component({
   selector: 'app-my-trainings',

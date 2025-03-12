@@ -5,6 +5,7 @@ import { DashboardComponent } from 'features/dashboard/dashboard.component';
 import { LoginComponent } from 'features/login/login.component';
 import { TrainingListComponent } from 'features/trainings/training-list/training-list.component';
 import { MyTrainingsComponent } from 'features/trainings/my-trainings/my-trainings.component';
+import { RequirementsComponent } from './features/requirements/requirement-list/requirement-list.component';
 
 // TODO:
 // find more efficient way to use layout component once user is loggedin here in routing
@@ -26,6 +27,7 @@ export const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
       },
+      { path: 'manage-requirements', component: RequirementsComponent },
       {
         path: 'manage-trainings',
         component: TrainingListComponent,

@@ -1,6 +1,6 @@
 import {
   AssignedLearningResource,
-  LearningResource,
+  ResourceData,
   LearningResourceType,
   ResourceStatus,
 } from './globals.model';
@@ -30,12 +30,12 @@ export type ResourceTypeData = {
 };
 
 export type LearningResourceData = {
-  node: LearningResource & { learning_resource_type: LearningResourceType };
+  node: ResourceData & { learning_resource_type: LearningResourceType };
 };
 
 export type AssignedLearningResourceData = {
   node: AssignedLearningResource & {
-    learning_resource: LearningResource;
+    learning_resource: ResourceData;
     resource_status: ResourceStatus;
   };
 };
