@@ -37,8 +37,10 @@ export const GET_REQUIREMENT = gql`
 `;
 
 export const GET_MY_REQUIREMENTS = gql`
-  query Assigned_compliance_resourceCollection($id: Int!) {
-    assigned_compliance_resourceCollection(filter: { user_id: { eq: $id } }) {
+  query Assigned_compliance_resourceCollection($userId: Int!) {
+    assigned_compliance_resourceCollection(
+      filter: { user_id: { eq: $userId } }
+    ) {
       edges {
         node {
           id
@@ -57,6 +59,10 @@ export const GET_MY_REQUIREMENTS = gql`
             is_active
             deadline_at
             created_at
+          }
+          resource_status {
+            id
+            name
           }
         }
       }

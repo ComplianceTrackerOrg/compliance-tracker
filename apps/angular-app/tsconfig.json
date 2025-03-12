@@ -57,6 +57,9 @@
       ],
       "@spartan-ng/ui-checkbox-helm": [
         "./src/libs/ui/ui-checkbox-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-progress-helm": [
+        "./src/libs/ui/ui-progress-helm/src/index.ts"
       ]
     }
   },

@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GET_ALL_REQUIREMENTS } from './requirements.graphql';
+import {
+  GET_ALL_REQUIREMENTS,
+  GET_MY_REQUIREMENTS,
+} from './requirements.graphql';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +24,20 @@ export class RequirementsService {
       .valueChanges.pipe(
         map((result) => {
           return (result?.data as any)?.compliance_resourceCollection?.edges;
+        })
+      );
+  }
+
+  getMyRequirements(userId: number): Observable<any> {
+    return this.apollo
+      .watchQuery({
+        query: GET_MY_REQUIREMENTS,
+        variables: { userId },
+      })
+      .valueChanges.pipe(
+        map((result) => {
+          return (result?.data as any)?.assigned_compliance_resourceCollection
+            ?.edges;
         })
       );
   }
