@@ -19,8 +19,8 @@ interface UserTableProps {
   title: string
   selected: Set<number>
   onSelect: (ids: Set<number>) => void
-  onAddAll?: () => void
-  onRemoveAll?: () => void
+  onAddAll?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onRemoveAll?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 const UserTable = (props: UserTableProps) => {
@@ -40,9 +40,9 @@ const UserTable = (props: UserTableProps) => {
                 <Button
                   size="sm"
                   className="bg-blue-500 text-white"
-                  onClick={() => {
+                  onClick={(e) => {
                     field.onChange([])
-                    onAddAll()
+                    onAddAll(e)
                   }}
                 >
                   Add All
@@ -52,9 +52,9 @@ const UserTable = (props: UserTableProps) => {
                 <Button
                   size="sm"
                   className="bg-blue-500 text-white"
-                  onClick={() => {
+                  onClick={(e) => {
                     field.onChange([])
-                    onRemoveAll()
+                    onRemoveAll(e)
                   }}
                 >
                   Remove All
@@ -65,54 +65,65 @@ const UserTable = (props: UserTableProps) => {
               <Table className="rounded-md border">
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-12">
-                      <Checkbox
-                        checked={
-                          users &&
-                          users.length > 0 &&
-                          users.every((user) => selected.has(user.id))
-                        }
-                        onCheckedChange={(checked) => {
-                          if (users && checked) {
-                            const newSelected = new Set(
-                              users.map((user) => user.id)
-                            )
-                            onSelect(newSelected)
-                            field.onChange(Array.from(newSelected))
-                          } else {
-                            onSelect(new Set())
-                            field.onChange([])
+                    <TableHead className="w-12 text-center">
+                      <div className="flex items-center justify-center">
+                        <Checkbox
+                          checked={
+                            users &&
+                            users.length > 0 &&
+                            users.every((user) => selected.has(user.id))
                           }
-                        }}
-                      />
+                          onCheckedChange={(checked) => {
+                            if (users && checked) {
+                              const newSelected = new Set(
+                                users.map((user) => user.id)
+                              )
+                              onSelect(newSelected)
+                              field.onChange(Array.from(newSelected))
+                            } else {
+                              onSelect(new Set())
+                              field.onChange([])
+                            }
+                          }}
+                        />
+                      </div>
                     </TableHead>
                     <TableHead>Name</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
+                  {users && users.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={2} className="text-center">
+                        No users found.
+                      </TableCell>
+                    </TableRow>
+                  )}
                   {users?.map((user) => (
                     <TableRow key={user.id}>
-                      <TableCell>
-                        <Checkbox
-                          checked={selected.has(user.id)}
-                          onCheckedChange={(checked) => {
-                            const newSelected = new Set(selected)
-                            if (checked) {
-                              newSelected.add(user.id)
-                            } else {
-                              newSelected.delete(user.id)
-                            }
-                            field.onChange(Array.from(newSelected))
-                            onSelect(newSelected)
-                          }}
-                        />
+                      <TableCell className="w-12 text-center">
+                        <div className="flex items-center justify-center">
+                          <Checkbox
+                            checked={selected.has(user.id)}
+                            onCheckedChange={(checked) => {
+                              const newSelected = new Set(selected)
+                              if (checked) {
+                                newSelected.add(user.id)
+                              } else {
+                                newSelected.delete(user.id)
+                              }
+                              field.onChange(Array.from(newSelected))
+                              onSelect(newSelected)
+                            }}
+                          />
+                        </div>
                       </TableCell>
-                      {user.firstName && user.lastName && (
-                        <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
-                      )}
-                      {user.firstName && !user.lastName && (
-                        <TableCell>{`${user.firstName}`}</TableCell>
-                      )}
+                      <TableCell>
+                        <div className="py-1">
+                          {user.firstName}{" "}
+                          {user.lastName ? `${user.lastName}` : ""}
+                        </div>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
