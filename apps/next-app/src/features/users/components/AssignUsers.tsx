@@ -95,12 +95,14 @@ const AssignUsers = () => {
   const handleResourceTypeSelection = (value: ResourceType) => {
     //TODO: fix resource dropdown selection when changing type
     setResourceType(value)
-    setSelectedResource(0)
+    // setSelectedResource(0)
+    reset()
   }
 
   const handleResourceSelection = (resourceId: string) => {
     const value = Number(resourceId)
     setSelectedResource(value)
+    reset()
   }
 
   const getRequirementUsers = async (resourceId: number) => {
@@ -137,7 +139,6 @@ const AssignUsers = () => {
     reset()
   }
 
-  // TODO: save only when form is "dirty"
   const onSubmit = async (data: UserAssignmentModel) => {
     const { movedToUnassigned, movedToAssigned } = data
 
@@ -163,7 +164,7 @@ const AssignUsers = () => {
 
       setOriginalAvailableIds(new Set(movedToUnassigned))
       setOriginalAssignedIds(new Set(movedToAssigned))
-      reset(data)
+      reset()
       toast.info("Users assigned successfully")
     } catch {
       toast.error("Error assigning users")
@@ -227,7 +228,10 @@ const AssignUsers = () => {
                 title="All Users"
                 selected={selectedAvailable}
                 onSelect={setSelectedAvailable}
-                onAddAll={handleAddAllUsers}
+                onAddAll={(e) => {
+                  e.preventDefault()
+                  handleAddAllUsers()
+                }}
               />
             </div>
 
@@ -235,7 +239,10 @@ const AssignUsers = () => {
               <Button
                 variant="default"
                 size="icon"
-                onClick={moveToAssigned}
+                onClick={(e) => {
+                  e.preventDefault()
+                  moveToAssigned()
+                }}
                 disabled={selectedAvailable.size === 0}
               >
                 <ChevronRight className="h-4 w-4" />
@@ -243,7 +250,10 @@ const AssignUsers = () => {
               <Button
                 variant="default"
                 size="icon"
-                onClick={moveToAvailable}
+                onClick={(e) => {
+                  e.preventDefault()
+                  moveToAvailable()
+                }}
                 disabled={selectedAssigned.size === 0}
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -256,7 +266,10 @@ const AssignUsers = () => {
                 title="Assigned Users"
                 selected={selectedAssigned}
                 onSelect={setSelectedAssigned}
-                onRemoveAll={handleRemoveAllUsers}
+                onRemoveAll={(e) => {
+                  e.preventDefault()
+                  handleRemoveAllUsers()
+                }}
               />
             </div>
           </div>
