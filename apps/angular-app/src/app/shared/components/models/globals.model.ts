@@ -22,7 +22,7 @@ export type ResourceStatus = {
   description: string;
 };
 
-export type AssignedLearningResource = {
+export type AssignedResourceFields = {
   id: number;
   user_id: number;
   resource_id: number;
