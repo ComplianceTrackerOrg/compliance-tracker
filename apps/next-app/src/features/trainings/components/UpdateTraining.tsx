@@ -90,8 +90,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
     setIsOpen(isModalOpen)
   }
 
-  const onSubmit = async (values: EditTrainingModel) => {
-    //TODO: handle client side errors
+  const submitHandler = async (values: EditTrainingModel) => {
     setIsLoading(true)
     const { name, description, type, url, dueDate, isMandatory } = values
     const input: UpdateTrainingInput = {
@@ -118,7 +117,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
       return
     }
 
-    if (editedData && editedData.updatelearning_resourceCollection) {
+    if (editedData?.updatelearning_resourceCollection) {
       if (onUpdateSuccess) {
         onUpdateSuccess()
       }
@@ -126,6 +125,12 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
       setIsLoading(false)
     }
   }
+
+  const errorHandler = (error: any) => {
+    console.error("errorHandler", error)
+  }
+
+  const onSubmit = handleSubmit(submitHandler, errorHandler)
 
   // TODO: use modal component and fetching state
   return (
@@ -137,7 +142,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
           <DialogDescription>Update training information.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={onSubmit} className="space-y-4">
             <FormField
               name="name"
               control={control}
