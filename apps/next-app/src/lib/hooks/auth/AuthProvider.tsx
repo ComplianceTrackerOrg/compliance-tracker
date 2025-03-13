@@ -53,7 +53,7 @@ export const UrqlClientProvider = ({
 }: GraphqlClientProviderProps) => {
   const client = useMemo(() => {
     return createGraphqlClient(url, apiKey)
-  }, [])
+  }, [apiKey, url])
 
   return (
     <UrqlProvider client={client} ssr={ssr}>
