@@ -116,3 +116,26 @@ export const DISABLE_REQUIREMENT = gql`
     }
   }
 `;
+
+export const UPDATE_ASSIGNED_REQUIREMENT_STATUS = gql`
+  mutation mutationUpdateAssignedRequirementStatus(
+    $assignedComplianceId: BigInt!
+    $statusId: Int!
+    $modifiedAt: Datetime!
+    $startedAt: Datetime
+    $completedAt: Datetime
+  ) {
+    updateassigned_compliance_resourceCollection(
+      set: {
+        status_id: $statusId
+        started_at: $startedAt
+        completed_at: $completedAt
+        modified_at: $modifiedAt
+      }
+      atMost: 1
+      filter: { id: { eq: $assignedComplianceId } }
+    ) {
+      affectedCount
+    }
+  }
+`;

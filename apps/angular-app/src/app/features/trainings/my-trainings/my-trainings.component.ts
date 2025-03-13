@@ -56,7 +56,7 @@ export class MyTrainingsComponent implements OnInit {
               } = node;
 
               return {
-                id,
+                id: id as number,
                 status: status.name,
                 trainingName: resource.name,
                 trainingDesc: resource.description,

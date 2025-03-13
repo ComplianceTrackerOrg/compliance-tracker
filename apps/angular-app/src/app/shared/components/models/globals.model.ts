@@ -23,7 +23,7 @@ export type ResourceStatus = {
 };
 
 export type AssignedResourceFields = {
-  id: number;
+  id: number | string;
   user_id: number;
   resource_id: number;
   status_id: number;
@@ -42,3 +42,9 @@ export type User = {
   is_active: string;
   auth_id: string;
 };
+
+export enum ResourceStatusOptions {
+  NOT_STARTED = 1,
+  IN_PROGRESS = 2,
+  COMPLETED = 3,
+}

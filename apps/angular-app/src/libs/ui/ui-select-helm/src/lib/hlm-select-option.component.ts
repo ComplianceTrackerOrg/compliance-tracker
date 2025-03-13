@@ -1,8 +1,10 @@
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
   inject,
+  Input,
   input,
 } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -25,7 +27,8 @@ import type { ClassValue } from 'clsx';
   },
   template: `
     <ng-content />
-    <span
+  @if(this.hasIcon) {
+      <span
       [attr.dir]="_brnSelectOption.dir()"
       class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center rtl:left-auto rtl:right-2"
       [attr.data-state]="this._brnSelectOption.checkedState()"
@@ -39,6 +42,7 @@ import type { ClassValue } from 'clsx';
       />
       }
     </span>
+  }
   `,
   imports: [NgIcon, HlmIconDirective],
 })
@@ -47,9 +51,17 @@ export class HlmSelectOptionComponent {
     host: true,
   });
   public readonly userClass = input<ClassValue>('', { alias: 'class' });
+  @Input() set hasIcon(value: boolean) {
+    this._hasIcon = coerceBooleanProperty(value);
+  }
+  private _hasIcon = true;
+
+  get hasIcon() {
+    return this._hasIcon;
+  }
   protected readonly _computedClass = computed(() =>
     hlm(
-      'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2  rtl:flex-reverse rtl:pr-8 rtl:pl-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2  rtl:flex-reverse rtl:pr-8 rtl:pl-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       this.userClass()
     )
   );

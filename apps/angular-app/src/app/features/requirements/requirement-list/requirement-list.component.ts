@@ -46,7 +46,7 @@ export class RequirementsComponent {
             const { node } = item;
             const { id, name, description, url, deadline_at } = node;
             return {
-              id,
+              id: id,
               requirementName: name,
               requirementDesc: description,
               dueDate: deadline_at,

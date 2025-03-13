@@ -73,20 +73,30 @@
             }}</hlm-td>
             <hlm-td class="col-span-3">{{ requirement.status }}</hlm-td>
             <hlm-td class="col-span-2">
-              <brn-select class="inline-block w-full" placeholder="Select">
+              <brn-select
+                class="inline-block w-full"
+                [class.pointer-events-none]="updatingContent"
+                [class.text-gray-300]="updatingContent"
+                placeholder="Select"
+              >
                 <hlm-select-trigger class="w-full">
-                  <hlm-select-value />
+                  <span>Select</span>
                 </hlm-select-trigger>
                 <hlm-select-content>
-                  <hlm-option class="cursor-pointer" value="1"
-                    >Mark as Not Started</hlm-option
-                  >
-                  <hlm-option class="cursor-pointer" value="2"
-                    >Mark as In Progress</hlm-option
-                  >
-                  <hlm-option class="cursor-pointer" value="3"
-                    >Mark as Completed</hlm-option
-                  >
+                  <div *ngFor="let option of options">
+                    <hlm-option
+                      *ngIf="
+                        option.name.toLowerCase() !==
+                        requirement.status?.toLowerCase()
+                      "
+                      class="p-2 flex justify-center"
+                      [hasIcon]="false"
+                      [value]="option.value"
+                      (click)="optionSelect(requirement.id, option.value)"
+                    >
+                      {{ option.label }}
+                    </hlm-option>
+                  </div>
                 </hlm-select-content>
               </brn-select>
             </hlm-td>

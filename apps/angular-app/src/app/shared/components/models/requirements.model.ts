@@ -1,4 +1,8 @@
-import { ResourceData } from './globals.model';
+import {
+  AssignedResourceFields,
+  ResourceData,
+  ResourceStatus,
+} from './globals.model';
 
 export type RequirementData = {
   id: number;
@@ -11,4 +15,11 @@ export type RequirementData = {
 
 export type RequirementResourceData = {
   node: ResourceData;
+};
+
+export type AssignedComplianceResourceData = {
+  node: AssignedResourceFields & {
+    compliance_resource: ResourceData;
+    resource_status: ResourceStatus;
+  };
 };
