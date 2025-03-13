@@ -14,13 +14,13 @@ import {
 } from "@/components/ui/card"
 import { StatusButton, StatusSelect } from "@/components/ui/status"
 import { toast } from "sonner"
-import { Skeleton } from "@/components/ui/skeleton"
 
 export default function AssignedRequirements() {
   const { authUser } = useAuth()
   const {
     data: assignedRequirements,
     fetchAgain,
+    fetching,
     updateStatus,
   } = useAssignedRequirements(authUser?.id ?? 0)
 
@@ -75,24 +75,9 @@ export default function AssignedRequirements() {
             <div className="col-span-3">Actions</div>
           </div>
 
-          {assignedRequirements?.length === 0 && (
-            <div className="grid grid-cols-12 gap-4 p-4 border-b last:border-0 items-center">
-              {/* Requirement */}
-              <div className="col-span-5">
-                <Skeleton className="h-5 w-[250px]" />{" "}
-              </div>
-              {/* Due date */}
-              <div className="col-span-2">
-                <Skeleton className="h-5 w-[100px]" />
-              </div>
-              {/* Status */}
-              <div className="col-span-2">
-                <Skeleton className="h-6 w-24 rounded-full" />{" "}
-              </div>
-              {/* Actions */}
-              <div className="col-span-3">
-                <Skeleton className="h-5 w-[120px]" />
-              </div>
+          {!fetching && assignedRequirements?.length === 0 && (
+            <div className="p-4 text-center text-sm text-muted-foreground">
+              No assigned requirements
             </div>
           )}
 

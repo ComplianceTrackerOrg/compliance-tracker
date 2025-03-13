@@ -1,9 +1,13 @@
+import { Suspense } from "react"
+import { SkeletonManageRequirements } from "@/components/ui/skeleton"
 import { RequirementsList } from "@/features/requirements"
 
-export default function RequirementsListPage() {
+export default async function RequirementsListPage() {
   return (
     <div className="mt-10">
-      <RequirementsList />
+      <Suspense fallback={<SkeletonManageRequirements />}>
+        <RequirementsList />
+      </Suspense>
     </div>
   )
 }
