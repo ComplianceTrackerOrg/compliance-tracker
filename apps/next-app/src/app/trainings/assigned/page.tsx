@@ -1,9 +1,13 @@
+import { Suspense } from "react"
+import SkeletonAssignedTrainings from "@/components/ui/skeleton/skeleton-assigned-trainings"
 import { AssignedTrainings } from "@/features/trainings"
 
-export default function AssignedTrainingsPage() {
+export default async function AssignedTrainingsPage() {
   return (
     <div className="mt-10">
-      <AssignedTrainings />
+      <Suspense fallback={<SkeletonAssignedTrainings />}>
+        <AssignedTrainings />
+      </Suspense>
     </div>
   )
 }

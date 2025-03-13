@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/card"
 import { StatusButton, StatusSelect } from "@/components/ui/status"
 import { toast } from "sonner"
-import { Skeleton } from "@/components/ui/skeleton"
 
 export default function AssignedTrainings() {
   const { authUser } = useAuth()
@@ -22,6 +21,7 @@ export default function AssignedTrainings() {
     data: assignedTrainings,
     fetchAgain,
     updateStatus,
+    fetching,
   } = useAssignedTrainings(authUser?.id ?? 0)
 
   const completedCount = assignedTrainings?.filter(
@@ -75,24 +75,9 @@ export default function AssignedTrainings() {
             <div className="col-span-3">Actions</div>
           </div>
 
-          {assignedTrainings?.length === 0 && (
-            <div className="grid grid-cols-12 gap-4 p-4 border-b last:border-0 items-center">
-              {/* Training */}
-              <div className="col-span-5">
-                <Skeleton className="h-5 w-[250px]" />{" "}
-              </div>
-              {/* Due Date */}
-              <div className="col-span-2">
-                <Skeleton className="h-5 w-[100px]" />
-              </div>
-              {/* Status */}
-              <div className="col-span-2">
-                <Skeleton className="h-6 w-24 rounded-full" />{" "}
-              </div>
-              {/* Actions */}
-              <div className="col-span-3">
-                <Skeleton className="h-5 w-[120px]" />
-              </div>
+          {!fetching && assignedTrainings?.length === 0 && (
+            <div className="p-4 text-center text-sm text-muted-foreground">
+              No assigned trainings
             </div>
           )}
 
