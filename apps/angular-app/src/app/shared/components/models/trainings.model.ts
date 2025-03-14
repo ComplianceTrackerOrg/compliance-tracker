@@ -39,10 +39,3 @@ export type AssignedLearningResourceData = {
     resource_status: ResourceStatus;
   };
 };
-
-export type AssignedComplianceResourceData = {
-  node: AssignedResourceFields & {
-    compliance_resource: ResourceData;
-    resource_status: ResourceStatus;
-  };
-};

@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import {
   GET_ALL_REQUIREMENTS,
   GET_MY_REQUIREMENTS,
+  UPDATE_ASSIGNED_REQUIREMENT_STATUS,
 } from './requirements.graphql';
 
 @Injectable({
@@ -40,5 +41,17 @@ export class RequirementsService {
             ?.edges;
         })
       );
+  }
+
+  updateRequirementStatus(input: any): Observable<any> {
+    return this.apollo.mutate({
+      mutation: UPDATE_ASSIGNED_REQUIREMENT_STATUS,
+      variables: input,
+      refetchQueries: [
+        {
+          query: GET_MY_REQUIREMENTS,
+        },
+      ],
+    });
   }
 }
