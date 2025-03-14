@@ -23,7 +23,7 @@ export type ResourceStatus = {
 };
 
 export type AssignedResourceFields = {
-  id: number | string;
+  id: number;
   user_id: number;
   resource_id: number;
   status_id: number;
