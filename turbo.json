@@ -6,14 +6,8 @@
       "cache": true
     },
     "build": {
-      "dependsOn": ["^build", "lint", "check-types"],
-      "outputs": [".next/**", "!.next/cache/**"],
-      "cache": true
-    },
-    "build:ng": {
-      "dependsOn": ["^build:ng"],
-      "outputs": ["dist/**"],
-      "cache": true
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "dependsOn": ["^build", "lint", "check-types"]
     },
     "check-types": {
       "dependsOn": ["^check-types"]
