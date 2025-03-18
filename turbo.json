@@ -1,13 +1,26 @@
 {
-  "pipeline": {
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "lint": {
+      "outputs": [],
+      "cache": true
+    },
     "build": {
+      "dependsOn": ["^build", "lint", "check-types"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "cache": true
+    },
+    "build:ng": {
+      "dependsOn": ["^build:ng"],
       "outputs": ["dist/**"],
-      "dependsOn": ["^build"]
+      "cache": true
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
     },
     "dev": {
-      "cache": false,
-      "dependsOn": ["^dev"]
-    },
-    "lint": {}
+      "persistent": true,
+      "cache": false
+    }
   }
 }
