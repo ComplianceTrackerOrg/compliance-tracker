@@ -58,6 +58,7 @@ export class MyTrainingsComponent implements OnInit {
 
   constructor(private trainingsService: TrainingsService) {}
 
+  // compute progress value
   get progress() {
     if (this.trainingsTotal === 0) return 0;
     return (this.trainingsCompleted / this.trainingsTotal) * 100;
