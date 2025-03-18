@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
+import { FieldErrors, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
@@ -126,7 +126,7 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
     }
   }
 
-  const errorHandler = (error: any) => {
+  const errorHandler = (error: FieldErrors<EditTrainingModel>) => {
     console.error("errorHandler", error)
   }
 
