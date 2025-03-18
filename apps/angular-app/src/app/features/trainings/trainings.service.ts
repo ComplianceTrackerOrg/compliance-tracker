@@ -9,6 +9,7 @@ import {
   GET_ALL_TRAINING_TYPES,
   GET_ALL_TRAININGS,
   GET_MY_TRAININGS,
+  UPDATE_ASSIGNED_TRAINING_STATUS,
   UPDATE_TRAINING,
 } from './trainings.graphql';
 
@@ -97,6 +98,18 @@ export class TrainingsService {
       refetchQueries: [
         {
           query: GET_ALL_TRAININGS,
+        },
+      ],
+    });
+  }
+
+  postUpdateTrainingStatus(data: any): Observable<any> {
+    return this.apollo.mutate({
+      mutation: UPDATE_ASSIGNED_TRAINING_STATUS,
+      variables: data,
+      refetchQueries: [
+        {
+          query: GET_MY_TRAININGS,
         },
       ],
     });
