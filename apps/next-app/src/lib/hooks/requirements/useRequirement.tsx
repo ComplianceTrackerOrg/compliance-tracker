@@ -24,6 +24,7 @@ export interface RequirementInput {
   description?: string
   url?: string
   deadline_at?: string
+  is_active: boolean
 }
 
 export interface UpdateRequirementInput {

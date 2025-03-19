@@ -54,9 +54,8 @@ export const editUserSchema = z.object({
 
 export type EditUserModel = z.infer<typeof editUserSchema>
 
-// TODO: update validation rules
 export const addTrainingSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
+  name: z.string().min(2, { message: "Name is required" }),
   description: z.string().optional(),
   type: z
     .string()
@@ -64,9 +63,16 @@ export const addTrainingSchema = z.object({
       (val) => Object.values(LearningResourceType).includes(Number(val)),
       { message: "Invalid type" }
     ),
-  url: z.string().optional(),
+  url: z
+    .string()
+    .url()
+    .refine((val) => val.startsWith("https://"), {
+      message: "URL must use HTTPS protocol",
+    })
+    .optional(),
   dueDate: z.date({ required_error: "Due date is required" }),
   isMandatory: z.boolean().default(true),
+  isActive: z.boolean().default(true),
 })
 
 export type AddTrainingModel = z.infer<typeof addTrainingSchema>

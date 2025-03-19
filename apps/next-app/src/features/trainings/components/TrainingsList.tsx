@@ -1,5 +1,6 @@
 "use client"
 import { Pencil, Plus, Trash2 } from "lucide-react"
+import { ChangeType } from "@/constants"
 import { useTrainings } from "@/lib/hooks/learnings"
 import { formatDate } from "@/lib/utils"
 import {
@@ -10,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
 
 import AddTraining from "./AddTraining"
 import DisableTraining from "./DisableTraining"
@@ -19,8 +21,20 @@ import AssignedTrainingUsers from "./AssignedTrainingUsers"
 export default function TrainingsList() {
   const { trainingListWithDetails: data, fetchListWithDetails } = useTrainings()
 
-  const handleChangeSuccess = async () => {
+  const handleChangeSuccess = async (changeType: ChangeType) => {
     fetchListWithDetails()
+
+    switch (changeType) {
+      case ChangeType.Add:
+        toast.info("Training added successfully")
+        return
+
+      case ChangeType.Edit:
+        toast.info("Training updated successfully")
+        return
+      default:
+        toast.info("Training disabled successfully")
+    }
   }
 
   return (
@@ -33,7 +47,7 @@ export default function TrainingsList() {
           </div>
           <div className="col-span-1 flex justify-end">
             <AddTraining
-              onAddSuccess={handleChangeSuccess}
+              onAddSuccess={() => handleChangeSuccess(ChangeType.Add)}
               trigger={
                 <Button className="bg-blue-500 text-white" variant="outline">
                   <Plus />
@@ -79,7 +93,9 @@ export default function TrainingsList() {
                     <UpdateTraining
                       id={id}
                       trigger={<Pencil className="cursor-pointer" />}
-                      onUpdateSuccess={handleChangeSuccess}
+                      onUpdateSuccess={() =>
+                        handleChangeSuccess(ChangeType.Edit)
+                      }
                     />
                   </span>
                   <span className="border rounded-lg p-1">
@@ -87,7 +103,9 @@ export default function TrainingsList() {
                       id={id}
                       name={name}
                       trigger={<Trash2 className="cursor-pointer" />}
-                      onDisableSuccess={handleChangeSuccess}
+                      onDisableSuccess={() =>
+                        handleChangeSuccess(ChangeType.Disable)
+                      }
                     />
                   </span>
                   <AssignedTrainingUsers

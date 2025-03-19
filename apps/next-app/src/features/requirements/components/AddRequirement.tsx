@@ -63,6 +63,7 @@ export default function AddRequirement(props: AddRequirementProps) {
       description: description || "",
       url: url || "",
       deadline_at: dueDate ? new Date(dueDate).toISOString() : undefined,
+      is_active: true,
     }
 
     const { data, error } = await addRequirement(input)

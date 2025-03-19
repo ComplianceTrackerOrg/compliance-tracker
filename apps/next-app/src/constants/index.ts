@@ -37,3 +37,9 @@ export const UserRoleLabel: Record<UserRoleType, string> = {
   [UserRoleType.Manager]: "Manager",
   [UserRoleType.IC]: "Individual Contributor",
 }
+
+export enum ChangeType {
+  Add,
+  Edit,
+  Disable,
+}

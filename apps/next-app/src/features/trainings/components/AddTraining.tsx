@@ -62,6 +62,7 @@ export default function AddTraining(props: AddTrainingProps) {
       url: "",
       dueDate: undefined,
       isMandatory: true,
+      isActive: true,
     },
   })
 
@@ -77,6 +78,7 @@ export default function AddTraining(props: AddTrainingProps) {
       url: url || "",
       deadline_at: dueDate ? new Date(dueDate).toISOString() : undefined,
       is_mandatory: isMandatory,
+      is_active: true,
     }
 
     const { data, error } = await addTraining(input)
