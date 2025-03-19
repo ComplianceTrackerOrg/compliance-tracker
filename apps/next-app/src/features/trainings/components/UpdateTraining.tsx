@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { FieldErrors, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
@@ -126,7 +126,8 @@ const UpdateTraining = (props: UpdateTrainingProps) => {
     }
   }
 
-  const errorHandler = (error: FieldErrors<EditTrainingModel>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const errorHandler = (error: any) => {
     console.error("errorHandler", error)
   }
 
