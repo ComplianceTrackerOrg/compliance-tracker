@@ -74,16 +74,26 @@
             }}</hlm-td>
             <hlm-td class="col-span-3">{{ training.status }}</hlm-td>
             <hlm-td class="col-span-2">
-              <brn-select class="inline-block w-full" placeholder="Select">
+              <brn-select
+                class="inline-block w-full"
+                [class.pointer-events-none]="updatingContent"
+                [class.text-gray-300]="updatingContent"
+                placeholder="Select"
+              >
                 <hlm-select-trigger class="w-full">
                   <span>Select</span>
                 </hlm-select-trigger>
                 <hlm-select-content>
                   <div *ngFor="let option of options">
                     <hlm-option
+                      *ngIf="
+                        option.name.toLowerCase() !==
+                        training.status?.toLowerCase()
+                      "
                       class="p-2 flex justify-center"
                       [hasIcon]="false"
                       [value]="option.value"
+                      (click)="optionSelect(training.id, option.value)"
                     >
                       {{ option.label }}
                     </hlm-option>

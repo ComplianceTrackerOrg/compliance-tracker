@@ -138,3 +138,26 @@ export const DISABLE_TRAINING = gql(`
     }
   }
 `)
+
+export const UPDATE_ASSIGNED_TRAINING_STATUS = gql`
+  mutation mutationUpdateAssignedTrainingStatus(
+    $assignedTrainingId: BigInt!
+    $statusId: Int!
+    $modifiedAt: Datetime!
+    $startedAt: Datetime
+    $completedAt: Datetime
+  ) {
+    updateassigned_learning_resourceCollection(
+      set: {
+        status_id: $statusId
+        started_at: $startedAt
+        completed_at: $completedAt
+        modified_at: $modifiedAt
+      }
+      atMost: 1
+      filter: { id: { eq: $assignedTrainingId } }
+    ) {
+      affectedCount
+    }
+  }
+`;
