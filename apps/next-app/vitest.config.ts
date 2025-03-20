@@ -24,6 +24,12 @@ export default defineConfig({
     coverage: {
       enabled: true,
       include: ["src/components/**/*.tsx"],
+      thresholds: {
+        lines: 80,
+        statements: 80,
+        branches: 80,
+        functions: 80,
+      },
     },
     reporters: ["default", "html"],
   },
