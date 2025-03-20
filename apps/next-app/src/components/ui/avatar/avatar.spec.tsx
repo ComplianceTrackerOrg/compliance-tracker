@@ -1,7 +1,7 @@
 import { test, expect, describe } from "vitest"
 import { render } from "@testing-library/react"
 
-import { Avatar, AvatarImage } from "./avatar"
+import { Avatar, AvatarImage, AvatarFallback } from "./avatar"
 
 describe("Avatar", () => {
   test("Avatar renders correctly", () => {
@@ -22,5 +22,18 @@ describe("AvatarImage", () => {
 
     const avatarImage = document.querySelector(".avatar-image")
     expect(avatarImage).toBeDefined()
+  })
+})
+
+describe("AvatarFallback", () => {
+  test("AvatarFallback renders correctly", () => {
+    render(
+      <Avatar>
+        <AvatarFallback className="avatar-fallback" />
+      </Avatar>
+    )
+
+    const avatarFallback = document.querySelector(".avatar-fallback")
+    expect(avatarFallback).toBeDefined()
   })
 })
