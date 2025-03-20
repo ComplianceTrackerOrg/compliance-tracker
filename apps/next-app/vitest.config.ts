@@ -19,11 +19,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    include: ["src/components/**/*.spec.tsx"],
+    include: ["src/features/**/*.spec.tsx"],
     exclude: ["node_modules"],
     coverage: {
       enabled: true,
-      include: ["src/components/**/*.tsx"],
+      include: ["src/features/**/*.tsx"],
       thresholds: {
         lines: 80,
         statements: 80,
