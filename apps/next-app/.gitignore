@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/html
+*.gz
 
 # next.js
 /.next/
