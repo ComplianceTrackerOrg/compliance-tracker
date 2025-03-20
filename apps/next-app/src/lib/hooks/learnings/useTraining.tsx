@@ -32,6 +32,7 @@ export interface TrainingInput {
   url?: string
   deadline_at?: string
   is_mandatory?: boolean
+  is_active: boolean
 }
 
 export interface UpdateTrainingInput {

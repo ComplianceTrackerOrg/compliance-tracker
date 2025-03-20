@@ -1,5 +1,6 @@
 "use client"
 import { Pencil, Plus, Trash2 } from "lucide-react"
+import { ChangeType } from "@/constants"
 import { formatDate } from "@/lib/utils"
 import {
   Card,
@@ -9,6 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+
 import { useRequirements } from "@/lib/hooks/requirements"
 import AddRequirement from "./AddRequirement"
 import UpdateRequirement from "./UpdateRequirement"
@@ -20,8 +23,20 @@ export default function RequirementsList() {
   const { requirementListWithDetails: data, fetchListWithDetails } =
     useRequirements(true)
 
-  const handleChangeSuccess = async () => {
+  const handleChangeSuccess = async (changeType: ChangeType) => {
     fetchListWithDetails()
+
+    switch (changeType) {
+      case ChangeType.Add:
+        toast.info("Requirement added successfully")
+        return
+
+      case ChangeType.Edit:
+        toast.info("Requirement updated successfully")
+        return
+      default:
+        toast.info("Requirement disabled successfully")
+    }
   }
 
   return (
@@ -34,7 +49,7 @@ export default function RequirementsList() {
           </div>
           <div className="col-span-1 flex justify-end">
             <AddRequirement
-              onAddSuccess={handleChangeSuccess}
+              onAddSuccess={() => handleChangeSuccess(ChangeType.Add)}
               trigger={
                 <Button className="bg-blue-500 text-white" variant="outline">
                   <Plus />
@@ -77,7 +92,9 @@ export default function RequirementsList() {
                       <UpdateRequirement
                         id={id}
                         trigger={<Pencil className="cursor-pointer" />}
-                        onUpdateSuccess={handleChangeSuccess}
+                        onUpdateSuccess={() =>
+                          handleChangeSuccess(ChangeType.Edit)
+                        }
                       />
                     </span>
                     <span className="border rounded-lg p-1">
@@ -85,7 +102,9 @@ export default function RequirementsList() {
                         id={id}
                         name={name}
                         trigger={<Trash2 className="cursor-pointer" />}
-                        onDisableSuccess={handleChangeSuccess}
+                        onDisableSuccess={() =>
+                          handleChangeSuccess(ChangeType.Disable)
+                        }
                       />
                     </span>
                     <AssignedRequirementUsers
